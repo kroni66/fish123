@@ -94,7 +94,7 @@ export function ProductGrid({ categoryId, searchQuery }: ProductGridProps) {
                 onClick={handleLoadMore}
                 className="px-8 py-3 font-medium"
               >
-                Load More Products
+                Načíst více produktů
               </Button>
             </div>
           )}
