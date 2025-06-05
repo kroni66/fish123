@@ -58,12 +58,12 @@ export function ProductGrid({ categoryId, searchQuery }: ProductGridProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center py-12">
             <h3 className="text-2xl font-semibold text-foreground mb-4">
-              {searchQuery ? "No products found" : "No products available"}
+              {searchQuery ? "Nebyly nalezeny žádné produkty" : "Žádné produkty nejsou k dispozici"}
             </h3>
             <p className="text-muted-foreground">
               {searchQuery 
-                ? `No products match your search for "${searchQuery}"`
-                : "Check back later for new products"
+                ? `Nebyly nalezeny žádné produkty odpovídající vašemu hledání "${searchQuery}"`
+                : "Zkuste to znovu později, až budou k dispozici nové produkty"
               }
             </p>
           </div>

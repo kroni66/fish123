@@ -42,7 +42,7 @@ export function CartOverlay() {
           {/* Cart Header */}
           <div className="flex items-center justify-between p-6 border-b">
             <h3 className="text-lg font-semibold text-foreground">
-              Shopping Cart ({items.length})
+              Nákupní košík ({items.length})
             </h3>
             <Button
               variant="ghost"
@@ -58,9 +58,9 @@ export function CartOverlay() {
           <div className="flex-1 overflow-y-auto p-6">
             {items.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-muted-foreground mb-4">Your cart is empty</p>
+                <p className="text-muted-foreground mb-4">Váš košík je prázdný</p>
                 <Button onClick={handleContinueShopping}>
-                  Continue Shopping
+                  Pokračovat v nákupu
                 </Button>
               </div>
             ) : (
@@ -122,9 +122,9 @@ export function CartOverlay() {
           {items.length > 0 && (
             <div className="border-t p-6">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-lg font-semibold text-foreground">Total:</span>
+                <span className="text-lg font-semibold text-foreground">Celkem:</span>
                 <span className="text-2xl font-bold text-primary">
-                  ${total.toFixed(2)}
+                  {total.toFixed(2)} Kč
                 </span>
               </div>
               <Button
@@ -132,7 +132,7 @@ export function CartOverlay() {
                 className="w-full bg-primary text-white hover:bg-primary/90 mb-3"
                 onClick={handleCheckout}
               >
-                Proceed to Checkout
+                Přejít k pokladně
               </Button>
               <Button
                 variant="outline"
@@ -140,7 +140,7 @@ export function CartOverlay() {
                 className="w-full"
                 onClick={handleContinueShopping}
               >
-                Continue Shopping
+                Pokračovat v nákupu
               </Button>
             </div>
           )}

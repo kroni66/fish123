@@ -10,7 +10,7 @@ export function Footer() {
               AquaStore
             </h3>
             <p className="text-gray-300 mb-4">
-              Premium fish accessories for your aquarium paradise.
+              Prémiové akvarijní doplňky pro váš podmořský ráj.
             </p>
             <div className="flex space-x-4">
               <a 
