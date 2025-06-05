@@ -2,15 +2,19 @@ import { Link } from "wouter";
 
 export function Footer() {
   return (
-    <footer className="bg-foreground text-white py-16">
+    <footer className="bg-gray-800 text-white py-12 mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-2xl font-bold font-poppins text-primary mb-4">
-              AquaStore
-            </h3>
-            <p className="text-gray-300 mb-4">
-              Prémiové akvarijní doplňky pro váš podmořský ráj.
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-sm">AQ</span>
+              </div>
+              <h3 className="text-xl font-bold">AquaStore.cz</h3>
+            </div>
+            <p className="text-gray-300 text-sm leading-relaxed mb-4">
+              Specializujeme se na kvalitní akvarijní techniku a doplňky. 
+              Váš spolehlivý partner pro akvaristiku.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -44,98 +48,81 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-lg mb-4">Shop</h4>
-            <ul className="space-y-2 text-gray-300">
+            <h4 className="font-semibold mb-4 text-white">Kategorie</h4>
+            <ul className="space-y-2 text-gray-300 text-sm">
               <li>
-                <Link href="/" className="hover:text-primary transition-colors">
-                  All Products
+                <Link href="/" className="hover:text-white transition-colors">
+                  Všechny produkty
                 </Link>
               </li>
               <li>
-                <Link href="/?category=2" className="hover:text-primary transition-colors">
-                  Decorations
+                <Link href="/?category=2" className="hover:text-white transition-colors">
+                  Dekorace
                 </Link>
               </li>
               <li>
-                <Link href="/?category=3" className="hover:text-primary transition-colors">
-                  Lighting
+                <Link href="/?category=3" className="hover:text-white transition-colors">
+                  Osvětlení
                 </Link>
               </li>
               <li>
-                <Link href="/?category=5" className="hover:text-primary transition-colors">
-                  Filters
+                <Link href="/?category=5" className="hover:text-white transition-colors">
+                  Filtry
                 </Link>
               </li>
               <li>
-                <Link href="/?category=4" className="hover:text-primary transition-colors">
-                  Plants
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-lg mb-4">Support</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li>
-                <Link href="/contact" className="hover:text-primary transition-colors">
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="hover:text-primary transition-colors">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link href="/shipping" className="hover:text-primary transition-colors">
-                  Shipping Info
-                </Link>
-              </li>
-              <li>
-                <Link href="/returns" className="hover:text-primary transition-colors">
-                  Returns
-                </Link>
-              </li>
-              <li>
-                <Link href="/size-guide" className="hover:text-primary transition-colors">
-                  Size Guide
+                <Link href="/?category=4" className="hover:text-white transition-colors">
+                  Rostliny
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold text-lg mb-4">Newsletter</h4>
-            <p className="text-gray-300 mb-4">
-              Subscribe for aquarium tips and exclusive offers.
-            </p>
-            <form className="flex" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="Your email"
-                className="flex-1 px-4 py-2 bg-gray-700 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-primary border-0"
-              />
-              <button
-                type="submit"
-                className="bg-primary text-white px-4 py-2 rounded-r-lg hover:bg-primary/90 transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
+            <h4 className="font-semibold mb-4 text-white">Zákaznický servis</h4>
+            <ul className="space-y-2 text-gray-300 text-sm">
+              <li>
+                <Link href="/contact" className="hover:text-white transition-colors">
+                  Kontakt
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="hover:text-white transition-colors">
+                  Často kladené otázky
+                </Link>
+              </li>
+              <li>
+                <Link href="/shipping" className="hover:text-white transition-colors">
+                  Doprava a platba
+                </Link>
+              </li>
+              <li>
+                <Link href="/returns" className="hover:text-white transition-colors">
+                  Reklamace
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white transition-colors">
+                  Obchodní podmínky
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-4 text-white">Kontaktní údaje</h4>
+            <div className="space-y-2 text-gray-300 text-sm">
+              <p>📧 info@aquastore.cz</p>
+              <p>📞 +420 123 456 789</p>
+              <p>🏪 Po-Pá: 9:00 - 17:00</p>
+              <p>📍 Praha, Česká republika</p>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-300">
-          <p>
-            &copy; 2024 AquaStore. All rights reserved. |{" "}
-            <Link href="/privacy" className="hover:text-primary transition-colors">
-              Privacy Policy
-            </Link>{" "}
-            |{" "}
-            <Link href="/terms" className="hover:text-primary transition-colors">
-              Terms of Service
-            </Link>
+        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+          <p className="text-gray-400 text-sm">
+            &copy; 2024 AquaStore.cz - Specializovaný obchod s akvarijními potřebami. Všechna práva vyhrazena.
           </p>
         </div>
       </div>

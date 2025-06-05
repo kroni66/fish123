@@ -48,25 +48,22 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
       className="bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-200 overflow-hidden group cursor-pointer"
       onClick={() => onProductClick(product)}
     >
-      <div className="aspect-square bg-muted relative overflow-hidden">
+      <div className="aspect-square bg-gray-50 relative overflow-hidden">
         <img
-          src={product.imageUrl || "/placeholder-product.jpg"}
+          src={product.imageUrl || "https://via.placeholder.com/400x400?text=Product"}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
         />
-        <Button
-          variant="ghost"
-          size="sm"
-          className={`absolute top-4 right-4 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow ${
-            isLiked ? "text-red-500" : "text-foreground"
-          }`}
-          onClick={handleLikeToggle}
-        >
-          <Heart className={`h-5 w-5 ${isLiked ? "fill-current" : ""}`} />
-        </Button>
+        {!product.inStock && (
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <span className="text-white font-semibold bg-red-600 px-3 py-1 rounded">
+              Nedostupné
+            </span>
+          </div>
+        )}
         {product.inStock && (
-          <Badge className="absolute top-4 left-4 bg-success text-white">
+          <Badge className="absolute top-3 left-3 bg-green-600 text-white">
             Skladem
           </Badge>
         )}
@@ -80,7 +77,7 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
         </p>
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold text-primary">
-            ${product.price}
+            {product.price} Kč
           </span>
           <Button
             size="sm"
