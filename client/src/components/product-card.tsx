@@ -45,7 +45,7 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
 
   return (
     <div 
-      className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group product-card-hover cursor-pointer"
+      className="bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-200 overflow-hidden group cursor-pointer"
       onClick={() => onProductClick(product)}
     >
       <div className="aspect-square bg-muted relative overflow-hidden">
