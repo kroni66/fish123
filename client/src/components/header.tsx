@@ -19,10 +19,10 @@ export function Header() {
   };
 
   const navigation = [
-    { name: "Products", href: "/" },
-    { name: "Categories", href: "/#categories" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    { name: "Produkty", href: "/" },
+    { name: "Kategorie", href: "/#categories" },
+    { name: "O nás", href: "/about" },
+    { name: "Kontakt", href: "/contact" },
   ];
 
   return (
@@ -59,7 +59,7 @@ export function Header() {
             <form onSubmit={handleSearch} className="relative hidden sm:block">
               <Input
                 type="text"
-                placeholder="Search products..."
+                placeholder="Hledat produkty..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-64 pr-10"
@@ -125,7 +125,7 @@ export function Header() {
               <form onSubmit={handleSearch} className="relative">
                 <Input
                   type="text"
-                  placeholder="Search products..."
+                  placeholder="Hledat produkty..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pr-10"

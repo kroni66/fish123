@@ -9,10 +9,10 @@ export function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-4xl md:text-6xl font-bold font-poppins mb-6">
-            Premium Fish Accessories
+            Prémiové Akvarijní Doplňky
           </h2>
           <p className="text-xl md:text-2xl mb-8 text-blue-100">
-            Transform your aquarium into an underwater paradise
+            Proměňte své akvárium v podmořský ráj
           </p>
           <Button
             size="lg"
@@ -20,7 +20,7 @@ export function Hero() {
             className="bg-white text-primary hover:bg-gray-100 px-8 py-4 text-lg font-semibold"
             onClick={() => setLocation("/#products")}
           >
-            Shop Now
+            Nakupovat
           </Button>
         </div>
       </div>

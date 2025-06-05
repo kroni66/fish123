@@ -65,12 +65,12 @@ export class MemStorage implements IStorage {
   private initializeSampleData() {
     // Categories
     const sampleCategories: Category[] = [
-      { id: 1, name: "All Products", slug: "all", description: "All fish accessories" },
-      { id: 2, name: "Decorations", slug: "decorations", description: "Aquarium decorations and ornaments" },
-      { id: 3, name: "Lighting", slug: "lighting", description: "LED and aquarium lighting systems" },
-      { id: 4, name: "Plants", slug: "plants", description: "Live and artificial aquarium plants" },
-      { id: 5, name: "Filters", slug: "filters", description: "Water filtration systems" },
-      { id: 6, name: "Accessories", slug: "accessories", description: "Various aquarium accessories" },
+      { id: 1, name: "Všechny produkty", slug: "all", description: "Veškeré akvarijní doplňky" },
+      { id: 2, name: "Dekorace", slug: "decorations", description: "Akvarijní dekorace a ozdoby" },
+      { id: 3, name: "Osvětlení", slug: "lighting", description: "LED a akvarijní osvětlovací systémy" },
+      { id: 4, name: "Rostliny", slug: "plants", description: "Živé a umělé akvarijní rostliny" },
+      { id: 5, name: "Filtry", slug: "filters", description: "Systémy filtrace vody" },
+      { id: 6, name: "Příslušenství", slug: "accessories", description: "Různé akvarijní doplňky" },
     ];
 
     sampleCategories.forEach(category => {
@@ -82,10 +82,10 @@ export class MemStorage implements IStorage {
     const sampleProducts: Product[] = [
       {
         id: 1,
-        name: "Coral Reef Castle",
-        slug: "coral-reef-castle",
-        description: "Transform your aquarium into an underwater paradise with our premium Coral Reef Castle. This vibrant decoration features multiple hiding spots and swim-through areas that your fish will love. Made from aquarium-safe materials with realistic coral textures and natural colors.",
-        price: "89.99",
+        name: "Korálový hrad",
+        slug: "koralovy-hrad",
+        description: "Proměňte své akvárium v podmořský ráj s naším prémiovým korálovým hradem. Tato živá dekorace nabízí několik úkrytů a průplavů, které vaše ryby milují. Vyrobeno z akvarijně bezpečných materiálů s realistickými korálovými texturami a přírodními barvami.",
+        price: "2199.99",
         categoryId: 2,
         imageUrl: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
         images: [
@@ -93,99 +93,99 @@ export class MemStorage implements IStorage {
           "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"
         ],
         inStock: true,
-        features: ["Multiple hiding spots for fish", "Aquarium-safe resin construction", "Realistic coral textures", "Suitable for freshwater and saltwater"],
-        dimensions: "8\" x 6\" x 7\""
+        features: ["Více úkrytů pro ryby", "Akvarijně bezpečná pryskyřičná konstrukce", "Realistické korálové textury", "Vhodné pro sladkou i slanou vodu"],
+        dimensions: "20 cm x 15 cm x 18 cm"
       },
       {
         id: 2,
         name: "LED Aqua Light Pro",
         slug: "led-aqua-light-pro",
-        description: "Full spectrum LED lighting system designed for optimal plant growth and fish health. Features adjustable color temperature and intensity controls.",
-        price: "159.99",
+        description: "Plnospektrální LED osvětlovací systém navržený pro optimální růst rostlin a zdraví ryb. Funkce nastavitelné teploty barev a ovládání intenzity.",
+        price: "3899.99",
         categoryId: 3,
         imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
         images: ["https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"],
         inStock: true,
-        features: ["Full spectrum LED", "Adjustable color temperature", "Energy efficient", "Remote control included"],
-        dimensions: "24\" x 4\" x 2\""
+        features: ["Plnospektrální LED", "Nastavitelná teplota barev", "Energeticky úsporné", "Dálkové ovládání v balení"],
+        dimensions: "61 cm x 10 cm x 5 cm"
       },
       {
         id: 3,
-        name: "Aquatic Plant Bundle",
-        slug: "aquatic-plant-bundle",
-        description: "Live aquarium plants for creating a natural ecosystem. This bundle includes a variety of easy-to-care-for plants perfect for beginners.",
-        price: "49.99",
+        name: "Balíček akvarijních rostlin",
+        slug: "balicek-akvarijnich-rostlin",
+        description: "Živé akvarijní rostliny pro vytvoření přírodního ekosystému. Tento balíček obsahuje různorodé, snadno pěstovatelné rostliny ideální pro začátečníky.",
+        price: "1199.99",
         categoryId: 4,
         imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
         images: ["https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"],
         inStock: true,
-        features: ["Live aquarium plants", "Easy to care for", "Natural ecosystem", "Beginner friendly"],
-        dimensions: "Various sizes"
+        features: ["Živé akvarijní rostliny", "Snadná péče", "Přírodní ekosystém", "Vhodné pro začátečníky"],
+        dimensions: "Různé velikosti"
       },
       {
         id: 4,
         name: "AquaClean Filter Pro",
         slug: "aquaclean-filter-pro",
-        description: "Advanced 3-stage filtration system for crystal clear water. Includes mechanical, biological, and chemical filtration media.",
-        price: "199.99",
+        description: "Pokročilý 3stupňový filtrační systém pro křišťálově čistou vodu. Zahrnuje mechanické, biologické a chemické filtrační médium.",
+        price: "4899.99",
         categoryId: 5,
         imageUrl: "https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
         images: ["https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"],
         inStock: true,
-        features: ["3-stage filtration", "Crystal clear water", "Easy maintenance", "Quiet operation"],
-        dimensions: "12\" x 8\" x 10\""
+        features: ["3stupňová filtrace", "Křišťálově čistá voda", "Snadná údržba", "Tichý chod"],
+        dimensions: "30 cm x 20 cm x 25 cm"
       },
       {
         id: 5,
-        name: "Natural Driftwood",
-        slug: "natural-driftwood",
-        description: "Premium driftwood piece for natural aquascaping. Each piece is unique and creates stunning underwater landscapes.",
-        price: "34.99",
+        name: "Přírodní kořen",
+        slug: "prirodni-koren",
+        description: "Prémiový kořen pro přírodní akvascaping. Každý kus je jedinečný a vytváří úžasné podmořské krajiny.",
+        price: "849.99",
         categoryId: 2,
         imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
         images: ["https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"],
         inStock: true,
-        features: ["Natural driftwood", "Unique piece", "Aquascaping ready", "Pre-treated"],
-        dimensions: "10\" x 6\" x 4\""
+        features: ["Přírodní kořen", "Jedinečný kus", "Připravený k akvascapingu", "Předem ošetřený"],
+        dimensions: "25 cm x 15 cm x 10 cm"
       },
       {
         id: 6,
-        name: "Premium Substrate",
-        slug: "premium-substrate",
-        description: "Nutrient-rich substrate specifically designed for planted aquariums. Promotes healthy root development and plant growth.",
-        price: "24.99",
+        name: "Prémiový substrát",
+        slug: "premiovy-substrat",
+        description: "Živinami bohatý substrát speciálně navržený pro akvárium s rostlinami. Podporuje zdravý rozvoj kořenů a růst rostlin.",
+        price: "599.99",
         categoryId: 6,
         imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
         images: ["https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"],
         inStock: true,
-        features: ["Nutrient-rich", "Plant growth support", "pH neutral", "Natural appearance"],
-        dimensions: "5lb bag"
+        features: ["Bohatý na živiny", "Podpora růstu rostlin", "pH neutrální", "Přírodní vzhled"],
+        dimensions: "2,5 kg pytel"
       },
       {
         id: 7,
-        name: "ThermoControl Heater",
-        slug: "thermocontrol-heater",
-        description: "Precise temperature control heater for tropical fish. Features digital display and automatic shut-off for safety.",
-        price: "69.99",
+        name: "ThermoControl ohřívač",
+        slug: "thermocontrol-ohrivac",
+        description: "Přesný teplotní ohřívač pro tropické ryby. Obsahuje digitální displej a automatické vypnutí pro bezpečnost.",
+        price: "1699.99",
         categoryId: 6,
         imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
         images: ["https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"],
         inStock: true,
-        features: ["Digital display", "Automatic shut-off", "Precise control", "Safety certified"],
-        dimensions: "8\" x 1.5\""
+        features: ["Digitální displej", "Automatické vypnutí", "Přesné ovládání", "Certifikovaná bezpečnost"],
+        dimensions: "20 cm x 4 cm"
       },
       {
         id: 8,
-        name: "AirFlow Pro Pump",
-        slug: "airflow-pro-pump",
-        description: "Silent air pump with decorative bubble effects. Creates beautiful bubble curtains while oxygenating your aquarium.",
-        price: "39.99",
+        name: "AirFlow Pro čerpadlo",
+        slug: "airflow-pro-cerpadlo",
+        description: "Tiché vzduchové čerpadlo s dekorativními bublinkovými efekty. Vytváří krásné bublinové závěsy při okysličování akvária.",
+        price: "999.99",
         categoryId: 6,
         imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
         images: ["https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"],
         inStock: true,
-        features: ["Silent operation", "Decorative bubbles", "High efficiency", "Durable construction"],
-        dimensions: "4\" x 3\" x 2\""
+        features: ["Tichý chod", "Dekorativní bubliny", "Vysoká účinnost", "Odolná konstrukce"],
+        dimensions: "10 cm x 8 cm x 5 cm"
       }
     ];
 

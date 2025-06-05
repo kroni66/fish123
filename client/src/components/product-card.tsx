@@ -24,13 +24,13 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
     try {
       await addToCart(product.id);
       toast({
-        title: "Added to cart",
-        description: `${product.name} has been added to your cart.`,
+        title: "Přidáno do košíku",
+        description: `${product.name} byl přidán do vašeho košíku.`,
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to add item to cart. Please try again.",
+        title: "Chyba",
+        description: "Nepodařilo se přidat položku do košíku. Zkuste to prosím znovu.",
         variant: "destructive",
       });
     } finally {
@@ -67,7 +67,7 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
         </Button>
         {product.inStock && (
           <Badge className="absolute top-4 left-4 bg-success text-white">
-            In Stock
+            Skladem
           </Badge>
         )}
       </div>
