@@ -10,33 +10,33 @@ export function Hero() {
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="mb-8">
           <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-            Vítejte v našem světě akvaristiky
+            Vítejte ve světě rybářských příběhů
           </span>
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            Každé akvárium<br />
-            <span className="text-primary">vyprávělo příběh</span>
+            Každý úlovek<br />
+            <span className="text-primary">má svůj příběh</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Objevte s námi kouzlo podvodního světa. Naše pečlivě vybrané produkty 
-            pomohou vytvořit jedinečný ekosystém, který bude radost sledovat každý den.
+            Objevte s námi kouzlo rybaření. Naše pečlivě vybrané produkty 
+            vám pomohou prožít nezapomenutelné chvíle u vody a dosáhnout vytouženého úlovku.
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/50">
-            <div className="text-3xl mb-3">🌊</div>
-            <h3 className="font-semibold text-gray-800 mb-2">Přírodní krása</h3>
-            <p className="text-gray-600 text-sm">Produkty inspirované přírodou</p>
+            <div className="text-3xl mb-3">🎣</div>
+            <h3 className="font-semibold text-gray-800 mb-2">Precizní náčiní</h3>
+            <p className="text-gray-600 text-sm">Profesionální rybářské vybavení</p>
           </div>
           <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/50">
-            <div className="text-3xl mb-3">🐠</div>
-            <h3 className="font-semibold text-gray-800 mb-2">Zdravé prostředí</h3>
-            <p className="text-gray-600 text-sm">Pro spokojené a zdravé ryby</p>
+            <div className="text-3xl mb-3">🎯</div>
+            <h3 className="font-semibold text-gray-800 mb-2">Úspěšný lov</h3>
+            <p className="text-gray-600 text-sm">Vybavení pro každý typ vody</p>
           </div>
           <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/50">
             <div className="text-3xl mb-3">💎</div>
             <h3 className="font-semibold text-gray-800 mb-2">Prémiová kvalita</h3>
-            <p className="text-gray-600 text-sm">Výběr těch nejlepších materiálů</p>
+            <p className="text-gray-600 text-sm">Výběr těch nejlepších značek</p>
           </div>
         </div>
 

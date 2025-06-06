@@ -65,12 +65,12 @@ export class MemStorage implements IStorage {
   private initializeSampleData() {
     // Categories
     const sampleCategories: Category[] = [
-      { id: 1, name: "Všechny produkty", slug: "all", description: "Veškeré akvarijní doplňky" },
-      { id: 2, name: "Dekorace", slug: "decorations", description: "Akvarijní dekorace a ozdoby" },
-      { id: 3, name: "Osvětlení", slug: "lighting", description: "LED a akvarijní osvětlovací systémy" },
-      { id: 4, name: "Rostliny", slug: "plants", description: "Živé a umělé akvarijní rostliny" },
-      { id: 5, name: "Filtry", slug: "filters", description: "Systémy filtrace vody" },
-      { id: 6, name: "Příslušenství", slug: "accessories", description: "Různé akvarijní doplňky" },
+      { id: 1, name: "Všechny produkty", slug: "all", description: "Veškeré rybářské produkty" },
+      { id: 2, name: "Pruty", slug: "rods", description: "Rybářské pruty pro každou techniku" },
+      { id: 3, name: "Navijáky", slug: "reels", description: "Kvalitní navijáky a cívky" },
+      { id: 4, name: "Návnady", slug: "baits", description: "Umělé i živé návnady" },
+      { id: 5, name: "Háčky a montáže", slug: "hooks", description: "Háčky, olova a montáže" },
+      { id: 6, name: "Příslušenství", slug: "accessories", description: "Rybářské doplňky a vybavení" },
     ];
 
     sampleCategories.forEach(category => {
@@ -82,32 +82,32 @@ export class MemStorage implements IStorage {
     const sampleProducts: Product[] = [
       {
         id: 1,
-        name: "Korálový hrad",
-        slug: "koralovy-hrad",
-        description: "Proměňte své akvárium v podmořský ráj s naším prémiovým korálovým hradem. Tato živá dekorace nabízí několik úkrytů a průplavů, které vaše ryby milují. Vyrobeno z akvarijně bezpečných materiálů s realistickými korálovými texturami a přírodními barvami.",
-        price: "2199.99",
+        name: "Kaprový prut Carbon Master 3.6m",
+        slug: "kaprovy-prut-carbon-master",
+        description: "Prémiový kaprový prut z vysokomodulního uhlíku pro náročné rybáře. Díky své progresivní akci zvládne jak jemné prezentace, tak i boj s velkými rybami. Ergonomická rukojeť s korkovým potahem zajišťuje pohodlí při dlouhých sezeních.",
+        price: "3299.99",
         categoryId: 2,
-        imageUrl: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
+        imageUrl: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
         images: [
-          "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600",
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600",
           "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"
         ],
         inStock: true,
-        features: ["Více úkrytů pro ryby", "Akvarijně bezpečná pryskyřičná konstrukce", "Realistické korálové textury", "Vhodné pro sladkou i slanou vodu"],
-        dimensions: "20 cm x 15 cm x 18 cm"
+        features: ["Vysokomodulní uhlíkové vlákno", "Progresivní akce", "Korkový potah rukojeti", "Testovací křivka 3.5 lb"],
+        dimensions: "Délka: 3.6m, Váha: 285g"
       },
       {
         id: 2,
-        name: "LED Aqua Light Pro",
-        slug: "led-aqua-light-pro",
-        description: "Plnospektrální LED osvětlovací systém navržený pro optimální růst rostlin a zdraví ryb. Funkce nastavitelné teploty barev a ovládání intenzity.",
-        price: "3899.99",
+        name: "Naviják Shimano Baitrunner 6000",
+        slug: "navijak-shimano-baitrunner",
+        description: "Špičkový kaprový naviják s patentovaným systémem Baitrunner pro volný chod. Hliníková cívka a precizní brzdy zajišťují spolehlivost při boji s velkými rybami. Ideal pro feederové i kaprové rybaření.",
+        price: "4299.99",
         categoryId: 3,
-        imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
-        images: ["https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"],
+        imageUrl: "https://images.unsplash.com/photo-1567207539374-7b5d4b37d2b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
+        images: ["https://images.unsplash.com/photo-1567207539374-7b5d4b37d2b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"],
         inStock: true,
-        features: ["Plnospektrální LED", "Nastavitelná teplota barev", "Energeticky úsporné", "Dálkové ovládání v balení"],
-        dimensions: "61 cm x 10 cm x 5 cm"
+        features: ["Baitrunner systém", "Hliníková cívka", "Precizní brzdy", "Kapacita: 260m/0.35mm"],
+        dimensions: "Převod: 4.6:1, Váha: 485g"
       },
       {
         id: 3,

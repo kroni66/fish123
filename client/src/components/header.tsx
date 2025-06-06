@@ -19,9 +19,10 @@ export function Header() {
   };
 
   const navigation = [
-    { name: "Produkty", href: "/" },
-    { name: "Kategorie", href: "/#categories" },
+    { name: "Naše příběhy", href: "/" },
+    { name: "Kolekce", href: "/#categories" },
     { name: "O nás", href: "/about" },
+    { name: "Inspirace", href: "/inspiration" },
     { name: "Kontakt", href: "/contact" },
   ];
 
@@ -34,14 +35,14 @@ export function Header() {
             <Link href="/">
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 bg-gradient-to-br from-primary to-cyan-500 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-lg">🐠</span>
+                  <span className="text-white font-bold text-lg">🎣</span>
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold text-gray-900">
-                    AquaStories
+                    Rybářské příběhy
                   </h1>
                   <p className="text-xs text-gray-500 font-medium">
-                    Příběhy z podvodního světa
+                    Vášeň pro rybaření
                   </p>
                 </div>
               </div>
