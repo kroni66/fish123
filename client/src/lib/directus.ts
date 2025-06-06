@@ -1,7 +1,7 @@
 // Directus SDK integration placeholder
 // This would integrate with the Directus backend if API key is provided
 
-const DIRECTUS_URL = "https://f456-185-5-70-249.ngrok-free.app";
+const DIRECTUS_URL = process.env.DIRECTUS_URL || import.meta.env.VITE_DIRECTUS_URL;
 
 interface DirectusProduct {
   id: number;
@@ -20,16 +20,17 @@ export class DirectusClient {
 
   constructor(url: string = DIRECTUS_URL) {
     this.baseUrl = url;
-    this.apiKey = import.meta.env.VITE_DIRECTUS_API_KEY || process.env.DIRECTUS_API_KEY;
+    this.apiKey =
+      import.meta.env.VITE_DIRECTUS_API_KEY || process.env.DIRECTUS_API_KEY;
   }
 
   private async request(endpoint: string, options: RequestInit = {}) {
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
 
     if (this.apiKey) {
-      headers['Authorization'] = `Bearer ${this.apiKey}`;
+      headers["Authorization"] = `Bearer ${this.apiKey}`;
     }
 
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -49,10 +50,10 @@ export class DirectusClient {
 
   async getProducts() {
     try {
-      const response = await this.request('/items/products');
+      const response = await this.request("/items/products");
       return response.data as DirectusProduct[];
     } catch (error) {
-      console.warn('Directus API not available, falling back to local data');
+      console.warn("Directus API not available, falling back to local data");
       return [];
     }
   }
@@ -62,17 +63,17 @@ export class DirectusClient {
       const response = await this.request(`/items/products/${id}`);
       return response.data as DirectusProduct;
     } catch (error) {
-      console.warn('Directus API not available, falling back to local data');
+      console.warn("Directus API not available, falling back to local data");
       return null;
     }
   }
 
   async getCategories() {
     try {
-      const response = await this.request('/items/categories');
+      const response = await this.request("/items/categories");
       return response.data;
     } catch (error) {
-      console.warn('Directus API not available, falling back to local data');
+      console.warn("Directus API not available, falling back to local data");
       return [];
     }
   }
