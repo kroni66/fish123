@@ -74,15 +74,15 @@ export function ProductGrid({ categoryId, searchQuery }: ProductGridProps) {
 
   return (
     <>
-      <section className="py-20" id="products">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24" id="products">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Editorial Introduction */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight">
               Objevte naše<br />
-              <span className="text-primary">pečlivě vybrané</span> produkty
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">pečlivě vybrané</span> produkty
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
               Každý produkt v naší kolekci prošel důkladným testováním na rybách a byl vybrán 
               pro svou kvalitu, spolehlivost a schopnost přinést úspěch u vody.
             </p>

@@ -93,6 +93,29 @@
     animation: slideOutToRight 0.3s ease-out;
   }
 
+  /* Modern visual effects */
+  .bg-grid-pattern {
+    background-image: radial-gradient(circle at 1px 1px, rgba(156, 163, 175, 0.15) 1px, transparent 0);
+    background-size: 20px 20px;
+  }
+
+  .glass-effect {
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .shadow-glow {
+    box-shadow: 0 0 20px rgba(46, 134, 171, 0.15);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   @keyframes slideInFromRight {
     from {
       transform: translateX(100%);
