@@ -13,8 +13,8 @@ export function Footer() {
               <h3 className="text-xl font-bold">AquaStore.cz</h3>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed mb-4">
-              Specializujeme se na kvalitní akvarijní techniku a doplňky. 
-              Váš spolehlivý partner pro akvaristiku.
+              Specializujeme se na kvalitní rybářské vybavení a doplňky. 
+              Váš spolehlivý partner pro úspěšné rybaření.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -57,22 +57,22 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/?category=2" className="hover:text-white transition-colors">
-                  Dekorace
+                  Pruty
                 </Link>
               </li>
               <li>
                 <Link href="/?category=3" className="hover:text-white transition-colors">
-                  Osvětlení
-                </Link>
-              </li>
-              <li>
-                <Link href="/?category=5" className="hover:text-white transition-colors">
-                  Filtry
+                  Navijáky
                 </Link>
               </li>
               <li>
                 <Link href="/?category=4" className="hover:text-white transition-colors">
-                  Rostliny
+                  Návnady
+                </Link>
+              </li>
+              <li>
+                <Link href="/?category=5" className="hover:text-white transition-colors">
+                  Háčky a montáže
                 </Link>
               </li>
             </ul>

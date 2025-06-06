@@ -83,8 +83,8 @@ export function ProductGrid({ categoryId, searchQuery }: ProductGridProps) {
               <span className="text-primary">pečlivě vybrané</span> produkty
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Každý produkt v naší kolekci prošel důkladným testováním a byl vybrán 
-              pro svou kvalitu, funkčnost a schopnost vytvořit krásné akvarijní prostředí.
+              Každý produkt v naší kolekci prošel důkladným testováním na rybách a byl vybrán 
+              pro svou kvalitu, spolehlivost a schopnost přinést úspěch u vody.
             </p>
           </div>
 
@@ -126,8 +126,8 @@ export function ProductGrid({ categoryId, searchQuery }: ProductGridProps) {
                 Proč si vybrat naše produkty?
               </h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                Jsme vášniví akvaristé, kteří rozumí potřebám vašich ryb i vašim estetickým představám. 
-                Každý produkt testujeme ve vlastních akváriích, abychom vám mohli garantovat jeho kvalitu a funkčnost.
+                Jsme vášniví rybáři, kteří rozumí potřebám moderního rybaření i tradičním technikám. 
+                Každý produkt testujeme na vlastních výlovech, abychom vám mohli garantovat jeho kvalitu a úspěšnost.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">

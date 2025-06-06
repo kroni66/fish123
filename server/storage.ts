@@ -111,16 +111,16 @@ export class MemStorage implements IStorage {
       },
       {
         id: 3,
-        name: "Balíček akvarijních rostlin",
-        slug: "balicek-akvarijnich-rostlin",
-        description: "Živé akvarijní rostliny pro vytvoření přírodního ekosystému. Tento balíček obsahuje různorodé, snadno pěstovatelné rostliny ideální pro začátečníky.",
-        price: "1199.99",
+        name: "Balíček umělých návnad Pro Mix",
+        slug: "balicek-umelych-navnad-pro-mix",
+        description: "Kompletní sada umělých návnad pro všechny druhy dravých ryb. Obsahuje wobbery, spinnery a gumové nástrahy v různých barvách a velikostech. Ideální pro začínající i pokročilé spiningisty.",
+        price: "1899.99",
         categoryId: 4,
-        imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
-        images: ["https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"],
+        imageUrl: "https://images.unsplash.com/photo-1578072449089-902e5384bc13?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=500",
+        images: ["https://images.unsplash.com/photo-1578072449089-902e5384bc13?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=600"],
         inStock: true,
-        features: ["Živé akvarijní rostliny", "Snadná péče", "Přírodní ekosystém", "Vhodné pro začátečníky"],
-        dimensions: "Různé velikosti"
+        features: ["Wobbery a spinnery", "Gumové nástrahy", "Různé barvy a velikosti", "Praktické plastové boxy"],
+        dimensions: "Box: 23cm x 12cm x 4cm"
       },
       {
         id: 4,
