@@ -74,27 +74,90 @@ export function ProductGrid({ categoryId, searchQuery }: ProductGridProps) {
 
   return (
     <>
-      <section className="py-16" id="products">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {displayedProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onProductClick={setSelectedProduct}
-              />
+      <section className="py-20" id="products">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Editorial Introduction */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Objevte naše<br />
+              <span className="text-primary">pečlivě vybrané</span> produkty
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Každý produkt v naší kolekci prošel důkladným testováním a byl vybrán 
+              pro svou kvalitu, funkčnost a schopnost vytvořit krásné akvarijní prostředí.
+            </p>
+          </div>
+
+          {/* Featured Product Story */}
+          {displayedProducts.length > 0 && (
+            <div className="mb-16">
+              <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-8 mb-8">
+                <div className="text-center mb-6">
+                  <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                    Produkt měsíce
+                  </span>
+                  <h3 className="text-2xl font-bold text-gray-900 mt-4 mb-3">
+                    {displayedProducts[0].name}
+                  </h3>
+                  <p className="text-gray-600 max-w-2xl mx-auto">
+                    {displayedProducts[0].description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Blog-style Product Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {displayedProducts.map((product, index) => (
+              <div key={product.id} className={index === 0 ? "md:col-span-2 lg:col-span-3" : ""}>
+                <ProductCard
+                  product={product}
+                  onProductClick={setSelectedProduct}
+                />
+              </div>
             ))}
           </div>
 
+          {/* Editorial Content Block */}
+          <div className="bg-white rounded-2xl border border-gray-100 p-8 mb-16">
+            <div className="max-w-3xl mx-auto text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Proč si vybrat naše produkty?
+              </h3>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                Jsme vášniví akvaristé, kteří rozumí potřebám vašich ryb i vašim estetickým představám. 
+                Každý produkt testujeme ve vlastních akváriích, abychom vám mohli garantovat jeho kvalitu a funkčnost.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="text-2xl mb-2">🔬</div>
+                  <h4 className="font-semibold text-gray-800 mb-1">Testováno</h4>
+                  <p className="text-gray-600 text-sm">V reálných podmínkách</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl mb-2">🌱</div>
+                  <h4 className="font-semibold text-gray-800 mb-1">Ekologické</h4>
+                  <p className="text-gray-600 text-sm">Šetrné k prostředí</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl mb-2">💝</div>
+                  <h4 className="font-semibold text-gray-800 mb-1">S láskou</h4>
+                  <p className="text-gray-600 text-sm">Vybráno s péčí</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {hasMore && (
-            <div className="text-center mt-12">
+            <div className="text-center">
               <Button
                 variant="outline"
                 size="lg"
                 onClick={handleLoadMore}
-                className="px-8 py-3 font-medium"
+                className="px-12 py-4 font-medium rounded-full border-2 hover:bg-primary hover:text-white transition-all"
               >
-                Načíst více produktů
+                Objevit další produkty
               </Button>
             </div>
           )}

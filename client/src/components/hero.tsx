@@ -5,46 +5,48 @@ export function Hero() {
   const [, setLocation] = useLocation();
 
   return (
-    <section className="bg-gradient-to-r from-blue-50 to-blue-100 py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Prémiové akvarijní doplňky
-            </h2>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Specializujeme se na kvalitní akvarijní techniku a doplňky. 
-              Nabízíme široký sortiment pro sladkovodní i mořská akvária.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                size="lg"
-                className="bg-primary text-white hover:bg-primary/90 px-8 py-3"
-                onClick={() => setLocation("/#products")}
-              >
-                Prohlédnout produkty
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary text-primary hover:bg-primary/10 px-8 py-3"
-              >
-                Kontaktujte nás
-              </Button>
-            </div>
+    <section className="relative py-20 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-cyan-50"></div>
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="mb-8">
+          <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+            Vítejte v našem světě akvaristiky
+          </span>
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            Každé akvárium<br />
+            <span className="text-primary">vyprávělo příběh</span>
+          </h1>
+          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+            Objevte s námi kouzlo podvodního světa. Naše pečlivě vybrané produkty 
+            pomohou vytvořit jedinečný ekosystém, který bude radost sledovat každý den.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/50">
+            <div className="text-3xl mb-3">🌊</div>
+            <h3 className="font-semibold text-gray-800 mb-2">Přírodní krása</h3>
+            <p className="text-gray-600 text-sm">Produkty inspirované přírodou</p>
           </div>
-          <div className="hidden lg:block">
-            <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-              <div className="text-4xl text-primary mb-4">🐠</div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                Odborné poradenství
-              </h3>
-              <p className="text-gray-600">
-                Pomůžeme vám vybrat správné vybavení pro vaše akvárium
-              </p>
-            </div>
+          <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/50">
+            <div className="text-3xl mb-3">🐠</div>
+            <h3 className="font-semibold text-gray-800 mb-2">Zdravé prostředí</h3>
+            <p className="text-gray-600 text-sm">Pro spokojené a zdravé ryby</p>
+          </div>
+          <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/50">
+            <div className="text-3xl mb-3">💎</div>
+            <h3 className="font-semibold text-gray-800 mb-2">Prémiová kvalita</h3>
+            <p className="text-gray-600 text-sm">Výběr těch nejlepších materiálů</p>
           </div>
         </div>
+
+        <Button
+          size="lg"
+          className="bg-primary text-white hover:bg-primary/90 px-12 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
+          onClick={() => setLocation("/#products")}
+        >
+          Začít objevovat
+        </Button>
       </div>
     </section>
   );
