@@ -49,7 +49,7 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
       onClick={() => onProductClick(product)}
     >
       <div className="relative">
-        <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-cyan-50 relative overflow-hidden">
+        <div className="aspect-[4/3] bg-gradient-to-br from-green-50 to-emerald-50 relative overflow-hidden">
           <img
             src={product.imageUrl || "https://via.placeholder.com/600x450?text=Product"}
             alt={product.name}
