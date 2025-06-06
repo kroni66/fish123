@@ -1,18 +1,19 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { DirectusStorage } from "./directus-storage";
-import { storage as localStorage } from "./storage";
+import { storage as localStorage, type IStorage } from "./storage";
 import { insertProductSchema, insertCartItemSchema, insertOrderSchema } from "@shared/schema";
 import { z } from "zod";
 
-// Initialize storage - try Directus first, fallback to local if credentials not available
-let storage;
+// Initialize storage - use Directus exclusively for products and categories
+let storage: IStorage;
 try {
   storage = new DirectusStorage();
   console.log("Using Directus backend for data storage");
 } catch (error) {
+  console.error("Directus configuration failed:", error);
   storage = localStorage;
-  console.log("Using local storage - Directus credentials not available");
+  console.log("Fallback: Using local storage");
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {

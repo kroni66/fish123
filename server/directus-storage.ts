@@ -86,11 +86,22 @@ export class DirectusStorage implements IStorage {
   // Categories
   async getCategories(): Promise<Category[]> {
     try {
-      const response = await this.request("/items/categories");
-      return response.data.map((category: DirectusCategory) => this.transformCategory(category));
+      // Try different possible collection names
+      let response;
+      try {
+        response = await this.request("/items/categories");
+      } catch (e) {
+        // Try alternative collection name
+        response = await this.request("/items/category");
+      }
+      
+      if (response.data && Array.isArray(response.data)) {
+        return response.data.map((category: DirectusCategory) => this.transformCategory(category));
+      }
+      return [];
     } catch (error) {
       console.error("Failed to fetch categories from Directus:", error);
-      return [];
+      throw error; // Re-throw to trigger fallback
     }
   }
 
