@@ -252,6 +252,16 @@ export function Navbar() {
                 <>
                   {isAuthenticated ? (
                     <div className="hidden md:flex items-center space-x-2">
+                      <Link href="/dashboard">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                          title="Můj účet"
+                        >
+                          <User className="w-5 h-5" />
+                        </Button>
+                      </Link>
                       <span className="text-slate-300 text-sm">
                         {user?.firstName || user?.email}
                       </span>
