@@ -44,15 +44,151 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2 group">
+            <Link href="/" className="flex items-center space-x-3 group">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur-lg group-hover:blur-xl transition-all duration-300"></div>
-                <div className="relative bg-gradient-to-r from-primary/10 to-accent/10 backdrop-blur-sm border border-primary/20 rounded-lg p-2">
-                  <Fish className="w-6 h-6 text-primary" />
-                </div>
+                <svg 
+                  width="44" 
+                  height="32" 
+                  viewBox="0 0 44 32" 
+                  className="group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+                >
+                  <defs>
+                    <linearGradient id="fishBodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#0891b2" />
+                      <stop offset="40%" stopColor="#06b6d4" />
+                      <stop offset="80%" stopColor="#22d3ee" />
+                      <stop offset="100%" stopColor="#67e8f9" />
+                    </linearGradient>
+                    <linearGradient id="fishFinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#0e7490" />
+                      <stop offset="50%" stopColor="#0891b2" />
+                      <stop offset="100%" stopColor="#06b6d4" />
+                    </linearGradient>
+                    <radialGradient id="eyeGradient" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#ffffff" />
+                      <stop offset="60%" stopColor="#e0f2fe" />
+                      <stop offset="100%" stopColor="#bae6fd" />
+                    </radialGradient>
+                    <filter id="softGlow">
+                      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+                      <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  
+                  {/* Main fish body */}
+                  <ellipse 
+                    cx="24" 
+                    cy="16" 
+                    rx="15" 
+                    ry="9" 
+                    fill="url(#fishBodyGradient)" 
+                    filter="url(#softGlow)"
+                    className="group-hover:brightness-110 transition-all duration-300"
+                  />
+                  
+                  {/* Fish tail - elegant curved design */}
+                  <path 
+                    d="M 9 16 Q 4 8 2 12 Q 4 16 2 20 Q 4 24 9 16" 
+                    fill="url(#fishFinGradient)"
+                    className="group-hover:translate-x-1 transition-transform duration-300"
+                    opacity="0.9"
+                  />
+                  
+                  {/* Dorsal fin - flowing design */}
+                  <path 
+                    d="M 22 7 Q 26 3 32 7 Q 28 9 26 11 Q 24 9 22 7" 
+                    fill="url(#fishFinGradient)"
+                    opacity="0.8"
+                  />
+                  
+                  {/* Ventral fin */}
+                  <path 
+                    d="M 22 25 Q 26 29 32 25 Q 28 23 26 21 Q 24 23 22 25" 
+                    fill="url(#fishFinGradient)"
+                    opacity="0.8"
+                  />
+                  
+                  {/* Pectoral fin */}
+                  <ellipse 
+                    cx="18" 
+                    cy="20" 
+                    rx="3" 
+                    ry="6" 
+                    fill="url(#fishFinGradient)" 
+                    opacity="0.6"
+                    transform="rotate(25 18 20)"
+                  />
+                  
+                  {/* Eye with detailed design */}
+                  <circle 
+                    cx="30" 
+                    cy="14" 
+                    r="3" 
+                    fill="url(#eyeGradient)"
+                    stroke="#0891b2"
+                    strokeWidth="0.5"
+                  />
+                  <circle 
+                    cx="31" 
+                    cy="14" 
+                    r="2" 
+                    fill="#1e40af"
+                  />
+                  <circle 
+                    cx="31.5" 
+                    cy="13.5" 
+                    r="0.8" 
+                    fill="white"
+                  />
+                  <circle 
+                    cx="31.2" 
+                    cy="13.8" 
+                    r="0.3" 
+                    fill="white"
+                    opacity="0.7"
+                  />
+                  
+                  {/* Elegant scale pattern */}
+                  <g opacity="0.25">
+                    <circle cx="16" cy="13" r="1.2" fill="white" />
+                    <circle cx="20" cy="11" r="1" fill="white" />
+                    <circle cx="20" cy="19" r="1" fill="white" />
+                    <circle cx="24" cy="16" r="1.2" fill="white" />
+                    <circle cx="27" cy="18" r="0.8" fill="white" />
+                  </g>
+                  
+                  {/* Mouth detail */}
+                  <ellipse 
+                    cx="36.5" 
+                    cy="16" 
+                    rx="1.5" 
+                    ry="0.8" 
+                    fill="#0e7490"
+                    opacity="0.6"
+                  />
+                  
+                  {/* Animated water bubbles on hover */}
+                  <g className="group-hover:opacity-100 opacity-0 transition-opacity duration-500">
+                    <circle cx="38" cy="10" r="1" fill="#67e8f9" opacity="0.6">
+                      <animate attributeName="cy" values="10;6;10" dur="2.5s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2.5s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="40" cy="14" r="0.7" fill="#22d3ee" opacity="0.5">
+                      <animate attributeName="cy" values="14;10;14" dur="2s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.5;0.1;0.5" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="42" cy="18" r="0.5" fill="#67e8f9" opacity="0.4">
+                      <animate attributeName="cy" values="18;14;18" dur="1.8s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.4;0.1;0.4" dur="1.8s" repeatCount="indefinite" />
+                    </circle>
+                  </g>
+                </svg>
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                FishingPro
+                AquaGear
               </span>
             </Link>
 
