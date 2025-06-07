@@ -401,42 +401,46 @@ export function Hero() {
       <div className="container mx-auto px-4 z-10 relative">
         <div className="max-w-5xl mx-auto text-center space-y-12">
           {/* Main Brand */}
-          <div className="space-y-6">
-            <h1 className="text-6xl md:text-8xl font-bold text-foreground leading-tight font-poppins tracking-tight">
-              <span className="block text-primary drop-shadow-lg">RIG OF DEATH</span>
-              <span className="block text-3xl md:text-4xl text-muted-foreground font-light mt-4 tracking-wide">
-                STAY IN STYLE
+          <div className="space-y-8">
+            <h1 className="relative">
+              <span className="block text-7xl md:text-9xl font-black text-foreground leading-none tracking-tighter drop-shadow-2xl">
+                <span className="bg-gradient-to-r from-primary via-blue-400 to-cyan-300 bg-clip-text text-transparent filter drop-shadow-sm">
+                  RIG OF DEATH
+                </span>
+              </span>
+              <span className="block text-2xl md:text-3xl text-slate-300 font-extralight mt-6 tracking-[0.3em] uppercase opacity-90 drop-shadow-lg">
+                Stay in Style
               </span>
             </h1>
           </div>
           
           {/* Tagline */}
-          <div className="max-w-3xl mx-auto space-y-4">
-            <p className="text-xl md:text-2xl text-foreground/90 font-light leading-relaxed">
+          <div className="max-w-4xl mx-auto space-y-6">
+            <p className="text-2xl md:text-3xl text-slate-100 font-light leading-relaxed tracking-wide drop-shadow-lg">
               Autentické rybářské vybavení pro moderní rybáře
             </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Objevte naši pečlivě vybranou kolekci prémiového vybavení. 
-              Od profesionálních prutů po speciální návnady – vše pro váš úspěch na vodě.
+            <p className="text-lg md:text-xl text-slate-300/90 font-normal leading-loose max-w-3xl mx-auto">
+              Objevte naši pečlivě vybranou kolekci prémiového vybavení.<br />
+              <span className="text-slate-400 font-light">Od profesionálních prutů po speciální návnady – vše pro váš úspěch na vodě.</span>
             </p>
           </div>
           
           {/* Search Bar */}
           <div className="max-w-2xl mx-auto">
             <div className="relative group">
-              <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
+              <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 h-6 w-6 text-slate-400 group-hover:text-primary transition-colors" />
               <Input 
                 placeholder="Vyhledejte rybářské vybavení..."
-                className="pl-16 pr-6 py-8 text-lg rounded-2xl bg-card/80 backdrop-blur-sm border-2 border-border hover:border-primary/50 focus:border-primary shadow-2xl transition-all duration-300"
+                className="pl-16 pr-6 py-8 text-lg font-medium rounded-2xl bg-slate-900/60 backdrop-blur-md border-2 border-slate-600/50 hover:border-primary/60 focus:border-primary text-slate-100 placeholder:text-slate-400 shadow-2xl transition-all duration-300"
               />
             </div>
           </div>
           
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-10">
             <Button 
               size="lg" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-8 text-xl rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold"
+              className="bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 text-white px-16 py-6 text-xl font-bold rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300 tracking-wide uppercase"
               onClick={() => {
                 const productsSection = document.getElementById('products');
                 if (productsSection) {
@@ -449,7 +453,7 @@ export function Hero() {
             <Button 
               variant="outline" 
               size="lg" 
-              className="border-2 border-foreground/20 text-foreground hover:bg-foreground/10 hover:border-primary px-12 py-8 text-xl rounded-2xl backdrop-blur-sm transition-all duration-300"
+              className="border-2 border-slate-300/70 text-slate-100 hover:bg-slate-300/10 hover:text-white hover:border-slate-200 px-16 py-6 text-xl font-semibold rounded-2xl backdrop-blur-md bg-slate-900/30 shadow-xl transform hover:scale-105 transition-all duration-300 tracking-wide"
             >
               Naše příběhy
             </Button>
