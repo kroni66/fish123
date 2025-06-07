@@ -56,13 +56,59 @@ export default function Landing() {
         <div className="absolute top-1/6 right-1/3 w-40 h-40 bg-cyan-300/4 rounded-full blur-3xl animate-pulse delay-500"></div>
         <div className="absolute top-1/2 left-1/6 w-32 h-32 bg-blue-300/6 rounded-full blur-2xl animate-pulse delay-1500"></div>
         <div className="absolute top-5/6 right-1/6 w-28 h-28 bg-teal-300/5 rounded-full blur-xl animate-pulse delay-2500"></div>
+        
+        {/* Animated bubble streams */}
+        <div className="absolute bottom-0 left-1/6 opacity-40">
+          <div className="animate-[bubble-rise_8s_ease-out_infinite]">
+            <div className="w-3 h-3 bg-cyan-300 rounded-full mb-8 animate-pulse"></div>
+            <div className="w-2 h-2 bg-blue-300 rounded-full mb-12 animate-pulse delay-500"></div>
+            <div className="w-2.5 h-2.5 bg-teal-300 rounded-full mb-6 animate-pulse delay-1000"></div>
+            <div className="w-1.5 h-1.5 bg-cyan-200 rounded-full animate-pulse delay-1500"></div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-0 right-1/4 opacity-35">
+          <div className="animate-[bubble-rise_6s_ease-out_infinite_2s]">
+            <div className="w-2 h-2 bg-cyan-200 rounded-full mb-10 animate-pulse"></div>
+            <div className="w-3 h-3 bg-blue-400 rounded-full mb-8 animate-pulse delay-300"></div>
+            <div className="w-2 h-2 bg-teal-200 rounded-full mb-6 animate-pulse delay-800"></div>
+            <div className="w-1 h-1 bg-cyan-300 rounded-full animate-pulse delay-1200"></div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-0 left-1/2 opacity-30">
+          <div className="animate-[bubble-rise_10s_ease-out_infinite_4s]">
+            <div className="w-2.5 h-2.5 bg-blue-300 rounded-full mb-14 animate-pulse delay-200"></div>
+            <div className="w-1.5 h-1.5 bg-cyan-300 rounded-full mb-10 animate-pulse delay-700"></div>
+            <div className="w-3 h-3 bg-teal-400 rounded-full mb-8 animate-pulse delay-1100"></div>
+            <div className="w-2 h-2 bg-blue-200 rounded-full animate-pulse delay-1600"></div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-0 right-1/6 opacity-25">
+          <div className="animate-[bubble-rise_7s_ease-out_infinite_1s]">
+            <div className="w-1.5 h-1.5 bg-teal-200 rounded-full mb-12 animate-pulse delay-400"></div>
+            <div className="w-2.5 h-2.5 bg-cyan-400 rounded-full mb-9 animate-pulse delay-900"></div>
+            <div className="w-2 h-2 bg-blue-300 rounded-full mb-7 animate-pulse delay-1300"></div>
+            <div className="w-1 h-1 bg-cyan-200 rounded-full animate-pulse delay-1700"></div>
+          </div>
+        </div>
       </div>
-      {/* Animated Background Elements */}
+      {/* Additional floating bubble particles */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Floating particles */}
-        <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-cyan-400 rounded-full animate-pulse opacity-40"></div>
-        <div className="absolute top-1/3 right-1/3 w-0.5 h-0.5 bg-blue-400 rounded-full animate-pulse opacity-60 delay-1000"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-teal-400 rounded-full animate-pulse opacity-30 delay-2000"></div>
+        {/* Small floating bubbles with drift animation */}
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-cyan-400/60 rounded-full animate-[bubble-rise_12s_ease-out_infinite] opacity-40"></div>
+        <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-blue-400/70 rounded-full animate-[bubble-rise_15s_ease-out_infinite_3s] opacity-60"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-3 h-3 bg-teal-400/50 rounded-full animate-[bubble-rise_9s_ease-out_infinite_6s] opacity-30"></div>
+        
+        {/* Medium floating bubbles */}
+        <div className="absolute top-1/5 right-1/5 w-2.5 h-2.5 bg-cyan-300/40 rounded-full animate-[bubble-rise_14s_ease-out_infinite_1s] opacity-35"></div>
+        <div className="absolute top-2/3 left-1/5 w-2 h-2 bg-blue-300/50 rounded-full animate-[bubble-rise_11s_ease-out_infinite_4s] opacity-45"></div>
+        <div className="absolute top-1/2 right-2/3 w-1.5 h-1.5 bg-teal-300/60 rounded-full animate-[bubble-rise_13s_ease-out_infinite_7s] opacity-40"></div>
+        
+        {/* Large slow-moving bubbles */}
+        <div className="absolute top-3/4 left-2/3 w-4 h-4 bg-cyan-400/30 rounded-full animate-[bubble-rise_18s_ease-out_infinite_2s] opacity-25"></div>
+        <div className="absolute top-1/6 left-3/4 w-3.5 h-3.5 bg-blue-400/35 rounded-full animate-[bubble-rise_16s_ease-out_infinite_5s] opacity-30"></div>
         
         {/* Animated SVG Fish */}
         <div className="absolute top-1/5 -left-20 opacity-20 animate-[swim-lr_45s_linear_infinite]">
