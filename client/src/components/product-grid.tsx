@@ -90,16 +90,6 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
             </p>
           </div>
 
-          {/* Category Filter */}
-          {onCategoryChange && (
-            <div className="mb-16">
-              <CategoryFilter 
-                selectedCategory={categoryId ?? null}
-                onCategoryChange={onCategoryChange}
-              />
-            </div>
-          )}
-
           {/* Featured Product Story */}
           {displayedProducts.length > 0 && (
             <div className="mb-16">
@@ -116,6 +106,16 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
                   </p>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Category Filter */}
+          {onCategoryChange && (
+            <div className="mb-16">
+              <CategoryFilter 
+                selectedCategory={categoryId ?? null}
+                onCategoryChange={onCategoryChange}
+              />
             </div>
           )}
 
