@@ -10,6 +10,7 @@ import Contact from "@/pages/contact";
 import Inspiration from "@/pages/inspiration";
 import ProductDetail from "@/pages/product-detail";
 import Checkout from "@/pages/checkout";
+import OrderConfirmation from "@/pages/order-confirmation";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -21,6 +22,8 @@ function Router() {
       <Route path="/inspiration" component={Inspiration} />
       <Route path="/product/:slug" component={ProductDetail} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/order-confirmation" component={OrderConfirmation} />
+      <Route path="/order-confirmation/:id" component={OrderConfirmation} />
       <Route component={NotFound} />
     </Switch>
   );
