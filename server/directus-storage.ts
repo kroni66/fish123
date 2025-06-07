@@ -33,8 +33,9 @@ export class DirectusStorage implements IStorage {
     if (!DIRECTUS_URL || !DIRECTUS_API_KEY) {
       throw new Error("DIRECTUS_URL and DIRECTUS_API_KEY environment variables are required");
     }
-    this.baseUrl = DIRECTUS_URL;
+    this.baseUrl = DIRECTUS_URL.replace(/\/$/, ''); // Remove trailing slash
     this.apiKey = DIRECTUS_API_KEY;
+    console.log(`Directus configured: ${this.baseUrl}`);
   }
 
   private async request(endpoint: string, options: RequestInit = {}) {
@@ -43,19 +44,30 @@ export class DirectusStorage implements IStorage {
       "Authorization": `Bearer ${this.apiKey}`,
     };
 
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      ...options,
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
-    });
+    const url = `${this.baseUrl}${endpoint}`;
+    console.log(`Directus API call: ${url}`);
 
-    if (!response.ok) {
-      throw new Error(`Directus request failed: ${response.status} ${response.statusText}`);
+    try {
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          ...headers,
+          ...options.headers,
+        },
+      });
+
+      if (!response.ok) {
+        console.error(`Directus API error: ${response.status} ${response.statusText} for ${url}`);
+        throw new Error(`Directus request failed: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log(`Directus API success: ${url} returned ${data.data?.length || 0} items`);
+      return data;
+    } catch (error) {
+      console.error(`Directus API fetch error for ${url}:`, error);
+      throw error;
     }
-
-    return response.json();
   }
 
   private transformProduct(directusProduct: DirectusProduct): Product {

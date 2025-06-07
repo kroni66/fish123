@@ -1,0 +1,41 @@
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+8:34:32 AM [express] GET /api/cart/session_1749159880471_d5vtgng0n 304 in 2ms :: []
+Failed to fetch products from Directus: Error: Directus request failed: 404 Not Found
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:55:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getProducts (/home/runner/workspace/server/directus-storage.ts:156:22)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:55:24)
+8:34:33 AM [express] GET /api/products 304 in 649ms :: []
+Failed to fetch categories from Directus: Error: Directus request failed: 404 Not Found
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:55:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getCategories (/home/runner/workspace/server/directus-storage.ts:98:22)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:32:26)
+8:34:33 AM [express] GET /api/categories 304 in 884ms :: []
+8:34:38 AM [express] GET /api/cart/session_1749285278019_lyjwikirw 200 in 0ms :: []
+Failed to fetch categories from Directus: Error: Directus request failed: 404 Not Found
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:55:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getCategories (/home/runner/workspace/server/directus-storage.ts:98:22)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:32:26)
+8:34:38 AM [express] GET /api/categories 200 in 723ms :: []
+Failed to fetch products from Directus: Error: Directus request failed: 404 Not Found
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:55:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getProducts (/home/runner/workspace/server/directus-storage.ts:156:22)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:55:24)
+8:34:38 AM [express] GET /api/products 200 in 778ms :: []
+8:34:40 AM [express] GET /api/cart/session_1749159880471_d5vtgng0n 304 in 0ms :: []
+Failed to fetch products from Directus: Error: Directus request failed: 404 Not Found
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:55:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getProducts (/home/runner/workspace/server/directus-storage.ts:156:22)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:55:24)
+8:34:40 AM [express] GET /api/products 304 in 462ms :: []
+Failed to fetch categories from Directus: Error: Directus request failed: 404 Not Found
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:55:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getCategories (/home/runner/workspace/server/directus-storage.ts:98:22)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:32:26)
+8:34:40 AM [express] GET /api/categories 304 in 470ms :: []
