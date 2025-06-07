@@ -456,15 +456,59 @@ export function Hero() {
         <div className="max-w-5xl mx-auto text-center space-y-12">
           {/* Main Brand */}
           <div className="space-y-8">
-            <h1 className="relative">
-              <span className="block text-7xl md:text-9xl font-black text-foreground leading-none tracking-tighter drop-shadow-2xl">
-                <span className="bg-gradient-to-r from-primary via-blue-400 to-cyan-300 bg-clip-text text-transparent filter drop-shadow-sm">
+            <h1 className="relative group">
+              {/* Main title with enhanced effects */}
+              <span className="block text-7xl md:text-9xl font-black leading-none tracking-tighter relative">
+                {/* Glowing background effect */}
+                <span className="absolute inset-0 blur-xl bg-gradient-to-r from-cyan-400/30 via-blue-500/40 to-red-500/30 animate-pulse"></span>
+                
+                {/* Main gradient text */}
+                <span className="relative z-10 bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent font-black tracking-wider">
+                  RIG
+                </span>
+                <span className="relative z-10 mx-3 md:mx-6 text-slate-400/80 font-thin tracking-normal">
+                  OF
+                </span>
+                <span className="relative z-10 bg-gradient-to-r from-red-400 via-orange-300 to-yellow-200 bg-clip-text text-transparent font-black tracking-wider">
+                  DEATH
+                </span>
+                
+                {/* Subtle shadow layer */}
+                <span className="absolute inset-0 text-7xl md:text-9xl font-black leading-none tracking-tighter text-black/20 blur-sm transform translate-x-1 translate-y-1">
                   RIG OF DEATH
                 </span>
+                
+                {/* Animated accent lines */}
+                <div className="absolute -bottom-2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute -top-2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-red-400 to-transparent opacity-40 group-hover:opacity-80 transition-opacity duration-700"></div>
+                
+                {/* Floating particles on hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none">
+                  <div className="absolute top-4 left-1/4 w-1 h-1 bg-cyan-400 rounded-full animate-pulse"></div>
+                  <div className="absolute top-8 right-1/3 w-0.5 h-0.5 bg-blue-400 rounded-full animate-pulse delay-300"></div>
+                  <div className="absolute bottom-6 left-1/3 w-0.5 h-0.5 bg-red-400 rounded-full animate-pulse delay-700"></div>
+                  <div className="absolute bottom-2 right-1/4 w-1 h-1 bg-orange-400 rounded-full animate-pulse delay-1000"></div>
+                </div>
               </span>
-              <span className="block text-2xl md:text-3xl text-slate-300 font-extralight mt-6 tracking-[0.3em] uppercase opacity-90 drop-shadow-lg">
-                Stay in Style
+              
+              {/* Enhanced subtitle with animation */}
+              <span className="block text-2xl md:text-3xl text-cyan-300/80 font-extralight mt-8 tracking-[0.3em] uppercase relative group-hover:text-cyan-300 transition-colors duration-500">
+                <span className="relative z-10">DEEP WATER FISHING</span>
+                {/* Animated underline */}
+                <div className="absolute bottom-0 left-1/2 w-0 h-px bg-gradient-to-r from-cyan-400 to-blue-500 group-hover:w-full group-hover:left-0 transition-all duration-1000"></div>
+                {/* Subtle glow */}
+                <div className="absolute inset-0 blur-sm text-cyan-400/20 group-hover:text-cyan-400/40 transition-colors duration-500">
+                  DEEP WATER FISHING
+                </div>
               </span>
+              
+              {/* Atmospheric depth effect */}
+              <div className="absolute -inset-8 opacity-0 group-hover:opacity-20 transition-opacity duration-2000">
+                <div className="absolute top-0 left-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+                <div className="absolute top-4 right-8 w-1 h-1 bg-blue-400 rounded-full animate-pulse delay-500"></div>
+                <div className="absolute bottom-8 left-12 w-1 h-1 bg-red-400 rounded-full animate-pulse delay-1000"></div>
+                <div className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse delay-1500"></div>
+              </div>
             </h1>
           </div>
           
