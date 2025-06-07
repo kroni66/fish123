@@ -99,28 +99,7 @@ export function EnhancedSearch({
           </div>
         )}
 
-        {/* Search Suggestions */}
-        {!searchQuery && (
-          <div className="text-center pt-2">
-            <p className="text-sm text-gray-500 mb-3">Oblíbená hledání:</p>
-            <div className="flex flex-wrap gap-2 justify-center">
-              {['návnady', 'háčky', 'vlasce', 'pruty', 'navijáky'].map((term) => (
-                <Button
-                  key={term}
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setTempSearch(term);
-                    onSearchChange(term);
-                  }}
-                  className="text-xs px-3 py-1 h-auto rounded-full"
-                >
-                  {term}
-                </Button>
-              ))}
-            </div>
-          </div>
-        )}
+        
     </div>
   );
 }

@@ -133,65 +133,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-foreground font-poppins mb-6">
-                Náš tým
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Rybáři pro rybáře
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="bg-card/80 backdrop-blur-sm border-border/50">
-                <CardContent className="p-8 text-center space-y-4">
-                  <div className="w-24 h-24 rounded-full bg-primary/20 mx-auto flex items-center justify-center">
-                    <span className="text-2xl">🎣</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground">Pavel Novák</h3>
-                  <p className="text-primary font-medium">Zakladatel & Expert na pruty</p>
-                  <p className="text-muted-foreground text-sm">
-                    15 let zkušeností s testováním rybářských prutů. 
-                    Specialista na kaprový a feederový lov.
-                  </p>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-card/80 backdrop-blur-sm border-border/50">
-                <CardContent className="p-8 text-center space-y-4">
-                  <div className="w-24 h-24 rounded-full bg-accent/20 mx-auto flex items-center justify-center">
-                    <span className="text-2xl">🏆</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground">Martin Svoboda</h3>
-                  <p className="text-primary font-medium">Expert na návnady</p>
-                  <p className="text-muted-foreground text-sm">
-                    Mistr ČR v kaprařině. Vývoj a testování 
-                    speciálních návnad a montáží.
-                  </p>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-card/80 backdrop-blur-sm border-border/50">
-                <CardContent className="p-8 text-center space-y-4">
-                  <div className="w-24 h-24 rounded-full bg-primary/20 mx-auto flex items-center justify-center">
-                    <span className="text-2xl">⚙️</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground">Jana Dvořáková</h3>
-                  <p className="text-primary font-medium">Technický poradce</p>
-                  <p className="text-muted-foreground text-sm">
-                    Odborník na technické vybavení, navijáky 
-                    a elektroniku pro moderní rybaření.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="py-24 fishing-gradient">

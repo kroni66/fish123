@@ -101,12 +101,13 @@ const CheckoutForm = () => {
         throw submitError;
       }
       
-      const { error } = await stripe.confirmPayment({
+      const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
           return_url: `${window.location.origin}/order-confirmation`,
           receipt_email: formData.email,
         },
+        redirect: "if_required",
       });
 
       if (error) {
@@ -135,8 +136,21 @@ const CheckoutForm = () => {
             duration: 2000,
           });
         }
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        // Payment successful - navigate to order confirmation
+        toast({
+          title: "Platba úspěšná",
+          description: "Vaše objednávka byla zpracována",
+          variant: "default",
+          duration: 2000,
+        });
+        
+        // Clear cart and navigate to order confirmation
+        await clearCart();
+        setTimeout(() => {
+          setLocation("/order-confirmation");
+        }, 1000);
       }
-      // Note: Stripe will handle the redirect to return_url on success
     } catch (err: any) {
       console.error("Payment processing error:", err);
       toast({
@@ -365,6 +379,21 @@ export default function Checkout() {
   const [clientSecret, setClientSecret] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
 
+  // Create stable options object to prevent re-renders - must be at top level
+  const stripeOptions = useMemo(() => ({
+    clientSecret,
+    appearance: {
+      theme: 'night' as const,
+      variables: {
+        colorPrimary: '#e67e22',
+        colorBackground: '#1f1b16',
+        colorText: '#f4f1e8',
+        colorDanger: '#ef4444',
+        borderRadius: '8px',
+      },
+    },
+  }), [clientSecret]);
+
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     if (items.length > 0 && !isInitialized) {
@@ -417,21 +446,6 @@ export default function Checkout() {
       </div>
     );
   }
-
-  // Create stable options object to prevent re-renders
-  const stripeOptions = useMemo(() => ({
-    clientSecret,
-    appearance: {
-      theme: 'night' as const,
-      variables: {
-        colorPrimary: '#e67e22',
-        colorBackground: '#1f1b16',
-        colorText: '#f4f1e8',
-        colorDanger: '#ef4444',
-        borderRadius: '8px',
-      },
-    },
-  }), [clientSecret]);
 
   // Make SURE to wrap the form in <Elements> which provides the stripe context.
   return (
