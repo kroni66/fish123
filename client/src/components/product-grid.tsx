@@ -90,24 +90,7 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
             </p>
           </div>
 
-          {/* Featured Product Story */}
-          {displayedProducts.length > 0 && (
-            <div className="mb-16">
-              <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-8 mb-8">
-                <div className="text-center mb-6">
-                  <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                    Produkt měsíce
-                  </span>
-                  <h3 className="text-2xl font-bold text-gray-900 mt-4 mb-3">
-                    {displayedProducts[0].name}
-                  </h3>
-                  <p className="text-gray-600 max-w-2xl mx-auto">
-                    {displayedProducts[0].description}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
+
 
           {/* Category Filter */}
           {onCategoryChange && (
@@ -119,15 +102,14 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
             </div>
           )}
 
-          {/* Blog-style Product Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {displayedProducts.map((product, index) => (
-              <div key={product.id} className={index === 0 ? "md:col-span-2 lg:col-span-3" : ""}>
-                <ProductCard
-                  product={product}
-                  onProductClick={setSelectedProduct}
-                />
-              </div>
+          {/* Product Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
+            {displayedProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onProductClick={setSelectedProduct}
+              />
             ))}
           </div>
 
