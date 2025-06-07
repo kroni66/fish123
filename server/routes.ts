@@ -42,18 +42,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { user, tokens } = await directusAuth.login(loginData);
       
       // Store or update user in our database
-      let localUser = await storage.getUserByDirectusId(user.id);
-      if (!localUser) {
-        localUser = await storage.createUser({
-          email: user.email,
-          firstName: user.first_name || null,
-          lastName: user.last_name || null,
-          directusId: user.id,
-        });
-      }
-
+      // Return user data from Directus directly
       res.json({
-        user: localUser,
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          directusId: user.id,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
         tokens,
       });
     } catch (error) {
@@ -69,16 +68,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const registerData = registerSchema.parse(req.body);
       const { user, tokens } = await directusAuth.register(registerData);
       
-      // Create user in our database
-      const localUser = await storage.createUser({
-        email: user.email,
-        firstName: user.first_name || null,
-        lastName: user.last_name || null,
-        directusId: user.id,
-      });
-
+      // Return user data from Directus directly
       res.json({
-        user: localUser,
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          directusId: user.id,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
         tokens,
       });
     } catch (error) {
