@@ -62,17 +62,19 @@ const CheckoutForm = () => {
       return;
     }
 
-    const formData = form.getValues();
-    const formErrors = Object.keys(form.formState.errors);
-    
-    if (formErrors.length > 0) {
+    // Trigger validation
+    const isValid = await form.trigger();
+    if (!isValid) {
       toast({
         title: "Chyba ve formuláři",
         description: "Prosím vyplňte všechna povinná pole správně.",
         variant: "destructive",
+        duration: 2000,
       });
       return;
     }
+
+    const formData = form.getValues();
 
     setIsProcessing(true);
 
@@ -98,12 +100,14 @@ const CheckoutForm = () => {
         title: "Chyba platby",
         description: error.message,
         variant: "destructive",
+        duration: 2000,
       });
     } else {
       clearCart();
       toast({
         title: "Platba byla úspěšná",
         description: "Děkujeme za vaši objednávku!",
+        duration: 2000,
       });
     }
 
