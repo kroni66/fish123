@@ -9,6 +9,7 @@ import { Footer } from "@/components/footer";
 import { CartOverlay } from "@/components/cart-overlay";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
+import { formatPrice } from "@/lib/utils";
 import type { Product } from "@shared/schema";
 
 export default function ProductDetail() {
@@ -151,11 +152,11 @@ export default function ProductDetail() {
 
             <div className="flex items-center space-x-4 mb-6">
               <span className="text-3xl font-bold text-primary">
-                ${product.price}
+                {formatPrice(product.price)} Kč
               </span>
               {product.inStock && (
                 <Badge className="bg-success text-white">
-                  In Stock
+                  Skladem
                 </Badge>
               )}
             </div>

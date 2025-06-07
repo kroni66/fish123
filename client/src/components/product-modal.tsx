@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
+import { formatPrice } from "@/lib/utils";
 import type { Product } from "@shared/schema";
 
 interface ProductModalProps {
@@ -118,11 +119,11 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
 
               <div className="flex items-center space-x-4 mb-6">
                 <span className="text-3xl font-bold text-primary">
-                  ${product.price}
+                  {formatPrice(product.price)} Kč
                 </span>
                 {product.inStock && (
                   <Badge className="bg-success text-white">
-                    In Stock
+                    Skladem
                   </Badge>
                 )}
               </div>

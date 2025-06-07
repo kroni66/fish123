@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
+import { formatPrice } from "@/lib/utils";
 import type { Product } from "@shared/schema";
 
 interface ProductCardProps {
@@ -75,7 +76,7 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
           <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
             <div className="bg-white/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg">
               <span className="text-primary font-bold text-lg">
-                {product.price} Kč
+                {formatPrice(product.price)} Kč
               </span>
             </div>
           </div>
