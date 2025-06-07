@@ -240,47 +240,92 @@ export function Hero() {
           </svg>
         </div>
 
-        {/* Water Surface Animation */}
-        <div className="absolute top-0 left-0 w-full h-32 overflow-hidden">
-          {/* Animated water surface */}
-          <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/20 via-blue-400/15 to-transparent animate-[water-surface_8s_ease-in-out_infinite]">
-            <svg width="100%" height="100%" viewBox="0 0 400 120" preserveAspectRatio="none" className="absolute inset-0">
+        {/* Enhanced Water Surface Animation */}
+        <div className="absolute top-0 left-0 w-full h-40 overflow-hidden">
+          {/* Multi-layered water surface */}
+          <div className="absolute inset-0 bg-gradient-to-b from-cyan-200/25 via-blue-300/20 to-transparent animate-[water-surface_10s_ease-in-out_infinite]">
+            <svg width="100%" height="100%" viewBox="0 0 400 160" preserveAspectRatio="none" className="absolute inset-0">
+              {/* Primary wave layer */}
               <path
-                d="M0,60 Q100,40 200,60 T400,60 L400,0 L0,0 Z"
-                fill="rgba(99, 179, 237, 0.15)"
-                className="animate-[water-surface_6s_ease-in-out_infinite]"
+                d="M0,80 Q100,60 200,80 T400,80 L400,0 L0,0 Z"
+                fill="rgba(56, 189, 248, 0.2)"
               >
                 <animate
                   attributeName="d"
-                  values="M0,60 Q100,40 200,60 T400,60 L400,0 L0,0 Z;M0,50 Q100,70 200,50 T400,50 L400,0 L0,0 Z;M0,60 Q100,40 200,60 T400,60 L400,0 L0,0 Z"
-                  dur="6s"
+                  values="M0,80 Q100,60 200,80 T400,80 L400,0 L0,0 Z;M0,70 Q100,90 200,70 T400,70 L400,0 L0,0 Z;M0,85 Q100,55 200,85 T400,85 L400,0 L0,0 Z;M0,80 Q100,60 200,80 T400,80 L400,0 L0,0 Z"
+                  dur="8s"
                   repeatCount="indefinite"
                 />
               </path>
+              
+              {/* Secondary wave layer */}
               <path
-                d="M0,70 Q100,50 200,70 T400,70 L400,0 L0,0 Z"
-                fill="rgba(147, 197, 253, 0.1)"
-                className="animate-[water-surface_8s_ease-in-out_infinite_2s]"
+                d="M0,90 Q150,70 300,90 T600,90 L600,0 L0,0 Z"
+                fill="rgba(99, 179, 237, 0.15)"
               >
                 <animate
                   attributeName="d"
-                  values="M0,70 Q100,50 200,70 T400,70 L400,0 L0,0 Z;M0,55 Q100,75 200,55 T400,55 L400,0 L0,0 Z;M0,70 Q100,50 200,70 T400,70 L400,0 L0,0 Z"
-                  dur="8s"
+                  values="M0,90 Q150,70 300,90 T600,90 L600,0 L0,0 Z;M0,75 Q150,95 300,75 T600,75 L600,0 L0,0 Z;M0,95 Q150,65 300,95 T600,95 L600,0 L0,0 Z;M0,90 Q150,70 300,90 T600,90 L600,0 L0,0 Z"
+                  dur="12s"
+                  repeatCount="indefinite"
+                />
+              </path>
+              
+              {/* Tertiary shimmer layer */}
+              <path
+                d="M0,100 Q200,80 400,100 L400,0 L0,0 Z"
+                fill="rgba(147, 197, 253, 0.1)"
+                className="animate-[water-shimmer_15s_ease-in-out_infinite]"
+              >
+                <animate
+                  attributeName="d"
+                  values="M0,100 Q200,80 400,100 L400,0 L0,0 Z;M0,85 Q200,105 400,85 L400,0 L0,0 Z;M0,105 Q200,75 400,105 L400,0 L0,0 Z;M0,100 Q200,80 400,100 L400,0 L0,0 Z"
+                  dur="18s"
                   repeatCount="indefinite"
                 />
               </path>
             </svg>
           </div>
 
-          {/* Water ripples */}
-          <div className="absolute top-1/2 left-1/4 w-16 h-16 opacity-30">
-            <div className="w-full h-full rounded-full border-2 border-cyan-200/40 animate-[water-ripple_4s_ease-out_infinite]"></div>
+          {/* Enhanced water ripples */}
+          <div className="absolute top-1/2 left-1/4 w-20 h-20 opacity-35">
+            <div className="w-full h-full rounded-full border-2 border-cyan-300/50 animate-[water-ripple_5s_ease-out_infinite]"></div>
+            <div className="absolute inset-2 w-16 h-16 rounded-full border border-blue-200/30 animate-[water-ripple_5s_ease-out_infinite_1s]"></div>
           </div>
-          <div className="absolute top-2/3 right-1/3 w-12 h-12 opacity-25">
-            <div className="w-full h-full rounded-full border-2 border-blue-200/30 animate-[water-ripple_5s_ease-out_infinite_2s]"></div>
+          <div className="absolute top-2/3 right-1/3 w-16 h-16 opacity-30">
+            <div className="w-full h-full rounded-full border-2 border-blue-300/40 animate-[water-ripple_6s_ease-out_infinite_3s]"></div>
+            <div className="absolute inset-2 w-12 h-12 rounded-full border border-cyan-200/25 animate-[water-ripple_6s_ease-out_infinite_4s]"></div>
           </div>
-          <div className="absolute top-1/3 left-2/3 w-20 h-20 opacity-20">
-            <div className="w-full h-full rounded-full border-2 border-slate-200/25 animate-[water-ripple_6s_ease-out_infinite_4s]"></div>
+          <div className="absolute top-1/3 left-2/3 w-24 h-24 opacity-25">
+            <div className="w-full h-full rounded-full border-2 border-slate-200/35 animate-[water-ripple_7s_ease-out_infinite_6s]"></div>
+          </div>
+        </div>
+
+        {/* Enhanced Bubble System */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Large rising bubbles */}
+          <div className="absolute bottom-0 left-1/6 w-6 h-6 bg-cyan-200/20 rounded-full animate-[bubble-rise_25s_linear_infinite]"></div>
+          <div className="absolute bottom-0 left-1/3 w-4 h-4 bg-blue-200/25 rounded-full animate-[bubble-rise_20s_linear_infinite_5s]"></div>
+          <div className="absolute bottom-0 right-1/4 w-8 h-8 bg-slate-200/15 rounded-full animate-[bubble-rise_30s_linear_infinite_10s]"></div>
+          <div className="absolute bottom-0 right-1/6 w-5 h-5 bg-cyan-300/20 rounded-full animate-[bubble-rise_22s_linear_infinite_15s]"></div>
+          
+          {/* Medium bubbles */}
+          <div className="absolute bottom-0 left-2/5 w-3 h-3 bg-blue-300/30 rounded-full animate-[bubble-rise_18s_linear_infinite_8s]"></div>
+          <div className="absolute bottom-0 right-2/5 w-3.5 h-3.5 bg-cyan-200/25 rounded-full animate-[bubble-rise_24s_linear_infinite_12s]"></div>
+          <div className="absolute bottom-0 left-3/4 w-2.5 h-2.5 bg-slate-300/20 rounded-full animate-[bubble-rise_16s_linear_infinite_6s]"></div>
+          
+          {/* Small bubble clusters */}
+          <div className="absolute bottom-0 left-1/2 space-y-2 animate-[bubble-cluster_28s_linear_infinite_3s]">
+            <div className="w-2 h-2 bg-cyan-200/30 rounded-full"></div>
+            <div className="w-1.5 h-1.5 bg-blue-200/25 rounded-full ml-2"></div>
+            <div className="w-2.5 h-2.5 bg-slate-200/20 rounded-full"></div>
+            <div className="w-1 h-1 bg-cyan-300/35 rounded-full ml-3"></div>
+          </div>
+          
+          <div className="absolute bottom-0 right-1/3 space-y-3 animate-[bubble-cluster_32s_linear_infinite_18s]">
+            <div className="w-1.5 h-1.5 bg-blue-300/25 rounded-full"></div>
+            <div className="w-2 h-2 bg-cyan-200/30 rounded-full ml-1"></div>
+            <div className="w-1 h-1 bg-slate-300/20 rounded-full ml-2"></div>
           </div>
         </div>
 
