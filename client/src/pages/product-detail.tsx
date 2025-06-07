@@ -164,9 +164,10 @@ export default function ProductDetail() {
             <div className="space-y-6 mb-8">
               <div>
                 <h3 className="font-semibold text-foreground mb-2">Description</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {product.description}
-                </p>
+                <div 
+                  className="text-muted-foreground leading-relaxed prose prose-sm max-w-none"
+                  dangerouslySetInnerHTML={{ __html: product.description || '' }}
+                />
               </div>
 
               {product.features && product.features.length > 0 && (

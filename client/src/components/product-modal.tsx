@@ -139,9 +139,10 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                 <TabsContent value="details" className="space-y-4 mt-4">
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">Popis</h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {product.description}
-                    </p>
+                    <div 
+                      className="text-muted-foreground leading-relaxed prose prose-sm max-w-none"
+                      dangerouslySetInnerHTML={{ __html: product.description || '' }}
+                    />
                   </div>
 
                   {product.features && product.features.length > 0 && (

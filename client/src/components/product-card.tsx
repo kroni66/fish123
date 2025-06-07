@@ -88,9 +88,10 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
           <h3 className="text-xl font-bold text-foreground mb-2 leading-tight group-hover:text-primary transition-colors duration-300">
             {product.name}
           </h3>
-          <p className="text-muted-foreground leading-relaxed text-sm line-clamp-3">
-            {product.description}
-          </p>
+          <div 
+            className="text-muted-foreground leading-relaxed text-sm line-clamp-3"
+            dangerouslySetInnerHTML={{ __html: product.description || '' }}
+          />
         </div>
 
         <div className="flex items-center justify-between pt-2 border-t border-border">

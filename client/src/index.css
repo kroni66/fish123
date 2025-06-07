@@ -494,4 +494,89 @@
   .custom-scrollbar::-webkit-scrollbar-corner {
     background: hsl(var(--muted));
   }
+
+  /* HTML content styling for product descriptions */
+  .prose {
+    color: hsl(var(--muted-foreground));
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    color: hsl(var(--foreground));
+    font-weight: 600;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .prose h1 { font-size: 1.5em; }
+  .prose h2 { font-size: 1.3em; }
+  .prose h3 { font-size: 1.1em; }
+
+  .prose p {
+    margin-bottom: 1em;
+    line-height: 1.6;
+  }
+
+  .prose ul,
+  .prose ol {
+    margin-bottom: 1em;
+    padding-left: 1.5em;
+  }
+
+  .prose li {
+    margin-bottom: 0.25em;
+  }
+
+  .prose strong,
+  .prose b {
+    font-weight: 600;
+    color: hsl(var(--foreground));
+  }
+
+  .prose em,
+  .prose i {
+    font-style: italic;
+  }
+
+  .prose a {
+    color: hsl(var(--primary));
+    text-decoration: underline;
+  }
+
+  .prose a:hover {
+    color: hsl(var(--primary));
+    opacity: 0.8;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid hsl(var(--primary));
+    padding-left: 1em;
+    margin: 1em 0;
+    font-style: italic;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .prose code {
+    background-color: hsl(var(--muted));
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+
+  .prose pre {
+    background-color: hsl(var(--muted));
+    padding: 1em;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1em 0;
+  }
+
+  .prose pre code {
+    background: none;
+    padding: 0;
+  }
 }
