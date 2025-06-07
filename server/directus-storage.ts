@@ -86,13 +86,17 @@ export class DirectusStorage implements IStorage {
   // Categories
   async getCategories(): Promise<Category[]> {
     try {
-      // Try different possible collection names
+      // Try different possible collection names with correct Directus API format
       let response;
       try {
         response = await this.request("/items/categories");
       } catch (e) {
-        // Try alternative collection name
-        response = await this.request("/items/category");
+        // Try alternative collection names
+        try {
+          response = await this.request("/items/category");
+        } catch (e2) {
+          response = await this.request("/items/fishing_categories");
+        }
       }
       
       if (response.data && Array.isArray(response.data)) {
@@ -101,7 +105,7 @@ export class DirectusStorage implements IStorage {
       return [];
     } catch (error) {
       console.error("Failed to fetch categories from Directus:", error);
-      throw error; // Re-throw to trigger fallback
+      return []; // Return empty array instead of throwing to prevent app crash
     }
   }
 
@@ -127,13 +131,36 @@ export class DirectusStorage implements IStorage {
   // Products
   async getProducts(categoryId?: number): Promise<Product[]> {
     try {
+      // Try different possible collection names with correct Directus API format
+      let response;
       let endpoint = "/items/products";
       if (categoryId) {
         endpoint += `?filter[category][_eq]=${categoryId}`;
       }
       
-      const response = await this.request(endpoint);
-      return response.data.map((product: DirectusProduct) => this.transformProduct(product));
+      try {
+        response = await this.request(endpoint);
+      } catch (e) {
+        // Try alternative collection names
+        try {
+          endpoint = "/items/product";
+          if (categoryId) {
+            endpoint += `?filter[category][_eq]=${categoryId}`;
+          }
+          response = await this.request(endpoint);
+        } catch (e2) {
+          endpoint = "/items/fishing_products";
+          if (categoryId) {
+            endpoint += `?filter[category][_eq]=${categoryId}`;
+          }
+          response = await this.request(endpoint);
+        }
+      }
+      
+      if (response.data && Array.isArray(response.data)) {
+        return response.data.map((product: DirectusProduct) => this.transformProduct(product));
+      }
+      return [];
     } catch (error) {
       console.error("Failed to fetch products from Directus:", error);
       return [];

@@ -7,13 +7,22 @@ import { z } from "zod";
 
 // Initialize storage - use Directus exclusively for products and categories
 let storage: IStorage;
-try {
-  storage = new DirectusStorage();
-  console.log("Using Directus backend for data storage");
-} catch (error) {
-  console.error("Directus configuration failed:", error);
+const DIRECTUS_URL = process.env.DIRECTUS_URL;
+const DIRECTUS_API_KEY = process.env.DIRECTUS_API_KEY;
+
+if (DIRECTUS_URL && DIRECTUS_API_KEY && DIRECTUS_URL !== "undefined") {
+  try {
+    storage = new DirectusStorage();
+    console.log("✓ Using Directus backend for data storage");
+  } catch (error) {
+    console.error("Directus configuration failed:", error);
+    storage = localStorage;
+    console.log("⚠ Fallback: Using local storage");
+  }
+} else {
   storage = localStorage;
-  console.log("Fallback: Using local storage");
+  console.log("⚠ No Directus credentials provided - using local storage");
+  console.log("  To use Directus backend, provide DIRECTUS_URL and DIRECTUS_API_KEY environment variables");
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
