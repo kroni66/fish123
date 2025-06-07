@@ -223,6 +223,110 @@ export function Hero() {
           </svg>
         </div>
 
+        {/* Water Surface Animation */}
+        <div className="absolute top-0 left-0 w-full h-32 overflow-hidden">
+          {/* Animated water surface */}
+          <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/20 via-blue-400/15 to-transparent animate-[water-surface_8s_ease-in-out_infinite]">
+            <svg width="100%" height="100%" viewBox="0 0 400 120" preserveAspectRatio="none" className="absolute inset-0">
+              <path
+                d="M0,60 Q100,40 200,60 T400,60 L400,0 L0,0 Z"
+                fill="rgba(99, 179, 237, 0.15)"
+                className="animate-[water-surface_6s_ease-in-out_infinite]"
+              >
+                <animate
+                  attributeName="d"
+                  values="M0,60 Q100,40 200,60 T400,60 L400,0 L0,0 Z;M0,50 Q100,70 200,50 T400,50 L400,0 L0,0 Z;M0,60 Q100,40 200,60 T400,60 L400,0 L0,0 Z"
+                  dur="6s"
+                  repeatCount="indefinite"
+                />
+              </path>
+              <path
+                d="M0,70 Q100,50 200,70 T400,70 L400,0 L0,0 Z"
+                fill="rgba(147, 197, 253, 0.1)"
+                className="animate-[water-surface_8s_ease-in-out_infinite_2s]"
+              >
+                <animate
+                  attributeName="d"
+                  values="M0,70 Q100,50 200,70 T400,70 L400,0 L0,0 Z;M0,55 Q100,75 200,55 T400,55 L400,0 L0,0 Z;M0,70 Q100,50 200,70 T400,70 L400,0 L0,0 Z"
+                  dur="8s"
+                  repeatCount="indefinite"
+                />
+              </path>
+            </svg>
+          </div>
+
+          {/* Water ripples */}
+          <div className="absolute top-1/2 left-1/4 w-16 h-16 opacity-30">
+            <div className="w-full h-full rounded-full border-2 border-cyan-200/40 animate-[water-ripple_4s_ease-out_infinite]"></div>
+          </div>
+          <div className="absolute top-2/3 right-1/3 w-12 h-12 opacity-25">
+            <div className="w-full h-full rounded-full border-2 border-blue-200/30 animate-[water-ripple_5s_ease-out_infinite_2s]"></div>
+          </div>
+          <div className="absolute top-1/3 left-2/3 w-20 h-20 opacity-20">
+            <div className="w-full h-full rounded-full border-2 border-slate-200/25 animate-[water-ripple_6s_ease-out_infinite_4s]"></div>
+          </div>
+        </div>
+
+        {/* Caustic Light Patterns */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/5 w-32 h-32 opacity-25 animate-[caustic-light_12s_ease-in-out_infinite]">
+            <svg width="100%" height="100%" viewBox="0 0 100 100" className="text-cyan-200">
+              <path
+                d="M20,20 Q40,10 60,20 Q80,30 80,50 Q70,70 50,80 Q30,70 20,50 Q10,30 20,20 Z"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+                opacity="0.6"
+              >
+                <animate
+                  attributeName="d"
+                  values="M20,20 Q40,10 60,20 Q80,30 80,50 Q70,70 50,80 Q30,70 20,50 Q10,30 20,20 Z;M25,15 Q45,25 65,15 Q85,25 85,45 Q75,65 55,75 Q35,65 25,45 Q15,25 25,15 Z;M20,20 Q40,10 60,20 Q80,30 80,50 Q70,70 50,80 Q30,70 20,50 Q10,30 20,20 Z"
+                  dur="12s"
+                  repeatCount="indefinite"
+                />
+              </path>
+            </svg>
+          </div>
+
+          <div className="absolute top-1/2 right-1/4 w-28 h-28 opacity-20 animate-[caustic-light_15s_ease-in-out_infinite_5s]">
+            <svg width="100%" height="100%" viewBox="0 0 100 100" className="text-blue-200">
+              <path
+                d="M30,30 Q50,20 70,30 Q80,50 70,70 Q50,80 30,70 Q20,50 30,30 Z"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                opacity="0.5"
+              >
+                <animate
+                  attributeName="d"
+                  values="M30,30 Q50,20 70,30 Q80,50 70,70 Q50,80 30,70 Q20,50 30,30 Z;M35,25 Q55,35 75,25 Q85,45 75,65 Q55,75 35,65 Q25,45 35,25 Z;M30,30 Q50,20 70,30 Q80,50 70,70 Q50,80 30,70 Q20,50 30,30 Z"
+                  dur="15s"
+                  repeatCount="indefinite"
+                />
+              </path>
+            </svg>
+          </div>
+
+          <div className="absolute top-3/4 left-1/2 w-24 h-24 opacity-15 animate-[caustic-light_18s_ease-in-out_infinite_8s]">
+            <svg width="100%" height="100%" viewBox="0 0 100 100" className="text-slate-200">
+              <path
+                d="M25,40 Q45,30 65,40 Q75,60 65,80 Q45,70 25,80 Q15,60 25,40 Z"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+                opacity="0.4"
+              >
+                <animate
+                  attributeName="d"
+                  values="M25,40 Q45,30 65,40 Q75,60 65,80 Q45,70 25,80 Q15,60 25,40 Z;M30,35 Q50,45 70,35 Q80,55 70,75 Q50,65 30,75 Q20,55 30,35 Z;M25,40 Q45,30 65,40 Q75,60 65,80 Q45,70 25,80 Q15,60 25,40 Z"
+                  dur="18s"
+                  repeatCount="indefinite"
+                />
+              </path>
+            </svg>
+          </div>
+        </div>
+
         {/* Underwater Depth Effects */}
         <div className="absolute inset-0 pointer-events-none">
           {/* Deep water rays */}
