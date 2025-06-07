@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import { ProductCard } from "./product-card";
 import { ProductModal } from "./product-modal";
 import { CategoryFilter } from "./category-filter";
 import { Button } from "./ui/button";
+import { useMarineAnimations, marinePresets } from "@/hooks/use-marine-animations";
 import type { Product } from "@shared/schema";
 
 interface ProductGridProps {
@@ -15,6 +17,9 @@ interface ProductGridProps {
 export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: ProductGridProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [displayCount, setDisplayCount] = useState(8);
+  
+  // Marine-themed animations
+  const { containerVariants, itemVariants, cardVariants } = useMarineAnimations(marinePresets.productGrid);
 
   const { data: products = [], isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products', categoryId],
