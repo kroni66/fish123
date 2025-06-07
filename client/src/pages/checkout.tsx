@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useLocation } from "wouter";
 import { ArrowLeft, Truck, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -419,7 +419,7 @@ export default function Checkout() {
   }
 
   // Create stable options object to prevent re-renders
-  const stripeOptions = {
+  const stripeOptions = useMemo(() => ({
     clientSecret,
     appearance: {
       theme: 'night' as const,
@@ -431,7 +431,7 @@ export default function Checkout() {
         borderRadius: '8px',
       },
     },
-  };
+  }), [clientSecret]);
 
   // Make SURE to wrap the form in <Elements> which provides the stripe context.
   return (
