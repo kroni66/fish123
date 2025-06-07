@@ -85,16 +85,16 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
 
       <div className="p-6 space-y-4">
         <div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight group-hover:text-primary transition-colors duration-300">
+          <h3 className="text-xl font-bold text-foreground mb-2 leading-tight group-hover:text-primary transition-colors duration-300">
             {product.name}
           </h3>
-          <p className="text-gray-600 leading-relaxed text-sm line-clamp-3">
+          <p className="text-muted-foreground leading-relaxed text-sm line-clamp-3">
             {product.description}
           </p>
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-          <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">
+        <div className="flex items-center justify-between pt-2 border-t border-border">
+          <div className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
             Klikněte pro detail
           </div>
           <Button
