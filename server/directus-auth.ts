@@ -24,7 +24,7 @@ export class DirectusAuth {
   }
 
   private async request(endpoint: string, options: RequestInit = {}) {
-    const url = `${this.baseUrl}${endpoint}`;
+    const url = `${this.baseUrl.replace(/\/$/, '')}${endpoint}`;
     
     const response = await fetch(url, {
       ...options,
@@ -71,16 +71,19 @@ export class DirectusAuth {
 
   async register(registerData: RegisterData): Promise<{ user: DirectusUser; tokens: DirectusAuthResponse }> {
     try {
-      // Create user in Directus
+      // Create user using admin API key since registration is disabled
       const createUserResponse = await this.request('/users', {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${this.apiKey}`,
+        },
         body: JSON.stringify({
           email: registerData.email,
           password: registerData.password,
           first_name: registerData.firstName,
           last_name: registerData.lastName,
           status: 'active',
-          role: process.env.DIRECTUS_DEFAULT_ROLE_ID || null, // You'll need to set this
+          role: null, // Will be assigned default role or no role
         }),
       });
 
