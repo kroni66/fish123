@@ -116,6 +116,7 @@ export class MemStorage implements IStorage {
     this.currentReviewId = 1;
     this.currentArticleId = 1;
     this.currentArticleCategoryId = 1;
+    this.currentWishlistItemId = 1;
 
     // Initialize with sample data
     this.initializeSampleData();
@@ -482,6 +483,32 @@ export class MemStorage implements IStorage {
 
   async getArticleCategories(): Promise<ArticleCategory[]> {
     return Array.from(this.articleCategories.values());
+  }
+
+  // Wishlist methods
+  async getWishlistItems(sessionId: string): Promise<WishlistItem[]> {
+    return Array.from(this.wishlistItems.values()).filter(item => item.sessionId === sessionId);
+  }
+
+  async addToWishlist(insertWishlistItem: InsertWishlistItem): Promise<WishlistItem> {
+    const id = this.currentWishlistItemId++;
+    const wishlistItem: WishlistItem = { 
+      ...insertWishlistItem, 
+      id,
+      createdAt: new Date()
+    };
+    this.wishlistItems.set(id, wishlistItem);
+    return wishlistItem;
+  }
+
+  async removeFromWishlist(id: number): Promise<void> {
+    this.wishlistItems.delete(id);
+  }
+
+  async isInWishlist(sessionId: string, productId: number): Promise<boolean> {
+    return Array.from(this.wishlistItems.values()).some(
+      item => item.sessionId === sessionId && item.productId === productId
+    );
   }
 }
 

@@ -8,6 +8,7 @@ import {
   Review,
   Article,
   ArticleCategory,
+  WishlistItem,
   InsertUser,
   InsertCategory,
   InsertProduct,
@@ -16,6 +17,7 @@ import {
   InsertReview,
   InsertArticle,
   InsertArticleCategory,
+  InsertWishlistItem,
 } from "@shared/schema";
 import { db } from "./db";
 import { users } from "@shared/schema";
@@ -644,5 +646,34 @@ export class DirectusStorage implements IStorage {
       console.error("Failed to fetch article categories from Directus:", error);
       return [];
     }
+  }
+
+  // Wishlist methods - using in-memory storage for simplicity
+  private wishlistItems: Map<number, WishlistItem> = new Map();
+  private currentWishlistItemId: number = 1;
+
+  async getWishlistItems(sessionId: string): Promise<WishlistItem[]> {
+    return Array.from(this.wishlistItems.values()).filter(item => item.sessionId === sessionId);
+  }
+
+  async addToWishlist(insertWishlistItem: InsertWishlistItem): Promise<WishlistItem> {
+    const id = this.currentWishlistItemId++;
+    const wishlistItem: WishlistItem = { 
+      ...insertWishlistItem, 
+      id,
+      createdAt: new Date()
+    };
+    this.wishlistItems.set(id, wishlistItem);
+    return wishlistItem;
+  }
+
+  async removeFromWishlist(id: number): Promise<void> {
+    this.wishlistItems.delete(id);
+  }
+
+  async isInWishlist(sessionId: string, productId: number): Promise<boolean> {
+    return Array.from(this.wishlistItems.values()).some(
+      item => item.sessionId === sessionId && item.productId === productId
+    );
   }
 }

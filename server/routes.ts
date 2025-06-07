@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { DirectusStorage } from "./directus-storage";
 import { storage as localStorage, type IStorage } from "./storage";
 import { directusAuth } from "./directus-auth";
-import { insertProductSchema, insertCartItemSchema, insertOrderSchema, insertReviewSchema, loginSchema, registerSchema } from "@shared/schema";
+import { insertProductSchema, insertCartItemSchema, insertOrderSchema, insertReviewSchema, insertWishlistItemSchema, loginSchema, registerSchema } from "@shared/schema";
 import { z } from "zod";
 import Stripe from "stripe";
 
@@ -298,6 +298,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res
         .status(500)
         .json({ message: "Error creating payment intent: " + error.message });
+    }
+  });
+
+  // Wishlist routes
+  app.get("/api/wishlist/:sessionId", async (req, res) => {
+    try {
+      const wishlistItems = await storage.getWishlistItems(req.params.sessionId);
+      
+      // Get product details for each wishlist item
+      const itemsWithProducts = await Promise.all(
+        wishlistItems.map(async (item) => {
+          const product = await storage.getProductById(item.productId!);
+          return { ...item, product };
+        })
+      );
+      
+      res.json(itemsWithProducts);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch wishlist items" });
+    }
+  });
+
+  app.post("/api/wishlist", async (req, res) => {
+    try {
+      const wishlistItemData = insertWishlistItemSchema.parse(req.body);
+      const wishlistItem = await storage.addToWishlist(wishlistItemData);
+      res.json(wishlistItem);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid wishlist item data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to add item to wishlist" });
+    }
+  });
+
+  app.delete("/api/wishlist/:id", async (req, res) => {
+    try {
+      await storage.removeFromWishlist(Number(req.params.id));
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ message: "Failed to remove item from wishlist" });
+    }
+  });
+
+  app.get("/api/wishlist/:sessionId/check/:productId", async (req, res) => {
+    try {
+      const isInWishlist = await storage.isInWishlist(req.params.sessionId, Number(req.params.productId));
+      res.json({ isInWishlist });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to check wishlist status" });
     }
   });
 
