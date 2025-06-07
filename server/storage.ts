@@ -71,11 +71,13 @@ export class MemStorage implements IStorage {
   private currentReviewId: number;
 
   constructor() {
+    this.users = new Map();
     this.categories = new Map();
     this.products = new Map();
     this.cartItems = new Map();
     this.orders = new Map();
     this.reviews = new Map();
+    this.currentUserId = 1;
     this.currentCategoryId = 1;
     this.currentProductId = 1;
     this.currentCartItemId = 1;
@@ -84,6 +86,52 @@ export class MemStorage implements IStorage {
 
     // Initialize with sample data
     this.initializeSampleData();
+  }
+
+  // User methods
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    for (const user of this.users.values()) {
+      if (user.email === email) {
+        return user;
+      }
+    }
+    return undefined;
+  }
+
+  async getUserByDirectusId(directusId: string): Promise<User | undefined> {
+    for (const user of this.users.values()) {
+      if (user.directusId === directusId) {
+        return user;
+      }
+    }
+    return undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const id = this.currentUserId++;
+    const user: User = {
+      id,
+      ...insertUser,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.users.set(id, user);
+    return user;
+  }
+
+  async updateUser(id: number, userData: Partial<User>): Promise<User> {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const updatedUser: User = {
+      ...user,
+      ...userData,
+      id,
+      updatedAt: new Date(),
+    };
+    this.users.set(id, updatedUser);
+    return updatedUser;
   }
 
   private initializeSampleData() {

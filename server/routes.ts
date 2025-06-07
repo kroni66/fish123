@@ -2,7 +2,8 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { DirectusStorage } from "./directus-storage";
 import { storage as localStorage, type IStorage } from "./storage";
-import { insertProductSchema, insertCartItemSchema, insertOrderSchema, insertReviewSchema } from "@shared/schema";
+import { directusAuth } from "./directus-auth";
+import { insertProductSchema, insertCartItemSchema, insertOrderSchema, insertReviewSchema, loginSchema, registerSchema } from "@shared/schema";
 import { z } from "zod";
 import Stripe from "stripe";
 
@@ -34,6 +35,115 @@ if (DIRECTUS_URL && DIRECTUS_API_KEY && DIRECTUS_URL !== "undefined") {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Authentication routes
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const loginData = loginSchema.parse(req.body);
+      const { user, tokens } = await directusAuth.login(loginData);
+      
+      // Store or update user in our database
+      let localUser = await storage.getUserByDirectusId(user.id);
+      if (!localUser) {
+        localUser = await storage.createUser({
+          email: user.email,
+          firstName: user.first_name || null,
+          lastName: user.last_name || null,
+          directusId: user.id,
+        });
+      }
+
+      res.json({
+        user: localUser,
+        tokens,
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(401).json({ 
+        message: error instanceof Error ? error.message : "Přihlášení se nezdařilo" 
+      });
+    }
+  });
+
+  app.post("/api/auth/register", async (req, res) => {
+    try {
+      const registerData = registerSchema.parse(req.body);
+      const { user, tokens } = await directusAuth.register(registerData);
+      
+      // Create user in our database
+      const localUser = await storage.createUser({
+        email: user.email,
+        firstName: user.first_name || null,
+        lastName: user.last_name || null,
+        directusId: user.id,
+      });
+
+      res.json({
+        user: localUser,
+        tokens,
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+      res.status(400).json({ 
+        message: error instanceof Error ? error.message : "Registrace se nezdařila" 
+      });
+    }
+  });
+
+  app.post("/api/auth/logout", async (req, res) => {
+    try {
+      const { refreshToken } = req.body;
+      if (refreshToken) {
+        await directusAuth.logout(refreshToken);
+      }
+      res.json({ message: "Úspěšně odhlášen" });
+    } catch (error) {
+      console.error("Logout error:", error);
+      res.json({ message: "Úspěšně odhlášen" }); // Always succeed logout
+    }
+  });
+
+  app.post("/api/auth/refresh", async (req, res) => {
+    try {
+      const { refreshToken } = req.body;
+      if (!refreshToken) {
+        return res.status(400).json({ message: "Refresh token je povinný" });
+      }
+      
+      const tokens = await directusAuth.refreshToken(refreshToken);
+      res.json(tokens);
+    } catch (error) {
+      console.error("Token refresh error:", error);
+      res.status(401).json({ 
+        message: error instanceof Error ? error.message : "Obnova tokenu se nezdařila" 
+      });
+    }
+  });
+
+  app.get("/api/auth/me", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ message: "Token není poskytnut" });
+      }
+      
+      const token = authHeader.substring(7);
+      const directusUser = await directusAuth.getCurrentUser(token);
+      
+      // Get local user data
+      const localUser = await storage.getUserByDirectusId(directusUser.id);
+      if (!localUser) {
+        return res.status(404).json({ message: "Uživatel nenalezen" });
+      }
+      
+      res.json(localUser);
+    } catch (error) {
+      console.error("Get user error:", error);
+      res.status(401).json({ 
+        message: error instanceof Error ? error.message : "Nepodařilo se získat uživatele" 
+      });
+    }
+  });
+
   // Categories
   app.get("/api/categories", async (req, res) => {
     try {
