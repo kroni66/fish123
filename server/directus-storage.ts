@@ -363,21 +363,16 @@ export class DirectusStorage implements IStorage {
   // Reviews
   async getProductReviews(productId: number): Promise<Review[]> {
     try {
-      console.log(`Fetching reviews for product ${productId} from Directus`);
       const filterParam = encodeURIComponent(`{"product_id":{"_eq":${productId}}}`);
       const response = await this.request(
         `/items/reviews?filter=${filterParam}&sort[]=-date_created`,
       );
-      console.log(`Directus reviews response:`, response);
       
       if (response.data && Array.isArray(response.data)) {
-        const transformedReviews = response.data.map((review: DirectusReview) =>
+        return response.data.map((review: DirectusReview) =>
           this.transformReview(review),
         );
-        console.log(`Transformed ${transformedReviews.length} reviews for product ${productId}`);
-        return transformedReviews;
       }
-      console.log(`No reviews found for product ${productId}`);
       return [];
     } catch (error) {
       console.error(

@@ -157,7 +157,7 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
         newHelpfulCount: data?.helpful || 'unknown'
       });
       
-      queryClient.invalidateQueries({ queryKey: ["/api/products", productId, "reviews"] });
+      queryClient.invalidateQueries({ queryKey: [`/api/products/${productId}/reviews`] });
     },
     onError: (error, reviewId) => {
       console.error(`[REVIEW] Failed to mark review ${reviewId} as helpful:`, {
