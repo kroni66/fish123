@@ -25,7 +25,7 @@ export function Navbar() {
   const navigation = [
     { name: 'Domů', href: '/' },
     { name: 'O nás', href: '/about' },
-    { name: 'Inspirace', href: '/inspiration' },
+    { name: 'Naše příběhy', href: '/inspiration' },
     { name: 'Kontakt', href: '/contact' },
   ];
 
