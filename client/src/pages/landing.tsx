@@ -1,36 +1,13 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Star, Users, Package, Award } from "lucide-react";
-import { ProductGrid } from "@/components/product-grid";
-import { EnhancedSearch } from "@/components/enhanced-search";
-import { Footer } from "@/components/footer";
+import { useLocation } from "wouter";
 
-export default function Home() {
-  const [location] = useLocation();
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+export default function Landing() {
+  const [, setLocation] = useLocation();
   const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.split('?')[1] || '');
-    const categoryParam = params.get('category');
-    const searchParam = params.get('search');
-    
-    if (categoryParam) {
-      setSelectedCategory(parseInt(categoryParam));
-    } else {
-      setSelectedCategory(null);
-    }
-    
-    if (searchParam) {
-      setSearchQuery(searchParam);
-    } else {
-      setSearchQuery("");
-    }
-  }, [location]);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -130,7 +107,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Feature Cards Section */}
+        {/* Product Preview Section */}
         <section className="py-24 px-4 relative">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
@@ -142,6 +119,7 @@ export default function Home() {
               </p>
             </div>
 
+            {/* Feature Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               <Card className="bg-slate-800/50 backdrop-blur border-slate-700/50 hover:border-cyan-500/30 transition-all duration-300 group">
                 <CardContent className="p-8 text-center">
@@ -198,26 +176,186 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </div>
 
-      {/* Enhanced Search Section */}
-      <EnhancedSearch
-        searchQuery={searchQuery}
-        categoryId={selectedCategory}
-        onSearchChange={setSearchQuery}
-        onCategoryChange={setSelectedCategory}
-      />
+        {/* Trusted By Section */}
+        <section className="py-16 px-4">
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-slate-500 text-sm uppercase tracking-wider mb-8">
+              Důvěřují nám profesdionálové z celého světa
+            </p>
+            <div className="flex items-center justify-center space-x-12 opacity-40 grayscale">
+              <div className="text-2xl font-bold text-slate-400">FISH PRO</div>
+              <div className="text-2xl font-bold text-slate-400">ANGLER</div>
+              <div className="text-2xl font-bold text-slate-400">DEEP SEA</div>
+              <div className="text-2xl font-bold text-slate-400">TACKLE</div>
+              <div className="text-2xl font-bold text-slate-400">MARINE</div>
+            </div>
+          </div>
+        </section>
 
-      {/* Products Section */}
-      <div id="products">
-        <ProductGrid 
-          categoryId={selectedCategory}
-          searchQuery={searchQuery}
-          onCategoryChange={setSelectedCategory}
-        />
+        {/* Pricing Section */}
+        <section className="py-24 px-4 bg-gradient-to-b from-transparent to-slate-950/50">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <Badge className="mb-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/20">
+                Cenové balíčky
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                Jednoduché ceny pro každého.
+              </h2>
+              <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+                Vyberte si balíček, který nejlépe vyhovuje vašemu stylu rybaření a rozpočtu.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Basic Plan */}
+              <Card className="bg-slate-800/50 backdrop-blur border-slate-700/50 relative">
+                <CardContent className="p-8">
+                  <div className="mb-8">
+                    <h3 className="text-xl font-bold text-white mb-2">Začátečník</h3>
+                    <p className="text-slate-400 mb-6">Pro ty, kteří začínají s rybařením</p>
+                    <div className="flex items-baseline">
+                      <span className="text-4xl font-bold text-white">2 990</span>
+                      <span className="text-slate-400 ml-2">Kč</span>
+                    </div>
+                  </div>
+                  
+                  <Button className="w-full mb-6 bg-slate-700 hover:bg-slate-600 text-white">
+                    Vybrat balíček
+                  </Button>
+                  
+                  <ul className="space-y-3 text-sm">
+                    <li className="flex items-center text-slate-300">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Základní rybářský prut
+                    </li>
+                    <li className="flex items-center text-slate-300">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Naviják pro začátečníky
+                    </li>
+                    <li className="flex items-center text-slate-300">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Základní návnady
+                    </li>
+                    <li className="flex items-center text-slate-300">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Email podpora
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Premium Plan */}
+              <Card className="bg-gradient-to-b from-cyan-500/10 to-blue-500/5 backdrop-blur border-cyan-500/30 relative scale-105">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-1">
+                    Nejoblíbenější
+                  </Badge>
+                </div>
+                <CardContent className="p-8">
+                  <div className="mb-8">
+                    <h3 className="text-xl font-bold text-white mb-2">Pokročilý</h3>
+                    <p className="text-slate-300 mb-6">Pro zkušené rybáře</p>
+                    <div className="flex items-baseline">
+                      <span className="text-4xl font-bold text-white">7 990</span>
+                      <span className="text-slate-300 ml-2">Kč</span>
+                    </div>
+                  </div>
+                  
+                  <Button className="w-full mb-6 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white">
+                    Vybrat balíček
+                  </Button>
+                  
+                  <ul className="space-y-3 text-sm">
+                    <li className="flex items-center text-slate-200">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Profesionální rybářský prut
+                    </li>
+                    <li className="flex items-center text-slate-200">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Kvalitní naviják
+                    </li>
+                    <li className="flex items-center text-slate-200">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Prémiové návnady
+                    </li>
+                    <li className="flex items-center text-slate-200">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Rybářská taška
+                    </li>
+                    <li className="flex items-center text-slate-200">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      24/7 podpora
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Pro Plan */}
+              <Card className="bg-slate-800/50 backdrop-blur border-slate-700/50 relative">
+                <CardContent className="p-8">
+                  <div className="mb-8">
+                    <h3 className="text-xl font-bold text-white mb-2">Profesionál</h3>
+                    <p className="text-slate-400 mb-6">Pro profesionální rybáře</p>
+                    <div className="flex items-baseline">
+                      <span className="text-4xl font-bold text-white">15 990</span>
+                      <span className="text-slate-400 ml-2">Kč</span>
+                    </div>
+                  </div>
+                  
+                  <Button className="w-full mb-6 bg-slate-700 hover:bg-slate-600 text-white">
+                    Vybrat balíček
+                  </Button>
+                  
+                  <ul className="space-y-3 text-sm">
+                    <li className="flex items-center text-slate-300">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Kompletní rybářská sada
+                    </li>
+                    <li className="flex items-center text-slate-300">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Profesionální vybavení
+                    </li>
+                    <li className="flex items-center text-slate-300">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Exkluzivní návnady
+                    </li>
+                    <li className="flex items-center text-slate-300">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Osobní konzultace
+                    </li>
+                    <li className="flex items-center text-slate-300">
+                      <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-3"></div>
+                      Prioritní podpora
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA Section */}
+        <section className="py-24 px-4 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Přestaňte ztrácet čas při rybaření.
+            </h2>
+            <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto">
+              Začněte lovit ryby s profesionálním vybavením, které garantuje úspěch na vodě.
+            </p>
+            <Button 
+              size="lg"
+              onClick={() => setLocation('/products')}
+              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105"
+            >
+              Začít nakupovat
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
+        </section>
       </div>
-      
-      <Footer />
     </div>
   );
 }

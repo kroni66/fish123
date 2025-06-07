@@ -661,4 +661,21 @@
   .animate-loading-bubble {
     animation: loading-bubble-float 2s ease-in-out infinite;
   }
+
+  @keyframes bubble-rise {
+    0% { 
+      transform: translateY(20px) scale(0.5);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.8;
+    }
+    90% {
+      opacity: 0.8;
+    }
+    100% { 
+      transform: translateY(-100vh) scale(1.2);
+      opacity: 0;
+    }
+  }
 }

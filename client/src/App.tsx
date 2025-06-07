@@ -11,6 +11,7 @@ import { UnderwaterPageTransition } from "@/components/loading-animations";
 import { usePageTransitions } from "@/hooks/use-page-transitions";
 import { AnimatePresence } from "framer-motion";
 import Home from "@/pages/home";
+import Landing from "@/pages/landing";
 import About from "@/pages/about";
 import Contact from "@/pages/contact";
 import Inspiration from "@/pages/inspiration";
