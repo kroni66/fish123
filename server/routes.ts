@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { DirectusStorage } from "./directus-storage";
 import { storage as localStorage, type IStorage } from "./storage";
-import { insertProductSchema, insertCartItemSchema, insertOrderSchema } from "@shared/schema";
+import { insertProductSchema, insertCartItemSchema, insertOrderSchema, insertReviewSchema } from "@shared/schema";
 import { z } from "zod";
 
 // Initialize storage - use Directus exclusively for products and categories
@@ -192,6 +192,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(order);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch order" });
+    }
+  });
+
+  // Reviews
+  app.get("/api/products/:productId/reviews", async (req, res) => {
+    try {
+      const productId = parseInt(req.params.productId);
+      const reviews = await storage.getProductReviews(productId);
+      res.json(reviews);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch reviews" });
+    }
+  });
+
+  app.post("/api/reviews", async (req, res) => {
+    try {
+      const reviewData = insertReviewSchema.parse(req.body);
+      const review = await storage.createReview(reviewData);
+      res.json(review);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid review data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to create review" });
+    }
+  });
+
+  app.get("/api/reviews/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const review = await storage.getReview(id);
+      if (!review) {
+        return res.status(404).json({ message: "Review not found" });
+      }
+      res.json(review);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch review" });
+    }
+  });
+
+  app.patch("/api/reviews/:id/helpful", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const review = await storage.markReviewHelpful(id);
+      res.json(review);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to mark review as helpful" });
     }
   });
 

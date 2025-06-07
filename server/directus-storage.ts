@@ -1,5 +1,5 @@
 import { IStorage } from "./storage";
-import { Category, Product, CartItem, Order, InsertCategory, InsertProduct, InsertCartItem, InsertOrder } from "@shared/schema";
+import { Category, Product, CartItem, Order, Review, InsertCategory, InsertProduct, InsertCartItem, InsertOrder, InsertReview } from "@shared/schema";
 
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const DIRECTUS_API_KEY = process.env.DIRECTUS_API_KEY;
@@ -23,6 +23,19 @@ interface DirectusCategory {
   name: string;
   slug: string;
   description: string;
+}
+
+interface DirectusReview {
+  id: number;
+  product_id: number;
+  customer_name: string;
+  customer_email: string;
+  rating: number;
+  title: string;
+  comment: string;
+  verified: boolean;
+  helpful: number;
+  date_created: string;
 }
 
 export class DirectusStorage implements IStorage {
@@ -92,6 +105,21 @@ export class DirectusStorage implements IStorage {
       name: directusCategory.name,
       slug: directusCategory.slug,
       description: directusCategory.description,
+    };
+  }
+
+  private transformReview(directusReview: DirectusReview): Review {
+    return {
+      id: directusReview.id,
+      productId: directusReview.product_id,
+      customerName: directusReview.customer_name,
+      customerEmail: directusReview.customer_email,
+      rating: directusReview.rating,
+      title: directusReview.title,
+      comment: directusReview.comment,
+      verified: directusReview.verified,
+      helpful: directusReview.helpful,
+      createdAt: new Date(directusReview.date_created),
     };
   }
 
@@ -295,5 +323,75 @@ export class DirectusStorage implements IStorage {
 
   async getOrder(id: number): Promise<Order | undefined> {
     return this.orders.get(id);
+  }
+
+  // Reviews
+  async getProductReviews(productId: number): Promise<Review[]> {
+    try {
+      const response = await this.request(`/items/reviews?filter[product_id][_eq]=${productId}&sort=-date_created`);
+      if (response.data && Array.isArray(response.data)) {
+        return response.data.map((review: DirectusReview) => this.transformReview(review));
+      }
+      return [];
+    } catch (error) {
+      console.error(`Failed to fetch reviews for product ${productId} from Directus:`, error);
+      return [];
+    }
+  }
+
+  async createReview(review: InsertReview): Promise<Review> {
+    try {
+      const directusReviewData = {
+        product_id: review.productId,
+        customer_name: review.customerName,
+        customer_email: review.customerEmail,
+        rating: review.rating,
+        title: review.title,
+        comment: review.comment,
+        verified: review.verified || false,
+        helpful: 0,
+      };
+
+      const response = await this.request("/items/reviews", {
+        method: "POST",
+        body: JSON.stringify(directusReviewData),
+      });
+
+      return this.transformReview(response.data);
+    } catch (error) {
+      console.error("Failed to create review in Directus:", error);
+      throw error;
+    }
+  }
+
+  async getReview(id: number): Promise<Review | undefined> {
+    try {
+      const response = await this.request(`/items/reviews/${id}`);
+      return response.data ? this.transformReview(response.data) : undefined;
+    } catch (error) {
+      console.error(`Failed to fetch review ${id} from Directus:`, error);
+      return undefined;
+    }
+  }
+
+  async markReviewHelpful(id: number): Promise<Review> {
+    try {
+      const review = await this.getReview(id);
+      if (!review) {
+        throw new Error(`Review ${id} not found`);
+      }
+
+      const response = await this.request(`/items/reviews/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          helpful: (review.helpful || 0) + 1,
+        }),
+      });
+
+      return this.transformReview(response.data);
+    } catch (error) {
+      console.error(`Failed to mark review ${id} as helpful:`, error);
+      throw error;
+    }
   }
 }
