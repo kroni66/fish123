@@ -76,7 +76,15 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
       });
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        console.log(`[REVIEW] API validation error:`, {
+          status: response.status,
+          errors: errorData.errors,
+          message: errorData.message,
+          timestamp: new Date().toISOString(),
+          productId
+        });
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
       
       return response.json();
@@ -164,6 +172,14 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
   const handleSubmitReview = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validate form fields
+    const errors = [];
+    if (!reviewForm.customerName.trim()) errors.push('Jméno je povinné');
+    if (!reviewForm.customerEmail.trim()) errors.push('Email je povinný');
+    if (reviewForm.title.length < 3) errors.push('Nadpis musí mít alespoň 3 znaky');
+    if (reviewForm.comment.length < 5) errors.push('Komentář musí mít alespoň 5 znaků');
+    if (reviewForm.rating === 0) errors.push('Hodnocení je povinné');
+    
     console.log(`[REVIEW] Form submission attempted for product ${productId}:`, {
       formData: {
         customerName: reviewForm.customerName,
@@ -173,7 +189,8 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
         commentLength: reviewForm.comment.length
       },
       validation: {
-        isValid: reviewForm.customerName && reviewForm.customerEmail && reviewForm.title && reviewForm.comment,
+        isValid: errors.length === 0,
+        errors: errors,
         missingFields: [
           !reviewForm.customerName && 'customerName',
           !reviewForm.customerEmail && 'customerEmail', 
@@ -184,6 +201,15 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
       timestamp: new Date().toISOString(),
       productId
     });
+    
+    if (errors.length > 0) {
+      toast({
+        title: "Chyba ve formuláři",
+        description: errors.join(', '),
+        variant: "destructive",
+      });
+      return;
+    }
     
     createReviewMutation.mutate(reviewForm);
   };
@@ -287,8 +313,12 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
                       });
                       setReviewForm(prev => ({ ...prev, customerName: e.target.value }));
                     }}
+                    className={reviewForm.customerName.trim() ? "border-green-300" : ""}
                     required
                   />
+                  {!reviewForm.customerName.trim() && (
+                    <p className="text-sm text-muted-foreground mt-1">Zadejte své jméno</p>
+                  )}
                 </div>
                 <div>
                   <Label htmlFor="customerEmail">Email *</Label>
@@ -339,8 +369,14 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
                     setReviewForm(prev => ({ ...prev, title: e.target.value }));
                   }}
                   placeholder="Stručný nadpis vaší recenze"
+                  className={reviewForm.title.length >= 3 ? "border-green-300" : reviewForm.title.length > 0 ? "border-orange-300" : ""}
                   required
                 />
+                <p className="text-sm text-muted-foreground mt-1">
+                  {reviewForm.title.length === 0 ? "Zadejte nadpis recenze" : 
+                   reviewForm.title.length < 3 ? `Ještě ${3 - reviewForm.title.length} znaky` :
+                   "✓ Nadpis je v pořádku"}
+                </p>
               </div>
 
               <div>
@@ -361,8 +397,17 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
                   placeholder="Podělte se o své zkušenosti s tímto produktem..."
                   rows={4}
                   required
-                  className="custom-scrollbar resize-y min-h-[100px] max-h-[300px]"
+                  className={`custom-scrollbar resize-y min-h-[100px] max-h-[300px] ${
+                    reviewForm.comment.length >= 5 ? "border-green-300" : 
+                    reviewForm.comment.length > 0 ? "border-orange-300" : ""
+                  }`}
                 />
+                <p className="text-sm text-muted-foreground mt-1">
+                  {reviewForm.comment.length === 0 ? "Napište své hodnocení" : 
+                   reviewForm.comment.length < 5 ? `Ještě ${5 - reviewForm.comment.length} znaků` :
+                   "✓ Komentář je v pořádku"} 
+                  {reviewForm.comment.length > 0 && ` (${reviewForm.comment.length} znaků)`}
+                </p>
               </div>
 
               <div className="flex gap-2">

@@ -89,8 +89,8 @@ export const insertReviewSchema = createInsertSchema(reviews).omit({
   helpful: true,
 }).extend({
   rating: z.number().min(1).max(5),
-  title: z.string().min(5, "Nadpis musí mít alespoň 5 znaků"),
-  comment: z.string().min(10, "Komentář musí mít alespoň 10 znaků"),
+  title: z.string().min(3, "Nadpis musí mít alespoň 3 znaky"),
+  comment: z.string().min(5, "Komentář musí mít alespoň 5 znaků"),
 });
 
 export type Category = typeof categories.$inferSelect;
