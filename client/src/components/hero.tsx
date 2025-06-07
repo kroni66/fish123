@@ -538,6 +538,7 @@ export function Hero() {
               variant="outline" 
               size="lg" 
               className="border-2 border-slate-300/70 text-slate-100 hover:bg-slate-300/10 hover:text-white hover:border-slate-200 px-16 py-6 text-xl font-semibold rounded-2xl backdrop-blur-md bg-slate-900/30 shadow-xl transform hover:scale-105 transition-all duration-300 tracking-wide"
+              onClick={() => setLocation('/inspiration')}
             >
               Naše příběhy
             </Button>
