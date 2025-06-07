@@ -3,7 +3,7 @@ import { useRoute } from "wouter";
 import { CheckCircle, ArrowLeft, Package, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Header } from "@/components/header";
+import { PageTransition } from "@/components/page-transition";
 import { Footer } from "@/components/footer";
 import { useLocation } from "wouter";
 
@@ -31,10 +31,10 @@ export default function OrderConfirmation() {
   const isSuccessful = paymentStatus === 'succeeded';
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-8">
+    <PageTransition>
+      <div className="min-h-screen bg-background">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <div className="text-center mb-8">
           {isSuccessful ? (
             <>
               <CheckCircle className="h-16 w-16 text-success mx-auto mb-4" />
@@ -144,8 +144,9 @@ export default function OrderConfirmation() {
             Pokračovat v nákupu
           </Button>
         </div>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </PageTransition>
   );
 }
