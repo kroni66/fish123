@@ -18,14 +18,14 @@ import { apiRequest } from "@/lib/queryClient";
 import { formatPrice } from "@/lib/utils";
 
 const checkoutSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  address: z.string().min(5, "Address must be at least 5 characters"),
-  city: z.string().min(2, "City must be at least 2 characters"),
-  postalCode: z.string().min(5, "Postal code must be at least 5 characters"),
-  cardNumber: z.string().min(16, "Card number must be 16 digits"),
-  expiryDate: z.string().regex(/^\d{2}\/\d{2}$/, "Expiry date must be MM/YY format"),
-  cvv: z.string().min(3, "CVV must be at least 3 digits"),
+  name: z.string().min(2, "Jméno musí mít alespoň 2 znaky"),
+  email: z.string().email("Zadejte prosím platnou e-mailovou adresu"),
+  address: z.string().min(5, "Adresa musí mít alespoň 5 znaků"),
+  city: z.string().min(2, "Město musí mít alespoň 2 znaky"),
+  postalCode: z.string().min(5, "PSČ musí mít alespoň 5 znaků"),
+  cardNumber: z.string().min(16, "Číslo karty musí mít 16 číslic"),
+  expiryDate: z.string().regex(/^\d{2}\/\d{2}$/, "Datum platnosti musí být ve formátu MM/RR"),
+  cvv: z.string().min(3, "CVV musí mít alespoň 3 číslice"),
 });
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>;
@@ -58,15 +58,15 @@ export default function Checkout() {
     onSuccess: (order) => {
       clearCart();
       toast({
-        title: "Order placed successfully!",
-        description: `Your order #${order.id} has been confirmed.`,
+        title: "Objednávka byla úspěšně odeslána!",
+        description: `Vaše objednávka č. ${order.id} byla potvrzena.`,
       });
       setLocation(`/order-confirmation/${order.id}`);
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to place order. Please try again.",
+        title: "Chyba",
+        description: "Nepodařilo se odeslat objednávku. Zkuste to prosím znovu.",
         variant: "destructive",
       });
     },
@@ -75,8 +75,8 @@ export default function Checkout() {
   const onSubmit = async (data: CheckoutFormData) => {
     if (items.length === 0) {
       toast({
-        title: "Cart is empty",
-        description: "Please add items to your cart before checking out.",
+        title: "Košík je prázdný",
+        description: "Před dokončením objednávky přidejte položky do košíku.",
         variant: "destructive",
       });
       return;
@@ -107,7 +107,7 @@ export default function Checkout() {
           city: data.city,
           postalCode: data.postalCode,
         },
-        status: "confirmed",
+        status: "potvrzeno",
       };
 
       // Simulate payment processing delay
@@ -127,13 +127,13 @@ export default function Checkout() {
         <Header />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-foreground mb-4">Your cart is empty</h1>
+            <h1 className="text-2xl font-bold text-foreground mb-4">Váš košík je prázdný</h1>
             <p className="text-muted-foreground mb-8">
-              Add some products to your cart before checking out.
+              Před dokončením objednávky přidejte produkty do košíku.
             </p>
             <Button onClick={() => setLocation("/")}>
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Continue Shopping
+              Pokračovat v nákupu
             </Button>
           </div>
         </div>
@@ -152,11 +152,11 @@ export default function Checkout() {
           className="mb-8"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Shopping
+          Zpět na produkty
         </Button>
 
         <h1 className="text-3xl font-bold text-foreground font-poppins mb-8">
-          Checkout
+          Pokladna
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -166,12 +166,12 @@ export default function Checkout() {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Truck className="h-5 w-5 mr-2" />
-                  Shipping Information
+                  Doručovací údaje
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label htmlFor="name">Celé jméno</Label>
                   <Input
                     id="name"
                     {...form.register("name")}
@@ -184,7 +184,7 @@ export default function Checkout() {
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label htmlFor="email">E-mailová adresa</Label>
                   <Input
                     id="email"
                     type="email"
@@ -198,7 +198,7 @@ export default function Checkout() {
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="address">Address</Label>
+                  <Label htmlFor="address">Adresa</Label>
                   <Input
                     id="address"
                     {...form.register("address")}
@@ -212,7 +212,7 @@ export default function Checkout() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="city">City</Label>
+                    <Label htmlFor="city">Město</Label>
                     <Input
                       id="city"
                       {...form.register("city")}
@@ -225,7 +225,7 @@ export default function Checkout() {
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="postalCode">Postal Code</Label>
+                    <Label htmlFor="postalCode">PSČ</Label>
                     <Input
                       id="postalCode"
                       {...form.register("postalCode")}
@@ -245,12 +245,12 @@ export default function Checkout() {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <CreditCard className="h-5 w-5 mr-2" />
-                  Payment Information
+                  Platební údaje
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="cardNumber">Card Number</Label>
+                  <Label htmlFor="cardNumber">Číslo karty</Label>
                   <Input
                     id="cardNumber"
                     placeholder="1234 5678 9012 3456"
@@ -265,10 +265,10 @@ export default function Checkout() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="expiryDate">Expiry Date</Label>
+                    <Label htmlFor="expiryDate">Datum platnosti</Label>
                     <Input
                       id="expiryDate"
-                      placeholder="MM/YY"
+                      placeholder="MM/RR"
                       {...form.register("expiryDate")}
                       className={form.formState.errors.expiryDate ? "border-destructive" : ""}
                     />
@@ -295,7 +295,7 @@ export default function Checkout() {
                 </div>
                 <div className="flex items-center text-sm text-muted-foreground">
                   <Shield className="h-4 w-4 mr-2" />
-                  Your payment information is secure and encrypted
+                  Vaše platební údaje jsou zabezpečené a šifrované
                 </div>
               </CardContent>
             </Card>
