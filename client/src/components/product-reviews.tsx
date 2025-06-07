@@ -466,7 +466,7 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
                   </div>
                 </div>
 
-                <p className="text-gray-700 leading-relaxed">{review.comment}</p>
+                <p className="text-white leading-relaxed">{review.comment}</p>
 
                 <Separator />
 
