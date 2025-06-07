@@ -122,7 +122,7 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
   });
 
   const markHelpfulMutation = useMutation({
-    mutationFn: (reviewId: number) => {
+    mutationFn: async (reviewId: number) => {
       console.log(`[REVIEW] Marking review ${reviewId} as helpful:`, {
         reviewId,
         productId,
@@ -130,7 +130,16 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
         action: 'mark_helpful'
       });
       
-      return apiRequest(`/api/reviews/${reviewId}/helpful`, "PATCH");
+      const response = await fetch(`/api/reviews/${reviewId}/helpful`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return response.json();
     },
     onSuccess: (data, reviewId) => {
       console.log(`[REVIEW] Successfully marked review ${reviewId} as helpful:`, {
@@ -401,10 +410,13 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
                     </div>
                     <div className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
-                      {formatDistanceToNow(new Date(review.createdAt), {
-                        addSuffix: true,
-                        locale: cs,
-                      })}
+                      {review.createdAt 
+                        ? formatDistanceToNow(new Date(review.createdAt), {
+                            addSuffix: true,
+                            locale: cs,
+                          })
+                        : "Nedávno"
+                      }
                     </div>
                   </div>
                 </div>
