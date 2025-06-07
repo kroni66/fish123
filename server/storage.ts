@@ -5,18 +5,24 @@ import {
   cartItems, 
   orders,
   reviews,
+  articles,
+  articleCategories,
   type User,
   type Category, 
   type Product, 
   type CartItem, 
   type Order,
   type Review,
+  type Article,
+  type ArticleCategory,
   type InsertUser,
   type InsertCategory, 
   type InsertProduct, 
   type InsertCartItem, 
   type InsertOrder,
-  type InsertReview
+  type InsertReview,
+  type InsertArticle,
+  type InsertArticleCategory
 } from "@shared/schema";
 
 export interface IStorage {
@@ -70,12 +76,16 @@ export class MemStorage implements IStorage {
   private cartItems: Map<number, CartItem>;
   private orders: Map<number, Order>;
   private reviews: Map<number, Review>;
+  private articles: Map<number, Article>;
+  private articleCategories: Map<number, ArticleCategory>;
   private currentUserId: number;
   private currentCategoryId: number;
   private currentProductId: number;
   private currentCartItemId: number;
   private currentOrderId: number;
   private currentReviewId: number;
+  private currentArticleId: number;
+  private currentArticleCategoryId: number;
 
   constructor() {
     this.users = new Map();
@@ -84,12 +94,16 @@ export class MemStorage implements IStorage {
     this.cartItems = new Map();
     this.orders = new Map();
     this.reviews = new Map();
+    this.articles = new Map();
+    this.articleCategories = new Map();
     this.currentUserId = 1;
     this.currentCategoryId = 1;
     this.currentProductId = 1;
     this.currentCartItemId = 1;
     this.currentOrderId = 1;
     this.currentReviewId = 1;
+    this.currentArticleId = 1;
+    this.currentArticleCategoryId = 1;
 
     // Initialize with sample data
     this.initializeSampleData();
@@ -418,6 +432,44 @@ export class MemStorage implements IStorage {
     review.helpful = (review.helpful || 0) + 1;
     this.reviews.set(id, review);
     return review;
+  }
+
+  // Articles
+  async getArticles(categorySlug?: string): Promise<Article[]> {
+    const articles = Array.from(this.articles.values()).filter(article => article.published);
+    if (categorySlug) {
+      return articles.filter(article => article.category === categorySlug);
+    }
+    return articles.sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime());
+  }
+
+  async getArticleById(id: number): Promise<Article | undefined> {
+    return this.articles.get(id);
+  }
+
+  async getArticleBySlug(slug: string): Promise<Article | undefined> {
+    for (const article of this.articles.values()) {
+      if (article.slug === slug) {
+        return article;
+      }
+    }
+    return undefined;
+  }
+
+  async createArticle(insertArticle: InsertArticle): Promise<Article> {
+    const id = this.currentArticleId++;
+    const article: Article = { 
+      ...insertArticle, 
+      id,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.articles.set(id, article);
+    return article;
+  }
+
+  async getArticleCategories(): Promise<ArticleCategory[]> {
+    return Array.from(this.articleCategories.values());
   }
 }
 

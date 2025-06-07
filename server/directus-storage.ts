@@ -502,4 +502,119 @@ export class DirectusStorage implements IStorage {
       throw error;
     }
   }
+
+  // Transform methods for articles
+  private transformArticle(directusArticle: DirectusArticle): Article {
+    return {
+      id: directusArticle.id,
+      title: directusArticle.title,
+      slug: directusArticle.slug,
+      excerpt: directusArticle.excerpt,
+      content: directusArticle.content,
+      author: directusArticle.author,
+      category: directusArticle.category,
+      imageUrl: directusArticle.image_url || null,
+      readTime: directusArticle.read_time,
+      published: directusArticle.published,
+      createdAt: new Date(directusArticle.date_created),
+      updatedAt: new Date(directusArticle.date_updated),
+    };
+  }
+
+  private transformArticleCategory(directusCategory: DirectusArticleCategory): ArticleCategory {
+    return {
+      id: directusCategory.id,
+      name: directusCategory.name,
+      slug: directusCategory.slug,
+      description: directusCategory.description || null,
+      createdAt: new Date(directusCategory.date_created),
+    };
+  }
+
+  // Article methods
+  async getArticles(categorySlug?: string): Promise<Article[]> {
+    try {
+      console.log("Directus API call: " + this.baseUrl + "/items/articles");
+      
+      let url = "/items/articles?filter[published][_eq]=true&sort=-date_created";
+      if (categorySlug) {
+        url += `&filter[category][_eq]=${categorySlug}`;
+      }
+
+      const response = await this.request(url);
+      console.log(`Directus API success: ${this.baseUrl}/items/articles returned ${response.data.length} items`);
+      
+      return response.data.map((article: DirectusArticle) =>
+        this.transformArticle(article)
+      );
+    } catch (error) {
+      console.error("Failed to fetch articles from Directus:", error);
+      return [];
+    }
+  }
+
+  async getArticleById(id: number): Promise<Article | undefined> {
+    try {
+      const response = await this.request(`/items/articles/${id}`);
+      return response.data ? this.transformArticle(response.data) : undefined;
+    } catch (error) {
+      console.error(`Failed to fetch article ${id} from Directus:`, error);
+      return undefined;
+    }
+  }
+
+  async getArticleBySlug(slug: string): Promise<Article | undefined> {
+    try {
+      const response = await this.request(`/items/articles?filter[slug][_eq]=${slug}&limit=1`);
+      if (response.data && response.data.length > 0) {
+        return this.transformArticle(response.data[0]);
+      }
+      return undefined;
+    } catch (error) {
+      console.error(`Failed to fetch article with slug ${slug} from Directus:`, error);
+      return undefined;
+    }
+  }
+
+  async createArticle(article: InsertArticle): Promise<Article> {
+    try {
+      const directusArticleData = {
+        title: article.title,
+        slug: article.slug,
+        excerpt: article.excerpt,
+        content: article.content,
+        author: article.author,
+        category: article.category,
+        image_url: article.imageUrl,
+        read_time: article.readTime,
+        published: article.published ?? true,
+      };
+
+      const response = await this.request("/items/articles", {
+        method: "POST",
+        body: JSON.stringify(directusArticleData),
+      });
+
+      return this.transformArticle(response.data);
+    } catch (error) {
+      console.error("Failed to create article in Directus:", error);
+      throw error;
+    }
+  }
+
+  async getArticleCategories(): Promise<ArticleCategory[]> {
+    try {
+      console.log("Directus API call: " + this.baseUrl + "/items/article_categories");
+      
+      const response = await this.request("/items/article_categories?sort=name");
+      console.log(`Directus API success: ${this.baseUrl}/items/article_categories returned ${response.data.length} items`);
+      
+      return response.data.map((category: DirectusArticleCategory) =>
+        this.transformArticleCategory(category)
+      );
+    } catch (error) {
+      console.error("Failed to fetch article categories from Directus:", error);
+      return [];
+    }
+  }
 }
