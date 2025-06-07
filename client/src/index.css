@@ -495,6 +495,23 @@
     background: hsl(var(--muted));
   }
 
+  /* 3D Rotation Effects */
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
   /* HTML content styling for product descriptions */
   .prose {
     color: hsl(var(--muted-foreground));
