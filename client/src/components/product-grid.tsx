@@ -5,6 +5,7 @@ import { ProductCard } from "./product-card";
 import { ProductModal } from "./product-modal";
 import { CategoryFilter } from "./category-filter";
 import { Button } from "./ui/button";
+import { UnderwaterLoading, ProductCardSkeleton } from "./loading-animations";
 import { useMarineAnimations, marinePresets } from "@/hooks/use-marine-animations";
 import type { Product } from "@shared/schema";
 
@@ -54,9 +55,23 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" aria-label="Loading"/>
-      </div>
+      <section className="py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <UnderwaterLoading 
+            isLoading={true} 
+            message="Načítám produkty z hlubin..." 
+            variant="default"
+            size="lg"
+          />
+          
+          {/* Skeleton placeholder grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-16">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <ProductCardSkeleton key={i} />
+            ))}
+          </div>
+        </div>
+      </section>
     );
   }
 

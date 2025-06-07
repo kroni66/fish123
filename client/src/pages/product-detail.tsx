@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { CartOverlay } from "@/components/cart-overlay";
+import { UnderwaterLoading } from "@/components/loading-animations";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
 import { formatPrice } from "@/lib/utils";
@@ -48,24 +49,36 @@ export default function ProductDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
         <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <UnderwaterLoading 
+            isLoading={true} 
+            message="Načítám produkt z mořských hlubin..." 
+            variant="default"
+            size="lg"
+          />
+          
+          {/* Enhanced skeleton with underwater theme */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
             <div className="space-y-4">
-              <div className="aspect-square bg-muted rounded-xl animate-pulse" />
+              <div className="aspect-square bg-gradient-to-br from-slate-800/50 to-slate-700/50 rounded-xl animate-shimmer border border-cyan-500/20" />
               <div className="grid grid-cols-4 gap-2">
                 {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="aspect-square bg-muted rounded-lg animate-pulse" />
+                  <div 
+                    key={i} 
+                    className="aspect-square bg-gradient-to-br from-slate-800/40 to-slate-700/40 rounded-lg animate-shimmer border border-blue-500/10"
+                    style={{ animationDelay: `${i * 0.2}s` }}
+                  />
                 ))}
               </div>
             </div>
             <div className="space-y-6">
-              <div className="h-8 bg-muted rounded animate-pulse" />
-              <div className="h-6 bg-muted rounded animate-pulse w-32" />
+              <div className="h-8 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded animate-shimmer" />
+              <div className="h-6 bg-gradient-to-r from-slate-700/40 to-slate-600/40 rounded animate-shimmer w-32" />
               <div className="space-y-2">
-                <div className="h-4 bg-muted rounded animate-pulse" />
-                <div className="h-4 bg-muted rounded animate-pulse w-3/4" />
+                <div className="h-4 bg-gradient-to-r from-slate-700/30 to-slate-600/30 rounded animate-shimmer" />
+                <div className="h-4 bg-gradient-to-r from-slate-700/30 to-slate-600/30 rounded animate-shimmer w-3/4" />
               </div>
             </div>
           </div>
