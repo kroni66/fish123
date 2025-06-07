@@ -212,6 +212,7 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
                   placeholder="Podělte se o své zkušenosti s tímto produktem..."
                   rows={4}
                   required
+                  className="custom-scrollbar resize-y min-h-[100px] max-h-[300px]"
                 />
               </div>
 
