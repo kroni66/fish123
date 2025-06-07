@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
-import { CategoryFilter } from "@/components/category-filter";
 import { ProductGrid } from "@/components/product-grid";
 import { CartOverlay } from "@/components/cart-overlay";
 import { Footer } from "@/components/footer";
@@ -34,13 +33,10 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <Header />
       <Hero />
-      <CategoryFilter 
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-      />
       <ProductGrid 
         categoryId={selectedCategory}
         searchQuery={searchQuery}
+        onCategoryChange={setSelectedCategory}
       />
       <Footer />
       <CartOverlay />

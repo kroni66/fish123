@@ -3,14 +3,16 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "./product-card";
 import { ProductModal } from "./product-modal";
+import { CategoryFilter } from "./category-filter";
 import type { Product } from "@shared/schema";
 
 interface ProductGridProps {
   categoryId?: number | null;
   searchQuery?: string;
+  onCategoryChange?: (categoryId: number | null) => void;
 }
 
-export function ProductGrid({ categoryId, searchQuery }: ProductGridProps) {
+export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: ProductGridProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [displayCount, setDisplayCount] = useState(8);
 
@@ -87,6 +89,16 @@ export function ProductGrid({ categoryId, searchQuery }: ProductGridProps) {
               pro svou kvalitu, spolehlivost a schopnost přinést úspěch u vody.
             </p>
           </div>
+
+          {/* Category Filter */}
+          {onCategoryChange && (
+            <div className="mb-16">
+              <CategoryFilter 
+                selectedCategory={categoryId ?? null}
+                onCategoryChange={onCategoryChange}
+              />
+            </div>
+          )}
 
           {/* Featured Product Story */}
           {displayedProducts.length > 0 && (
