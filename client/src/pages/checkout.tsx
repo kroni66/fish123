@@ -15,6 +15,7 @@ import { Footer } from "@/components/footer";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { formatPrice } from "@/lib/utils";
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -97,7 +98,7 @@ export default function Checkout() {
 
       const orderData = {
         sessionId,
-        total: total.toFixed(2),
+        total: formatPrice(total),
         items: orderItems,
         customerInfo: {
           name: data.name,
@@ -326,7 +327,7 @@ export default function Checkout() {
                         </p>
                       </div>
                       <span className="font-medium text-foreground">
-                        ${((parseFloat(item.product?.price || "0")) * item.quantity).toFixed(2)}
+                        {formatPrice((parseFloat(item.product?.price || "0")) * item.quantity)} Kč
                       </span>
                     </div>
                   ))}
@@ -336,21 +337,21 @@ export default function Checkout() {
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Subtotal</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>Mezisouhrn</span>
+                    <span>{formatPrice(total)} Kč</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span>Shipping</span>
-                    <span className="text-success">FREE</span>
+                    <span>Doprava</span>
+                    <span className="text-success">ZDARMA</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span>Tax</span>
-                    <span>${(total * 0.08).toFixed(2)}</span>
+                    <span>DPH</span>
+                    <span>{formatPrice(total * 0.21)} Kč</span>
                   </div>
                   <Separator />
                   <div className="flex justify-between font-semibold text-lg">
-                    <span>Total</span>
-                    <span className="text-primary">${(total * 1.08).toFixed(2)}</span>
+                    <span>Celkem</span>
+                    <span className="text-primary">{formatPrice(total * 1.21)} Kč</span>
                   </div>
                 </div>
 
@@ -366,7 +367,7 @@ export default function Checkout() {
                       <span>Processing...</span>
                     </div>
                   ) : (
-                    `Complete Order - $${(total * 1.08).toFixed(2)}`
+                    `Dokončit objednávku - ${formatPrice(total * 1.21)} Kč`
                   )}
                 </Button>
               </CardContent>

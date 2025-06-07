@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/hooks/use-cart";
 import { useLocation } from "wouter";
+import { formatPrice } from "@/lib/utils";
 
 export function CartOverlay() {
   const { 
@@ -79,7 +80,7 @@ export function CartOverlay() {
                         {item.product?.name}
                       </h4>
                       <p className="text-sm text-muted-foreground">
-                        ${item.product?.price}
+                        {formatPrice(item.product?.price || "0")} Kč
                       </p>
                       <div className="flex items-center space-x-2 mt-2">
                         <Button
@@ -124,7 +125,7 @@ export function CartOverlay() {
               <div className="flex items-center justify-between mb-4">
                 <span className="text-lg font-semibold text-foreground">Celkem:</span>
                 <span className="text-2xl font-bold text-primary">
-                  {total.toFixed(2)} Kč
+                  {formatPrice(total)} Kč
                 </span>
               </div>
               <Button
