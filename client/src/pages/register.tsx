@@ -28,7 +28,7 @@ export default function Register() {
     try {
       setSubmitError(null);
       await registerUser(data);
-      setLocation("/");
+      setLocation("/dashboard");
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : "Registrace se nezdařila");
     }

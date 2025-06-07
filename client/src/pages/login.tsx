@@ -28,7 +28,7 @@ export default function Login() {
     try {
       setSubmitError(null);
       await login(data);
-      setLocation("/");
+      setLocation("/dashboard");
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : "Přihlášení se nezdařilo");
     }
