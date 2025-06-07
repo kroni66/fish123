@@ -81,30 +81,7 @@ export function Hero() {
             </Button>
           </div>
           
-          {/* Features */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-16 max-w-4xl mx-auto">
-            <div className="text-center space-y-3">
-              <div className="inline-flex p-4 rounded-full bg-primary/20 backdrop-blur-sm">
-                <Award className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold text-foreground">Prémiová kvalita</h3>
-              <p className="text-muted-foreground">Pouze ověřené značky a materiály</p>
-            </div>
-            <div className="text-center space-y-3">
-              <div className="inline-flex p-4 rounded-full bg-accent/20 backdrop-blur-sm">
-                <Target className="h-8 w-8 text-accent" />
-              </div>
-              <h3 className="text-lg font-semibold text-foreground">Přesnost</h3>
-              <p className="text-muted-foreground">Vybavení pro precizní rybolov</p>
-            </div>
-            <div className="text-center space-y-3">
-              <div className="inline-flex p-4 rounded-full bg-primary/20 backdrop-blur-sm">
-                <Fish className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold text-foreground">Tradice</h3>
-              <p className="text-muted-foreground">Respekt k rybářské kultuře</p>
-            </div>
-          </div>
+          
         </div>
       </div>
     </section>

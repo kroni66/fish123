@@ -103,53 +103,98 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
           )}
 
           {/* Core Values Section */}
-          <div className="mb-20">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="mb-24 relative">
+            {/* Section Header */}
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-foreground mb-4">Naše hodnoty</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Tři pilíře, na kterých stavíme každý produkt v našem sortimentu
+              </p>
+            </div>
+
+            {/* Values Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               {/* Prémiová kvalita */}
-              <div className="group relative bg-gradient-to-br from-amber-900/90 to-amber-800/90 rounded-2xl p-8 text-center overflow-hidden hover:scale-105 transition-all duration-300">
-                <div className="absolute inset-0 bg-black/10 opacity-30"></div>
-                <div className="relative z-10">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-amber-200/20 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-amber-200" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
-                    </svg>
+              <div className="group relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-amber-600/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                <div className="relative bg-gradient-to-br from-amber-900/95 to-amber-800/95 backdrop-blur-sm rounded-3xl p-10 text-center border border-amber-700/30 hover:border-amber-600/50 transition-all duration-500 hover:shadow-2xl hover:shadow-amber-900/25 group-hover:-translate-y-2">
+                  {/* Decorative elements */}
+                  <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-amber-400/10 to-transparent rounded-full blur-2xl"></div>
+                  <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-amber-300/10 to-transparent rounded-full blur-xl"></div>
+                  
+                  <div className="relative z-10">
+                    <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-br from-amber-200/30 to-amber-300/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-amber-400/20 group-hover:scale-110 transition-transform duration-300">
+                      <svg className="w-10 h-10 text-amber-200" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-3xl font-bold text-amber-100 mb-6 tracking-tight">Prémiová kvalita</h3>
+                    <p className="text-amber-200/90 leading-relaxed text-lg">
+                      Vybíráme pouze ty nejlepší materiály a komponenty, které prošly důkladným testováním v nejnáročnějších podmínkách.
+                    </p>
+                    <div className="mt-8 pt-6 border-t border-amber-600/30">
+                      <div className="flex items-center justify-center space-x-2 text-amber-300/80">
+                        <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
+                        <span className="text-sm font-medium">Ověřeno našimi experty</span>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-bold text-amber-100 mb-4">Prémiová kvalita</h3>
-                  <p className="text-amber-200/90 leading-relaxed">
-                    Vybíráme pouze ty nejlepší materiály a komponenty, které prošly důkladným testováním v nejnáročnějších podmínkách.
-                  </p>
                 </div>
               </div>
 
               {/* Přesnost */}
-              <div className="group relative bg-gradient-to-br from-stone-800/90 to-stone-700/90 rounded-2xl p-8 text-center overflow-hidden hover:scale-105 transition-all duration-300">
-                <div className="absolute inset-0 bg-black/10 opacity-30"></div>
-                <div className="relative z-10">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-stone-200/20 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-stone-200" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
-                    </svg>
+              <div className="group relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-stone-500/20 to-stone-600/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                <div className="relative bg-gradient-to-br from-stone-800/95 to-stone-700/95 backdrop-blur-sm rounded-3xl p-10 text-center border border-stone-600/30 hover:border-stone-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-stone-900/25 group-hover:-translate-y-2">
+                  {/* Decorative elements */}
+                  <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-stone-400/10 to-transparent rounded-full blur-2xl"></div>
+                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-stone-300/10 to-transparent rounded-full blur-xl"></div>
+                  
+                  <div className="relative z-10">
+                    <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-br from-stone-200/30 to-stone-300/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-stone-400/20 group-hover:scale-110 transition-transform duration-300">
+                      <svg className="w-10 h-10 text-stone-200" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-3xl font-bold text-stone-100 mb-6 tracking-tight">Přesnost</h3>
+                    <p className="text-stone-200/90 leading-relaxed text-lg">
+                      Každý detail je pečlivě promyšlen a vyladěn pro maximální účinnost. Preciznost, která rozhoduje o úspěchu.
+                    </p>
+                    <div className="mt-8 pt-6 border-t border-stone-600/30">
+                      <div className="flex items-center justify-center space-x-2 text-stone-300/80">
+                        <div className="w-2 h-2 bg-stone-400 rounded-full"></div>
+                        <span className="text-sm font-medium">Vyladěno do detailu</span>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-bold text-stone-100 mb-4">Přesnost</h3>
-                  <p className="text-stone-200/90 leading-relaxed">
-                    Každý detail je pečlivě promyšlen a vyladěn pro maximální účinnost. Preciznost, která rozhoduje o úspěchu.
-                  </p>
                 </div>
               </div>
 
               {/* Tradice */}
-              <div className="group relative bg-gradient-to-br from-emerald-900/90 to-emerald-800/90 rounded-2xl p-8 text-center overflow-hidden hover:scale-105 transition-all duration-300">
-                <div className="absolute inset-0 bg-black/10 opacity-30"></div>
-                <div className="relative z-10">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-emerald-200/20 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-emerald-200" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2M21,9V7L15,1H9V3H15L19,7V9H21M5,7V9H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19V19H5V7M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
-                    </svg>
+              <div className="group relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                <div className="relative bg-gradient-to-br from-emerald-900/95 to-emerald-800/95 backdrop-blur-sm rounded-3xl p-10 text-center border border-emerald-700/30 hover:border-emerald-600/50 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-900/25 group-hover:-translate-y-2">
+                  {/* Decorative elements */}
+                  <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-emerald-400/10 to-transparent rounded-full blur-2xl"></div>
+                  <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-emerald-300/10 to-transparent rounded-full blur-xl"></div>
+                  
+                  <div className="relative z-10">
+                    <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-br from-emerald-200/30 to-emerald-300/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-emerald-400/20 group-hover:scale-110 transition-transform duration-300">
+                      <svg className="w-10 h-10 text-emerald-200" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2M21,9V7L15,1H9V3H15L19,7V9H21M5,7V9H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19V19H5V7M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
+                      </svg>
+                    </div>
+                    <h3 className="text-3xl font-bold text-emerald-100 mb-6 tracking-tight">Tradice</h3>
+                    <p className="text-emerald-200/90 leading-relaxed text-lg">
+                      Respektujeme osvědčené metody předávané generacemi rybářů a spojujeme je s moderními inovacemi.
+                    </p>
+                    <div className="mt-8 pt-6 border-t border-emerald-600/30">
+                      <div className="flex items-center justify-center space-x-2 text-emerald-300/80">
+                        <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                        <span className="text-sm font-medium">Generace zkušeností</span>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-bold text-emerald-100 mb-4">Tradice</h3>
-                  <p className="text-emerald-200/90 leading-relaxed">
-                    Respektujeme osvědčené metody předávané generacemi rybářů a spojujeme je s moderními inovacemi.
-                  </p>
                 </div>
               </div>
             </div>
