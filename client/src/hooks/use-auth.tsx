@@ -22,7 +22,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const userData = await apiRequest("GET", "/api/auth/user");
+        const response = await apiRequest("GET", "/api/auth/user");
+        const userData = await response.json();
         setUser(userData);
       } catch {
         setUser(null);
@@ -39,7 +40,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setError(null);
     try {
       const response = await apiRequest("POST", "/api/auth/login", data);
-      setUser(response.user);
+      const loginResult = await response.json();
+      setUser(loginResult.user);
+      // Force a refresh of user data from the server to ensure consistency
+      const userResponse = await apiRequest("GET", "/api/auth/user");
+      const userData = await userResponse.json();
+      setUser(userData);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Přihlášení se nezdařilo";
       setError(errorMessage);
@@ -54,7 +60,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setError(null);
     try {
       const response = await apiRequest("POST", "/api/auth/register", data);
-      setUser(response.user);
+      const registerResult = await response.json();
+      setUser(registerResult.user);
+      // Force a refresh of user data from the server to ensure consistency
+      const userResponse = await apiRequest("GET", "/api/auth/user");
+      const userData = await userResponse.json();
+      setUser(userData);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Registrace se nezdařila";
       setError(errorMessage);

@@ -28,7 +28,10 @@ export default function Login() {
     try {
       setSubmitError(null);
       await login(data);
-      setLocation("/dashboard");
+      // Small delay to ensure auth state is updated before navigation
+      setTimeout(() => {
+        setLocation("/dashboard");
+      }, 100);
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : "Přihlášení se nezdařilo");
     }
