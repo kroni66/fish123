@@ -55,11 +55,10 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
 
   const { data: reviews = [], isLoading } = useQuery<Review[]>({
     queryKey: ["/api/products", productId, "reviews"],
-    queryFn: () => apiRequest(`/api/products/${productId}/reviews`),
   });
 
   const createReviewMutation = useMutation({
-    mutationFn: (reviewData: any) => {
+    mutationFn: async (reviewData: any) => {
       // Log review submission attempt
       console.log(`[REVIEW] Submitting review for product ${productId}:`, {
         customerName: reviewData.customerName,
@@ -70,7 +69,17 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
         productId
       });
       
-      return apiRequest("/api/reviews", "POST", { ...reviewData, productId });
+      const response = await fetch("/api/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...reviewData, productId }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return response.json();
     },
     onSuccess: (data) => {
       console.log(`[REVIEW] Successfully submitted review for product ${productId}:`, {
