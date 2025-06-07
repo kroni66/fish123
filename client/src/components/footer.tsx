@@ -1,131 +1,325 @@
 import { Link } from "wouter";
+import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Twitter } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-12 mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-sm">AQ</span>
+    <footer className="bg-gradient-to-b from-slate-900 to-slate-950 text-white relative overflow-hidden">
+      {/* Decorative wave pattern */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Brand Section */}
+          <div className="lg:col-span-1">
+            <Link href="/" className="flex items-center group mb-6">
+              <div className="relative mr-3">
+                <svg 
+                  width="44" 
+                  height="32" 
+                  viewBox="0 0 44 32" 
+                  className="group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+                >
+                  <defs>
+                    <linearGradient id="footerFishBodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#0891b2" />
+                      <stop offset="40%" stopColor="#06b6d4" />
+                      <stop offset="80%" stopColor="#22d3ee" />
+                      <stop offset="100%" stopColor="#67e8f9" />
+                    </linearGradient>
+                    <linearGradient id="footerFishFinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#0e7490" />
+                      <stop offset="50%" stopColor="#0891b2" />
+                      <stop offset="100%" stopColor="#06b6d4" />
+                    </linearGradient>
+                    <radialGradient id="footerEyeGradient" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#ffffff" />
+                      <stop offset="60%" stopColor="#e0f2fe" />
+                      <stop offset="100%" stopColor="#bae6fd" />
+                    </radialGradient>
+                    <filter id="footerSoftGlow">
+                      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+                      <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  
+                  {/* Main fish body */}
+                  <ellipse 
+                    cx="24" 
+                    cy="16" 
+                    rx="15" 
+                    ry="9" 
+                    fill="url(#footerFishBodyGradient)" 
+                    filter="url(#footerSoftGlow)"
+                    className="group-hover:brightness-110 transition-all duration-300"
+                  />
+                  
+                  {/* Fish tail */}
+                  <path 
+                    d="M 9 16 Q 4 8 2 12 Q 4 16 2 20 Q 4 24 9 16" 
+                    fill="url(#footerFishFinGradient)"
+                    className="group-hover:translate-x-1 transition-transform duration-300"
+                    opacity="0.9"
+                  />
+                  
+                  {/* Dorsal fin */}
+                  <path 
+                    d="M 22 7 Q 26 3 32 7 Q 28 9 26 11 Q 24 9 22 7" 
+                    fill="url(#footerFishFinGradient)"
+                    opacity="0.8"
+                  />
+                  
+                  {/* Ventral fin */}
+                  <path 
+                    d="M 22 25 Q 26 29 32 25 Q 28 23 26 21 Q 24 23 22 25" 
+                    fill="url(#footerFishFinGradient)"
+                    opacity="0.8"
+                  />
+                  
+                  {/* Pectoral fin */}
+                  <ellipse 
+                    cx="18" 
+                    cy="20" 
+                    rx="3" 
+                    ry="6" 
+                    fill="url(#footerFishFinGradient)" 
+                    opacity="0.6"
+                    transform="rotate(25 18 20)"
+                  />
+                  
+                  {/* Eye */}
+                  <circle 
+                    cx="30" 
+                    cy="14" 
+                    r="3" 
+                    fill="url(#footerEyeGradient)"
+                    stroke="#0891b2"
+                    strokeWidth="0.5"
+                  />
+                  <circle 
+                    cx="31" 
+                    cy="14" 
+                    r="2" 
+                    fill="#1e40af"
+                  />
+                  <circle 
+                    cx="31.5" 
+                    cy="13.5" 
+                    r="0.8" 
+                    fill="white"
+                  />
+                  <circle 
+                    cx="31.2" 
+                    cy="13.8" 
+                    r="0.3" 
+                    fill="white"
+                    opacity="0.7"
+                  />
+                  
+                  {/* Scale pattern */}
+                  <g opacity="0.25">
+                    <circle cx="16" cy="13" r="1.2" fill="white" />
+                    <circle cx="20" cy="11" r="1" fill="white" />
+                    <circle cx="20" cy="19" r="1" fill="white" />
+                    <circle cx="24" cy="16" r="1.2" fill="white" />
+                    <circle cx="27" cy="18" r="0.8" fill="white" />
+                  </g>
+                  
+                  {/* Mouth detail */}
+                  <ellipse 
+                    cx="36.5" 
+                    cy="16" 
+                    rx="1.5" 
+                    ry="0.8" 
+                    fill="#0e7490"
+                    opacity="0.6"
+                  />
+                </svg>
               </div>
-              <h3 className="text-xl font-bold">AquaStore.cz</h3>
-            </div>
-            <p className="text-gray-300 text-sm leading-relaxed mb-4">
+              <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                AquaStore.cz
+              </span>
+            </Link>
+            
+            <p className="text-slate-300 text-sm leading-relaxed mb-6 max-w-sm">
               Specializujeme se na kvalitní rybářské vybavení a doplňky. 
-              Váš spolehlivý partner pro úspěšné rybaření.
+              Váš spolehlivý partner pro úspěšné rybaření s více než 10letou tradicí.
             </p>
+            
+            {/* Social Media */}
             <div className="flex space-x-4">
               <a 
                 href="#" 
-                className="text-gray-300 hover:text-primary transition-colors"
-                aria-label="Twitter"
-              >
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                </svg>
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-300 hover:text-primary transition-colors"
+                className="w-10 h-10 rounded-full bg-slate-800 hover:bg-cyan-600 flex items-center justify-center transition-all duration-300 group"
                 aria-label="Facebook"
               >
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                </svg>
+                <Facebook className="h-5 w-5 text-slate-400 group-hover:text-white transition-colors" />
               </a>
               <a 
                 href="#" 
-                className="text-gray-300 hover:text-primary transition-colors"
+                className="w-10 h-10 rounded-full bg-slate-800 hover:bg-pink-600 flex items-center justify-center transition-all duration-300 group"
                 aria-label="Instagram"
               >
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.095.113.108.212.08.327-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001.012.001z.017 0z"/>
-                </svg>
+                <Instagram className="h-5 w-5 text-slate-400 group-hover:text-white transition-colors" />
+              </a>
+              <a 
+                href="#" 
+                className="w-10 h-10 rounded-full bg-slate-800 hover:bg-blue-500 flex items-center justify-center transition-all duration-300 group"
+                aria-label="Twitter"
+              >
+                <Twitter className="h-5 w-5 text-slate-400 group-hover:text-white transition-colors" />
               </a>
             </div>
           </div>
 
+          {/* Navigation Links */}
           <div>
-            <h4 className="font-semibold mb-4 text-white">Kategorie</h4>
-            <ul className="space-y-2 text-gray-300 text-sm">
+            <h4 className="text-lg font-semibold mb-6 text-white relative">
+              Kategorie
+              <div className="absolute -bottom-2 left-0 w-8 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400"></div>
+            </h4>
+            <ul className="space-y-3">
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
+                <Link href="/" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm flex items-center group">
+                  <span className="w-1 h-1 bg-cyan-400 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
                   Všechny produkty
                 </Link>
               </li>
               <li>
-                <Link href="/?category=2" className="hover:text-white transition-colors">
-                  Pruty
+                <Link href="/?category=1" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm flex items-center group">
+                  <span className="w-1 h-1 bg-cyan-400 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Pruty a vybavení
                 </Link>
               </li>
               <li>
-                <Link href="/?category=3" className="hover:text-white transition-colors">
-                  Navijáky
+                <Link href="/?category=2" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm flex items-center group">
+                  <span className="w-1 h-1 bg-cyan-400 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Návnady a nástrahy
                 </Link>
               </li>
               <li>
-                <Link href="/?category=4" className="hover:text-white transition-colors">
-                  Návnady
-                </Link>
-              </li>
-              <li>
-                <Link href="/?category=5" className="hover:text-white transition-colors">
-                  Háčky a montáže
+                <Link href="/inspiration" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm flex items-center group">
+                  <span className="w-1 h-1 bg-cyan-400 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Naše příběhy
                 </Link>
               </li>
             </ul>
           </div>
 
+          {/* Customer Service */}
           <div>
-            <h4 className="font-semibold mb-4 text-white">Zákaznický servis</h4>
-            <ul className="space-y-2 text-gray-300 text-sm">
+            <h4 className="text-lg font-semibold mb-6 text-white relative">
+              Zákaznický servis
+              <div className="absolute -bottom-2 left-0 w-8 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400"></div>
+            </h4>
+            <ul className="space-y-3">
               <li>
-                <Link href="/contact" className="hover:text-white transition-colors">
+                <Link href="/contact" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm flex items-center group">
+                  <span className="w-1 h-1 bg-cyan-400 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
                   Kontakt
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-white transition-colors">
-                  Často kladené otázky
+                <Link href="/about" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm flex items-center group">
+                  <span className="w-1 h-1 bg-cyan-400 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  O nás
                 </Link>
               </li>
               <li>
-                <Link href="/shipping" className="hover:text-white transition-colors">
-                  Doprava a platba
+                <Link href="/wishlist" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm flex items-center group">
+                  <span className="w-1 h-1 bg-cyan-400 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Seznam přání
                 </Link>
               </li>
               <li>
-                <Link href="/returns" className="hover:text-white transition-colors">
-                  Reklamace
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="hover:text-white transition-colors">
-                  Obchodní podmínky
+                <Link href="/checkout" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm flex items-center group">
+                  <span className="w-1 h-1 bg-cyan-400 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Objednávka
                 </Link>
               </li>
             </ul>
           </div>
 
+          {/* Contact Info */}
           <div>
-            <h4 className="font-semibold mb-4 text-white">Kontaktní údaje</h4>
-            <div className="space-y-2 text-gray-300 text-sm">
-              <p>📧 info@aquastore.cz</p>
-              <p>📞 +420 123 456 789</p>
-              <p>🏪 Po-Pá: 9:00 - 17:00</p>
-              <p>📍 Praha, Česká republika</p>
+            <h4 className="text-lg font-semibold mb-6 text-white relative">
+              Kontaktní údaje
+              <div className="absolute -bottom-2 left-0 w-8 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400"></div>
+            </h4>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3 text-slate-300">
+                <div className="w-5 h-5 rounded bg-slate-800 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Mail className="h-3 w-3 text-cyan-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white">Email</p>
+                  <a href="mailto:info@aquastore.cz" className="text-sm hover:text-cyan-400 transition-colors">
+                    info@aquastore.cz
+                  </a>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-3 text-slate-300">
+                <div className="w-5 h-5 rounded bg-slate-800 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Phone className="h-3 w-3 text-cyan-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white">Telefon</p>
+                  <a href="tel:+420123456789" className="text-sm hover:text-cyan-400 transition-colors">
+                    +420 123 456 789
+                  </a>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-3 text-slate-300">
+                <div className="w-5 h-5 rounded bg-slate-800 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Clock className="h-3 w-3 text-cyan-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white">Otevírací doba</p>
+                  <p className="text-sm">Po-Pá: 9:00 - 17:00</p>
+                  <p className="text-sm">So: 9:00 - 14:00</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-3 text-slate-300">
+                <div className="w-5 h-5 rounded bg-slate-800 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <MapPin className="h-3 w-3 text-cyan-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white">Adresa</p>
+                  <p className="text-sm">Praha, Česká republika</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-          <p className="text-gray-400 text-sm">
-            &copy; 2024 AquaStore.cz - Specializovaný obchod s akvarijními potřebami. Všechna práva vyhrazena.
-          </p>
+        {/* Bottom Section */}
+        <div className="border-t border-slate-800 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-slate-400 text-sm">
+              &copy; 2024 AquaStore.cz - Kvalitní rybářské vybavení a doplňky. Všechna práva vyhrazena.
+            </p>
+            <div className="flex items-center space-x-6 text-slate-400 text-xs">
+              <Link href="/privacy" className="hover:text-cyan-400 transition-colors">
+                Ochrana údajů
+              </Link>
+              <Link href="/terms" className="hover:text-cyan-400 transition-colors">
+                Obchodní podmínky
+              </Link>
+              <Link href="/cookies" className="hover:text-cyan-400 transition-colors">
+                Cookies
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
+      
+      {/* Background decoration */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-950 to-transparent pointer-events-none"></div>
     </footer>
   );
 }
