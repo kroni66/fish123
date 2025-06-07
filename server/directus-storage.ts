@@ -6,12 +6,16 @@ import {
   CartItem,
   Order,
   Review,
+  Article,
+  ArticleCategory,
   InsertUser,
   InsertCategory,
   InsertProduct,
   InsertCartItem,
   InsertOrder,
   InsertReview,
+  InsertArticle,
+  InsertArticleCategory,
 } from "@shared/schema";
 import { db } from "./db";
 import { users } from "@shared/schema";

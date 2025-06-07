@@ -379,6 +379,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Article routes for INSPIRACE section
+  app.get("/api/articles", async (req, res) => {
+    try {
+      const categorySlug = req.query.category as string;
+      const articles = await storage.getArticles(categorySlug);
+      res.json(articles);
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+      res.status(500).json({ message: "Failed to fetch articles" });
+    }
+  });
+
+  app.get("/api/articles/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const article = await storage.getArticleById(id);
+      if (!article) {
+        return res.status(404).json({ message: "Article not found" });
+      }
+      res.json(article);
+    } catch (error) {
+      console.error("Error fetching article:", error);
+      res.status(500).json({ message: "Failed to fetch article" });
+    }
+  });
+
+  app.get("/api/article-categories", async (req, res) => {
+    try {
+      const categories = await storage.getArticleCategories();
+      res.json(categories);
+    } catch (error) {
+      console.error("Error fetching article categories:", error);
+      res.status(500).json({ message: "Failed to fetch article categories" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

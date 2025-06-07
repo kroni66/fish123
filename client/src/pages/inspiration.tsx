@@ -1,77 +1,54 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Calendar, User, ArrowRight, Fish, Target, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import type { Article, ArticleCategory } from "@shared/schema";
 
-interface BlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  content: string;
-  author: string;
+interface BlogPost extends Article {
   date: string;
-  category: string;
   image: string;
-  readTime: number;
 }
-
-const blogPosts: BlogPost[] = [
-  {
-    id: 1,
-    title: "Tajemství úspěšného kaprového lovu",
-    excerpt: "Objevte techniky, které vám pomohou ulovit kapra snů. Od výběru správného místa až po perfektní montáž.",
-    content: "Kaprový lov je umění, které vyžaduje trpělivost, znalosti a správné vybavení. V tomto článku se podělíme o osvědčené techniky...",
-    author: "Pavel Novák",
-    date: "2024-01-15",
-    category: "Techniky",
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    readTime: 8
-  },
-  {
-    id: 2,
-    title: "Jarní feederování na řekách",
-    excerpt: "Jak se připravit na jarní sezónu a vytěžit maximum z feederového rybolovu na tekoucích vodách.",
-    content: "Jarní období přináší nové možnosti pro feederový lov. Ryby jsou aktivnější a hledají potravu...",
-    author: "Martin Svoboda",
-    date: "2024-01-12",
-    category: "Sezónní tipy",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    readTime: 6
-  },
-  {
-    id: 3,
-    title: "Noční lov sumců: Kompletní průvodce",
-    excerpt: "Vše co potřebujete vědět o lovu největších sladkovodních dravců. Bezpečnost, technika a vybavení.",
-    content: "Sumci jsou fascinující ryby, které nabízejí jedinečný rybářský zážitek. Noční lov vyžaduje speciální přístup...",
-    author: "Jana Dvořáková",
-    date: "2024-01-10",
-    category: "Dravci",
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    readTime: 10
-  },
-  {
-    id: 4,
-    title: "Zimní spinning na candáty",
-    excerpt: "Zimní období nemusí znamenat konec spinningu. Naučte se lovit candáty i v chladných měsících.",
-    content: "Zimní spinning má svá specifika, ale může být velmi úspěšný. Klíčem je pomalá prezentace a správný výběr míst...",
-    author: "Pavel Novák",
-    date: "2024-01-08",
-    category: "Spinning",
-    image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    readTime: 7
-  }
-];
-
-const categories = ["Všechny", "Techniky", "Sezónní tipy", "Dravci", "Spinning"];
 
 export default function Inspiration() {
   const [selectedCategory, setSelectedCategory] = useState("Všechny");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
+  // Fetch articles from Directus
+  const { data: articles = [], isLoading: articlesLoading } = useQuery({
+    queryKey: ["/api/articles", selectedCategory === "Všechny" ? undefined : selectedCategory],
+    retry: false,
+  });
+
+  // Fetch article categories from Directus
+  const { data: articleCategories = [] } = useQuery({
+    queryKey: ["/api/article-categories"],
+    retry: false,
+  });
+
+  // Transform articles to blog posts format
+  const blogPosts: BlogPost[] = (articles as Article[]).map((article: Article) => ({
+    ...article,
+    date: article.createdAt ? new Date(article.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+    image: article.imageUrl || "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+  }));
+
+  // Create categories list including "Všechny" and categories from Directus
+  const categories = ["Všechny", ...(articleCategories as ArticleCategory[]).map((cat: ArticleCategory) => cat.name)];
+
   const filteredPosts = selectedCategory === "Všechny" 
     ? blogPosts 
     : blogPosts.filter(post => post.category === selectedCategory);
+
+  // Show loading state while articles are being fetched
+  if (articlesLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" aria-label="Loading"/>
+      </div>
+    );
+  }
 
   if (selectedPost) {
     return (
