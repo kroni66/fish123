@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { ArrowLeft, CreditCard, Truck, Shield } from "lucide-react";
+import { ArrowLeft, Truck, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
+import { useStripe, useElements, PaymentElement, Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { useCart } from "@/hooks/use-cart";
@@ -17,23 +19,29 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { formatPrice } from "@/lib/utils";
 
+// Make sure to call `loadStripe` outside of a component's render to avoid
+// recreating the `Stripe` object on every render.
+if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
+  throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY');
+}
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+
 const checkoutSchema = z.object({
   name: z.string().min(2, "Jméno musí mít alespoň 2 znaky"),
   email: z.string().email("Zadejte prosím platnou e-mailovou adresu"),
   address: z.string().min(5, "Adresa musí mít alespoň 5 znaků"),
   city: z.string().min(2, "Město musí mít alespoň 2 znaky"),
   postalCode: z.string().min(5, "PSČ musí mít alespoň 5 znaků"),
-  cardNumber: z.string().min(16, "Číslo karty musí mít 16 číslic"),
-  expiryDate: z.string().regex(/^\d{2}\/\d{2}$/, "Datum platnosti musí být ve formátu MM/RR"),
-  cvv: z.string().min(3, "CVV musí mít alespoň 3 číslice"),
 });
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>;
 
-export default function Checkout() {
-  const [, setLocation] = useLocation();
-  const { items, total, clearCart } = useCart();
+const CheckoutForm = () => {
+  const stripe = useStripe();
+  const elements = useElements();
   const { toast } = useToast();
+  const { items, total, clearCart } = useCart();
+  const [, setLocation] = useLocation();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const form = useForm<CheckoutFormData>({
@@ -44,39 +52,23 @@ export default function Checkout() {
       address: "",
       city: "",
       postalCode: "",
-      cardNumber: "",
-      expiryDate: "",
-      cvv: "",
     },
   });
 
-  const createOrderMutation = useMutation({
-    mutationFn: async (orderData: any) => {
-      const response = await apiRequest("POST", "/api/orders", orderData);
-      return response.json();
-    },
-    onSuccess: (order) => {
-      clearCart();
-      toast({
-        title: "Objednávka byla úspěšně odeslána!",
-        description: `Vaše objednávka č. ${order.id} byla potvrzena.`,
-      });
-      setLocation(`/order-confirmation/${order.id}`);
-    },
-    onError: () => {
-      toast({
-        title: "Chyba",
-        description: "Nepodařilo se odeslat objednávku. Zkuste to prosím znovu.",
-        variant: "destructive",
-      });
-    },
-  });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const onSubmit = async (data: CheckoutFormData) => {
-    if (items.length === 0) {
+    if (!stripe || !elements) {
+      return;
+    }
+
+    const formData = form.getValues();
+    const formErrors = Object.keys(form.formState.errors);
+    
+    if (formErrors.length > 0) {
       toast({
-        title: "Košík je prázdný",
-        description: "Před dokončením objednávky přidejte položky do košíku.",
+        title: "Chyba ve formuláři",
+        description: "Prosím vyplňte všechna povinná pole správně.",
         variant: "destructive",
       });
       return;
@@ -84,63 +76,39 @@ export default function Checkout() {
 
     setIsProcessing(true);
 
-    try {
-      // Get session ID
-      const sessionId = localStorage.getItem("cart_session_id") || "anonymous";
-
-      // Prepare order data
-      const orderItems = items.map(item => ({
-        productId: item.productId!,
-        name: item.product?.name || "Unknown Product",
-        price: item.product?.price || "0",
-        quantity: item.quantity,
-      }));
-
-      const orderData = {
-        sessionId,
-        total: formatPrice(total),
-        items: orderItems,
-        customerInfo: {
-          name: data.name,
-          email: data.email,
-          address: data.address,
-          city: data.city,
-          postalCode: data.postalCode,
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${window.location.origin}/order-confirmation`,
+        receipt_email: formData.email,
+        shipping: {
+          name: formData.name,
+          address: {
+            line1: formData.address,
+            city: formData.city,
+            postal_code: formData.postalCode,
+            country: 'CZ',
+          },
         },
-        status: "potvrzeno",
-      };
+      },
+    });
 
-      // Simulate payment processing delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      await createOrderMutation.mutateAsync(orderData);
-    } catch (error) {
-      console.error("Checkout error:", error);
-    } finally {
-      setIsProcessing(false);
+    if (error) {
+      toast({
+        title: "Chyba platby",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      clearCart();
+      toast({
+        title: "Platba byla úspěšná",
+        description: "Děkujeme za vaši objednávku!",
+      });
     }
-  };
 
-  if (items.length === 0) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-foreground mb-4">Váš košík je prázdný</h1>
-            <p className="text-muted-foreground mb-8">
-              Před dokončením objednávky přidejte produkty do košíku.
-            </p>
-            <Button onClick={() => setLocation("/")}>
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Pokračovat v nákupu
-            </Button>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
+    setIsProcessing(false);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -244,58 +212,15 @@ export default function Checkout() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <CreditCard className="h-5 w-5 mr-2" />
+                  <Shield className="h-5 w-5 mr-2" />
                   Platební údaje
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="cardNumber">Číslo karty</Label>
-                  <Input
-                    id="cardNumber"
-                    placeholder="1234 5678 9012 3456"
-                    {...form.register("cardNumber")}
-                    className={form.formState.errors.cardNumber ? "border-destructive" : ""}
-                  />
-                  {form.formState.errors.cardNumber && (
-                    <p className="text-sm text-destructive mt-1">
-                      {form.formState.errors.cardNumber.message}
-                    </p>
-                  )}
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="expiryDate">Datum platnosti</Label>
-                    <Input
-                      id="expiryDate"
-                      placeholder="MM/RR"
-                      {...form.register("expiryDate")}
-                      className={form.formState.errors.expiryDate ? "border-destructive" : ""}
-                    />
-                    {form.formState.errors.expiryDate && (
-                      <p className="text-sm text-destructive mt-1">
-                        {form.formState.errors.expiryDate.message}
-                      </p>
-                    )}
-                  </div>
-                  <div>
-                    <Label htmlFor="cvv">CVV</Label>
-                    <Input
-                      id="cvv"
-                      placeholder="123"
-                      {...form.register("cvv")}
-                      className={form.formState.errors.cvv ? "border-destructive" : ""}
-                    />
-                    {form.formState.errors.cvv && (
-                      <p className="text-sm text-destructive mt-1">
-                        {form.formState.errors.cvv.message}
-                      </p>
-                    )}
-                  </div>
-                </div>
+                <PaymentElement />
                 <div className="flex items-center text-sm text-muted-foreground">
                   <Shield className="h-4 w-4 mr-2" />
-                  Vaše platební údaje jsou zabezpečené a šifrované
+                  Vaše platební údaje jsou zabezpečené pomocí Stripe
                 </div>
               </CardContent>
             </Card>
@@ -355,21 +280,23 @@ export default function Checkout() {
                   </div>
                 </div>
 
-                <Button
-                  size="lg"
-                  className="w-full mt-6 bg-primary text-white hover:bg-primary/90"
-                  onClick={form.handleSubmit(onSubmit)}
-                  disabled={isProcessing}
-                >
-                  {isProcessing ? (
-                    <div className="flex items-center space-x-2">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span>Zpracovávám...</span>
-                    </div>
-                  ) : (
-                    `Dokončit objednávku - ${formatPrice(total * 1.21)} Kč`
-                  )}
-                </Button>
+                <form onSubmit={handleSubmit}>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full mt-6 bg-primary text-white hover:bg-primary/90"
+                    disabled={!stripe || isProcessing}
+                  >
+                    {isProcessing ? (
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Zpracovávám platbu...</span>
+                      </div>
+                    ) : (
+                      `Zaplatit - ${formatPrice(total * 1.21)} Kč`
+                    )}
+                  </Button>
+                </form>
               </CardContent>
             </Card>
           </div>
@@ -377,5 +304,71 @@ export default function Checkout() {
       </div>
       <Footer />
     </div>
+  );
+};
+
+export default function Checkout() {
+  const [, setLocation] = useLocation();
+  const { items } = useCart();
+  const [clientSecret, setClientSecret] = useState("");
+
+  useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
+    if (items.length > 0) {
+      const total = items.reduce((sum, item) => {
+        return sum + (parseFloat(item.product?.price || "0") * item.quantity);
+      }, 0);
+      
+      apiRequest("POST", "/api/create-payment-intent", { 
+        amount: total * 1.21 // Include VAT
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setClientSecret(data.clientSecret);
+        })
+        .catch((error) => {
+          console.error("Error creating payment intent:", error);
+        });
+    }
+  }, [items]);
+
+  if (items.length === 0) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-foreground mb-4">Váš košík je prázdný</h1>
+            <p className="text-muted-foreground mb-8">
+              Před dokončením objednávky přidejte produkty do košíku.
+            </p>
+            <Button onClick={() => setLocation("/")}>
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Pokračovat v nákupu
+            </Button>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!clientSecret) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="h-screen flex items-center justify-center">
+          <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" aria-label="Loading"/>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Make SURE to wrap the form in <Elements> which provides the stripe context.
+  return (
+    <Elements stripe={stripePromise} options={{ clientSecret }}>
+      <CheckoutForm />
+    </Elements>
   );
 }

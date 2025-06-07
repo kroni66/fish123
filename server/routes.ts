@@ -4,6 +4,14 @@ import { DirectusStorage } from "./directus-storage";
 import { storage as localStorage, type IStorage } from "./storage";
 import { insertProductSchema, insertCartItemSchema, insertOrderSchema, insertReviewSchema } from "@shared/schema";
 import { z } from "zod";
+import Stripe from "stripe";
+
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
+}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2023-10-16",
+});
 
 // Initialize storage - use Directus exclusively for products and categories
 let storage: IStorage;
@@ -161,6 +169,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ message: "Cart cleared" });
     } catch (error) {
       res.status(500).json({ message: "Failed to clear cart" });
+    }
+  });
+
+  // Stripe payment route for one-time payments
+  app.post("/api/create-payment-intent", async (req, res) => {
+    try {
+      const { amount } = req.body;
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(amount * 100), // Convert to cents
+        currency: "czk",
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      });
+      res.json({ clientSecret: paymentIntent.client_secret });
+    } catch (error: any) {
+      res
+        .status(500)
+        .json({ message: "Error creating payment intent: " + error.message });
     }
   });
 
