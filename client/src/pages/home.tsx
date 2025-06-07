@@ -39,11 +39,13 @@ export default function Home() {
         onCategoryChange={setSelectedCategory}
       />
 
-      <ProductGrid 
-        categoryId={selectedCategory}
-        searchQuery={searchQuery}
-        onCategoryChange={setSelectedCategory}
-      />
+      <div id="products">
+        <ProductGrid 
+          categoryId={selectedCategory}
+          searchQuery={searchQuery}
+          onCategoryChange={setSelectedCategory}
+        />
+      </div>
       <Footer />
     </div>
   );
