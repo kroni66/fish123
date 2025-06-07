@@ -47,15 +47,32 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Multi-layered radial gradient background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-950/30 via-slate-950 to-slate-900"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-blue-950/20 via-transparent to-transparent"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-teal-950/15 via-transparent to-transparent"></div>
+      {/* Enhanced multi-layered radial gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-black"></div>
       
-      {/* Atmospheric glow effects */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
-      <div className="absolute top-1/3 left-1/4 w-48 h-48 bg-teal-500/8 rounded-full blur-xl animate-pulse delay-2000"></div>
+      {/* Primary radial gradients */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_var(--tw-gradient-stops))] from-cyan-900/40 via-cyan-950/20 to-transparent"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,_var(--tw-gradient-stops))] from-blue-900/35 via-blue-950/15 to-transparent"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_70%,_var(--tw-gradient-stops))] from-teal-900/25 via-teal-950/10 to-transparent"></div>
+      
+      {/* Secondary depth gradients */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,_var(--tw-gradient-stops))] from-cyan-800/20 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_20%_100%,_var(--tw-gradient-stops))] from-blue-800/15 via-transparent to-transparent"></div>
+      
+      {/* Enhanced atmospheric glow effects */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-cyan-400/8 rounded-full blur-[120px] animate-pulse"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-400/12 rounded-full blur-[80px] animate-pulse delay-1000"></div>
+      <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-teal-400/6 rounded-full blur-[60px] animate-pulse delay-2000"></div>
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] bg-gradient-to-t from-cyan-900/20 to-transparent blur-xl"></div>
+      
+      {/* Subtle animated orbs */}
+      <div className="absolute top-1/4 right-1/3 w-32 h-32 bg-cyan-300/5 rounded-full blur-2xl animate-pulse delay-500"></div>
+      <div className="absolute bottom-1/3 left-1/5 w-24 h-24 bg-blue-300/8 rounded-full blur-xl animate-pulse delay-1500"></div>
+      
+      {/* Dynamic light rays */}
+      <div className="absolute top-0 left-1/4 w-1 h-full bg-gradient-to-b from-cyan-400/10 via-cyan-400/5 to-transparent transform rotate-12 blur-sm animate-pulse delay-700"></div>
+      <div className="absolute top-0 right-1/3 w-0.5 h-full bg-gradient-to-b from-blue-300/8 via-blue-300/3 to-transparent transform -rotate-6 blur-sm animate-pulse delay-1200"></div>
+      <div className="absolute top-0 left-2/3 w-0.5 h-full bg-gradient-to-b from-teal-400/6 via-teal-400/2 to-transparent transform rotate-3 blur-sm animate-pulse delay-1800"></div>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Floating particles */}
@@ -101,34 +118,49 @@ export default function Home() {
       {/* Main Content */}
       <div className="relative z-10">
         {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center px-4">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            {/* Badge */}
-            <div className="inline-flex items-center px-4 py-2 bg-slate-800/50 border border-cyan-500/20 rounded-full backdrop-blur-sm">
+        <section className="min-h-screen flex items-center justify-center px-4 relative">
+          {/* Hero-specific depth overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_80%_at_50%_50%,_var(--tw-gradient-stops))] from-transparent via-slate-950/30 to-slate-950/80"></div>
+          
+          {/* Subtle vignette effect */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_100%_at_50%_50%,_var(--tw-gradient-stops))] from-transparent via-transparent to-black/40"></div>
+          <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
+            {/* Badge with enhanced glow */}
+            <div className="inline-flex items-center px-4 py-2 bg-slate-800/70 border border-cyan-500/30 rounded-full backdrop-blur-sm shadow-lg shadow-cyan-500/10">
               <span className="text-cyan-300 text-sm font-medium">🎣 Nová kolekce rybářského vybavení</span>
             </div>
 
-            {/* Main Heading */}
-            <div className="space-y-6">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tighter">
+            {/* Main Heading with enhanced effects */}
+            <div className="space-y-6 relative">
+              {/* Glow effects behind text */}
+              <div className="absolute inset-0 blur-3xl opacity-30">
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tighter">
+                  <span className="block text-cyan-400">RIG OF DEATH</span>
+                  <span className="block text-white mt-2">je nový způsob</span>
+                  <span className="block text-blue-400">jak lovit ryby.</span>
+                </h1>
+              </div>
+              
+              {/* Main text */}
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tighter relative">
                 <span className="block bg-gradient-to-r from-cyan-300 via-blue-400 to-cyan-500 bg-clip-text text-transparent relative">
-                  <span className="animate-gradient-x bg-gradient-to-r from-cyan-200 via-blue-300 to-teal-300 bg-clip-text text-transparent">
+                  <span className="animate-gradient-x bg-gradient-to-r from-cyan-200 via-blue-300 to-teal-300 bg-clip-text text-transparent drop-shadow-2xl">
                     RIG OF DEATH
                   </span>
                 </span>
-                <span className="block bg-gradient-to-r from-slate-200 via-white to-slate-300 bg-clip-text text-transparent mt-2">
+                <span className="block bg-gradient-to-r from-slate-200 via-white to-slate-300 bg-clip-text text-transparent mt-2 drop-shadow-lg">
                   je nový způsob
                 </span>
-                <span className="block bg-gradient-to-r from-teal-300 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-teal-300 via-cyan-400 to-blue-500 bg-clip-text text-transparent drop-shadow-lg">
                   jak lovit ryby.
                 </span>
               </h1>
-              
-              <p className="text-xl md:text-2xl text-slate-300 font-light max-w-3xl mx-auto leading-relaxed">
-                Prémiové rybářské vybavení, které kombinuje moderní technologie 
-                s tradicí hlubinného rybolovu. Každý kus je pečlivě vybrán pro maximální úspěch.
-              </p>
             </div>
+              
+            <p className="text-xl md:text-2xl text-slate-300 font-light max-w-3xl mx-auto leading-relaxed">
+              Prémiové rybářské vybavení, které kombinuje moderní technologie 
+              s tradicí hlubinného rybolovu. Každý kus je pečlivě vybrán pro maximální úspěch.
+            </p>
 
             {/* CTA Button */}
             <div className="pt-8">
