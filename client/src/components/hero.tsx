@@ -4,11 +4,13 @@ import { Input } from "@/components/ui/input";
 import { useLocation } from "wouter";
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { ProductModal } from "@/components/product-modal";
 
 export function Hero() {
   const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
   // Fetch products for autocomplete
@@ -41,14 +43,10 @@ export function Hero() {
     setShowSuggestions(value.length >= 2);
   };
 
-  const handleSuggestionClick = (productName: string) => {
-    setSearchQuery(productName);
+  const handleSuggestionClick = (product: any) => {
+    setSearchQuery(product.name);
     setShowSuggestions(false);
-    // Navigate to products section with search
-    const productsSection = document.getElementById('products');
-    if (productsSection) {
-      productsSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    setSelectedProduct(product);
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -501,7 +499,7 @@ export function Hero() {
                   {suggestions.map((product: any, index: number) => (
                     <button
                       key={product.id}
-                      onClick={() => handleSuggestionClick(product.name)}
+                      onClick={() => handleSuggestionClick(product)}
                       className="w-full px-6 py-4 text-left hover:bg-slate-700/50 transition-colors border-b border-slate-600/30 last:border-b-0 group"
                     >
                       <div className="flex items-center space-x-3">
@@ -548,6 +546,14 @@ export function Hero() {
           
         </div>
       </div>
+
+      {/* Product Modal */}
+      {selectedProduct && (
+        <ProductModal 
+          product={selectedProduct} 
+          onClose={() => setSelectedProduct(null)} 
+        />
+      )}
     </section>
   );
 }
