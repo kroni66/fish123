@@ -47,32 +47,39 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Enhanced multi-layered radial gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-black"></div>
-      
-      {/* Primary radial gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_var(--tw-gradient-stops))] from-cyan-900/40 via-cyan-950/20 to-transparent"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,_var(--tw-gradient-stops))] from-blue-900/35 via-blue-950/15 to-transparent"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_70%,_var(--tw-gradient-stops))] from-teal-900/25 via-teal-950/10 to-transparent"></div>
-      
-      {/* Secondary depth gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,_var(--tw-gradient-stops))] from-cyan-800/20 via-transparent to-transparent"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_20%_100%,_var(--tw-gradient-stops))] from-blue-800/15 via-transparent to-transparent"></div>
-      
-      {/* Enhanced atmospheric glow effects */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-cyan-400/8 rounded-full blur-[120px] animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-400/12 rounded-full blur-[80px] animate-pulse delay-1000"></div>
-      <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-teal-400/6 rounded-full blur-[60px] animate-pulse delay-2000"></div>
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] bg-gradient-to-t from-cyan-900/20 to-transparent blur-xl"></div>
-      
-      {/* Subtle animated orbs */}
-      <div className="absolute top-1/4 right-1/3 w-32 h-32 bg-cyan-300/5 rounded-full blur-2xl animate-pulse delay-500"></div>
-      <div className="absolute bottom-1/3 left-1/5 w-24 h-24 bg-blue-300/8 rounded-full blur-xl animate-pulse delay-1500"></div>
-      
-      {/* Dynamic light rays */}
-      <div className="absolute top-0 left-1/4 w-1 h-full bg-gradient-to-b from-cyan-400/10 via-cyan-400/5 to-transparent transform rotate-12 blur-sm animate-pulse delay-700"></div>
-      <div className="absolute top-0 right-1/3 w-0.5 h-full bg-gradient-to-b from-blue-300/8 via-blue-300/3 to-transparent transform -rotate-6 blur-sm animate-pulse delay-1200"></div>
-      <div className="absolute top-0 left-2/3 w-0.5 h-full bg-gradient-to-b from-teal-400/6 via-teal-400/2 to-transparent transform rotate-3 blur-sm animate-pulse delay-1800"></div>
+      {/* Global unified radial gradient background system */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* Base gradient foundation */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-black"></div>
+        
+        {/* Primary radial gradients - positioned for full page coverage */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_10%,_var(--tw-gradient-stops))] from-cyan-900/40 via-cyan-950/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,_var(--tw-gradient-stops))] from-blue-900/35 via-blue-950/15 to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,_var(--tw-gradient-stops))] from-teal-900/25 via-teal-950/10 to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,_var(--tw-gradient-stops))] from-cyan-900/30 via-cyan-950/15 to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_90%,_var(--tw-gradient-stops))] from-blue-900/25 via-blue-950/12 to-transparent"></div>
+        
+        {/* Secondary depth gradients for enhanced layering */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_50%_at_50%_0%,_var(--tw-gradient-stops))] from-cyan-800/15 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_40%_at_0%_50%,_var(--tw-gradient-stops))] from-blue-800/12 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_100%_80%,_var(--tw-gradient-stops))] from-teal-800/10 via-transparent to-transparent"></div>
+        
+        {/* Large atmospheric glow effects */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-cyan-400/6 rounded-full blur-[150px] animate-pulse"></div>
+        <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-blue-400/8 rounded-full blur-[120px] animate-pulse delay-1000"></div>
+        <div className="absolute top-2/3 left-1/4 w-[500px] h-[500px] bg-teal-400/5 rounded-full blur-[100px] animate-pulse delay-2000"></div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1000px] h-[300px] bg-gradient-to-t from-cyan-900/15 to-transparent blur-2xl"></div>
+        
+        {/* Dynamic light rays spanning full height */}
+        <div className="absolute top-0 left-1/5 w-1 h-full bg-gradient-to-b from-cyan-400/8 via-cyan-400/4 to-transparent transform rotate-12 blur-sm animate-pulse delay-700"></div>
+        <div className="absolute top-0 right-1/4 w-0.5 h-full bg-gradient-to-b from-blue-300/6 via-blue-300/3 to-transparent transform -rotate-8 blur-sm animate-pulse delay-1200"></div>
+        <div className="absolute top-0 left-3/4 w-0.5 h-full bg-gradient-to-b from-teal-400/5 via-teal-400/2 to-transparent transform rotate-5 blur-sm animate-pulse delay-1800"></div>
+        
+        {/* Floating atmospheric particles */}
+        <div className="absolute top-1/6 right-1/3 w-40 h-40 bg-cyan-300/4 rounded-full blur-3xl animate-pulse delay-500"></div>
+        <div className="absolute top-1/2 left-1/6 w-32 h-32 bg-blue-300/6 rounded-full blur-2xl animate-pulse delay-1500"></div>
+        <div className="absolute top-5/6 right-1/6 w-28 h-28 bg-teal-300/5 rounded-full blur-xl animate-pulse delay-2500"></div>
+      </div>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Floating particles */}
@@ -119,11 +126,6 @@ export default function Home() {
       <div className="relative z-10">
         {/* Hero Section */}
         <section className="min-h-screen flex items-center justify-center px-4 relative">
-          {/* Hero-specific depth overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_80%_at_50%_50%,_var(--tw-gradient-stops))] from-transparent via-slate-950/30 to-slate-950/80"></div>
-          
-          {/* Subtle vignette effect */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_100%_at_50%_50%,_var(--tw-gradient-stops))] from-transparent via-transparent to-black/40"></div>
           <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
             {/* Badge with enhanced glow */}
             <div className="inline-flex items-center px-4 py-2 bg-slate-800/70 border border-cyan-500/30 rounded-full backdrop-blur-sm shadow-lg shadow-cyan-500/10">
@@ -178,8 +180,6 @@ export default function Home() {
 
         {/* Feature Cards Section */}
         <section className="py-24 px-4 relative">
-          {/* Section-specific gradient overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900/30 via-slate-950/60 to-slate-950"></div>
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -224,8 +224,6 @@ export default function Home() {
 
             {/* Stats Section */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-16 border-t border-b border-slate-700/50 relative">
-              {/* Stats background glow */}
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,_var(--tw-gradient-stops))] from-cyan-900/20 via-transparent to-transparent blur-xl"></div>
               <div className="text-center relative z-10">
                 <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">10K+</div>
                 <div className="text-slate-400">Spokojených rybářů</div>
@@ -251,38 +249,27 @@ export default function Home() {
       </div>
 
       {/* Enhanced Search Section */}
-      <div className="relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-950/40 to-slate-950"></div>
-        <div className="relative z-10">
-          <EnhancedSearch
-            searchQuery={searchQuery}
-            categoryId={selectedCategory}
-            onSearchChange={setSearchQuery}
-            onCategoryChange={setSelectedCategory}
-          />
-        </div>
+      <div className="relative z-10">
+        <EnhancedSearch
+          searchQuery={searchQuery}
+          categoryId={selectedCategory}
+          onSearchChange={setSearchQuery}
+          onCategoryChange={setSelectedCategory}
+        />
       </div>
 
       {/* Products Section */}
-      <div id="products" className="relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-teal-900/15 via-slate-950/50 to-slate-950"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_75%,_var(--tw-gradient-stops))] from-cyan-900/10 via-transparent to-transparent"></div>
-        <div className="relative z-10">
-          <ProductGrid 
-            categoryId={selectedCategory}
-            searchQuery={searchQuery}
-            onCategoryChange={setSelectedCategory}
-          />
-        </div>
+      <div id="products" className="relative z-10">
+        <ProductGrid 
+          categoryId={selectedCategory}
+          searchQuery={searchQuery}
+          onCategoryChange={setSelectedCategory}
+        />
       </div>
       
       {/* Footer Section */}
-      <div className="relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900/60 via-slate-950 to-black"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,_var(--tw-gradient-stops))] from-cyan-900/15 via-transparent to-transparent"></div>
-        <div className="relative z-10">
-          <Footer />
-        </div>
+      <div className="relative z-10">
+        <Footer />
       </div>
     </div>
   );

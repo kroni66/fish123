@@ -24,27 +24,39 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Enhanced multi-layered radial gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-black"></div>
-      
-      {/* Primary radial gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_var(--tw-gradient-stops))] from-cyan-900/40 via-cyan-950/20 to-transparent"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,_var(--tw-gradient-stops))] from-blue-900/35 via-blue-950/15 to-transparent"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_70%,_var(--tw-gradient-stops))] from-teal-900/25 via-teal-950/10 to-transparent"></div>
-      
-      {/* Secondary depth gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,_var(--tw-gradient-stops))] from-cyan-800/20 via-transparent to-transparent"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_20%_100%,_var(--tw-gradient-stops))] from-blue-800/15 via-transparent to-transparent"></div>
-      
-      {/* Enhanced atmospheric glow effects */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-cyan-400/8 rounded-full blur-[120px] animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-400/12 rounded-full blur-[80px] animate-pulse delay-1000"></div>
-      <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-teal-400/6 rounded-full blur-[60px] animate-pulse delay-2000"></div>
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] bg-gradient-to-t from-cyan-900/20 to-transparent blur-xl"></div>
-      
-      {/* Dynamic light rays */}
-      <div className="absolute top-0 left-1/4 w-1 h-full bg-gradient-to-b from-cyan-400/10 via-cyan-400/5 to-transparent transform rotate-12 blur-sm animate-pulse delay-700"></div>
-      <div className="absolute top-0 right-1/3 w-0.5 h-full bg-gradient-to-b from-blue-300/8 via-blue-300/3 to-transparent transform -rotate-6 blur-sm animate-pulse delay-1200"></div>
+      {/* Global unified radial gradient background system */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* Base gradient foundation */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-black"></div>
+        
+        {/* Primary radial gradients - positioned for full page coverage */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_10%,_var(--tw-gradient-stops))] from-cyan-900/40 via-cyan-950/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,_var(--tw-gradient-stops))] from-blue-900/35 via-blue-950/15 to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,_var(--tw-gradient-stops))] from-teal-900/25 via-teal-950/10 to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,_var(--tw-gradient-stops))] from-cyan-900/30 via-cyan-950/15 to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_90%,_var(--tw-gradient-stops))] from-blue-900/25 via-blue-950/12 to-transparent"></div>
+        
+        {/* Secondary depth gradients for enhanced layering */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_50%_at_50%_0%,_var(--tw-gradient-stops))] from-cyan-800/15 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_40%_at_0%_50%,_var(--tw-gradient-stops))] from-blue-800/12 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_100%_80%,_var(--tw-gradient-stops))] from-teal-800/10 via-transparent to-transparent"></div>
+        
+        {/* Large atmospheric glow effects */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-cyan-400/6 rounded-full blur-[150px] animate-pulse"></div>
+        <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-blue-400/8 rounded-full blur-[120px] animate-pulse delay-1000"></div>
+        <div className="absolute top-2/3 left-1/4 w-[500px] h-[500px] bg-teal-400/5 rounded-full blur-[100px] animate-pulse delay-2000"></div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1000px] h-[300px] bg-gradient-to-t from-cyan-900/15 to-transparent blur-2xl"></div>
+        
+        {/* Dynamic light rays spanning full height */}
+        <div className="absolute top-0 left-1/5 w-1 h-full bg-gradient-to-b from-cyan-400/8 via-cyan-400/4 to-transparent transform rotate-12 blur-sm animate-pulse delay-700"></div>
+        <div className="absolute top-0 right-1/4 w-0.5 h-full bg-gradient-to-b from-blue-300/6 via-blue-300/3 to-transparent transform -rotate-8 blur-sm animate-pulse delay-1200"></div>
+        <div className="absolute top-0 left-3/4 w-0.5 h-full bg-gradient-to-b from-teal-400/5 via-teal-400/2 to-transparent transform rotate-5 blur-sm animate-pulse delay-1800"></div>
+        
+        {/* Floating atmospheric particles */}
+        <div className="absolute top-1/6 right-1/3 w-40 h-40 bg-cyan-300/4 rounded-full blur-3xl animate-pulse delay-500"></div>
+        <div className="absolute top-1/2 left-1/6 w-32 h-32 bg-blue-300/6 rounded-full blur-2xl animate-pulse delay-1500"></div>
+        <div className="absolute top-5/6 right-1/6 w-28 h-28 bg-teal-300/5 rounded-full blur-xl animate-pulse delay-2500"></div>
+      </div>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Floating particles */}
@@ -134,10 +146,8 @@ export default function Landing() {
         </section>
 
         {/* Product Preview Section */}
-        <section className="py-24 px-4 relative">
-          {/* Section-specific gradient overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900/30 via-slate-950/60 to-slate-950"></div>
-          <div className="max-w-7xl mx-auto relative z-10">
+        <section className="py-24 px-4 relative z-10">
+          <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                 Vybavení pro <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">profesionály</span>
@@ -222,8 +232,7 @@ export default function Landing() {
         </section>
 
         {/* Pricing Section */}
-        <section className="py-24 px-4 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900/50 via-slate-950 to-slate-950"></div>
+        <section className="py-24 px-4 relative z-10">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <Badge className="mb-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/20">
