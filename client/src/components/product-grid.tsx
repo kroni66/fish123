@@ -106,9 +106,16 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
           <div className="mb-24 relative">
             {/* Section Header */}
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-foreground mb-4">Naše hodnoty</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Tři pilíře, na kterých stavíme každý produkt v našem sortimentu
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
+                <span className="text-primary font-semibold text-sm uppercase tracking-wider">Proč si vybrat naše produkty</span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+                Kvalita, která<br />
+                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">rozhoduje o úspěchu</span>
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                Každý produkt představuje spojení tradičního rybářského řemesla s nejmodernějšími technologiami. 
+                Důvěřují nám tisíce rybářů napříč Evropou.
               </p>
             </div>
 
@@ -130,13 +137,24 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
                       </svg>
                     </div>
                     <h3 className="text-3xl font-bold text-amber-100 mb-6 tracking-tight">Prémiová kvalita</h3>
-                    <p className="text-amber-200/90 leading-relaxed text-lg">
-                      Vybíráme pouze ty nejlepší materiály a komponenty, které prošly důkladným testováním v nejnáročnějších podmínkách.
+                    <p className="text-amber-200/90 leading-relaxed text-lg mb-6">
+                      Každý produkt prochází náročným výběrovým procesem. Testujeme odolnost materiálů, 
+                      dlouhodobou funkčnost a skutečnou účinnost v reálných podmínkách rybaření.
                     </p>
-                    <div className="mt-8 pt-6 border-t border-amber-600/30">
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="text-center p-3 bg-amber-800/30 rounded-lg border border-amber-600/20">
+                        <div className="text-2xl font-bold text-amber-200">5+</div>
+                        <div className="text-xs text-amber-300/80">let testování</div>
+                      </div>
+                      <div className="text-center p-3 bg-amber-800/30 rounded-lg border border-amber-600/20">
+                        <div className="text-2xl font-bold text-amber-200">99%</div>
+                        <div className="text-xs text-amber-300/80">spokojenost</div>
+                      </div>
+                    </div>
+                    <div className="pt-6 border-t border-amber-600/30">
                       <div className="flex items-center justify-center space-x-2 text-amber-300/80">
                         <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
-                        <span className="text-sm font-medium">Ověřeno našimi experty</span>
+                        <span className="text-sm font-medium">Certifikováno evropskými standardy</span>
                       </div>
                     </div>
                   </div>
@@ -162,13 +180,24 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
                       </svg>
                     </div>
                     <h3 className="text-3xl font-bold text-stone-100 mb-6 tracking-tight">Přesnost</h3>
-                    <p className="text-stone-200/90 leading-relaxed text-lg">
-                      Každý detail je pečlivě promyšlen a vyladěn pro maximální účinnost. Preciznost, která rozhoduje o úspěchu.
+                    <p className="text-stone-200/90 leading-relaxed text-lg mb-6">
+                      Žádný detail není náhodný. Od aerodynamiky návnad po ergonomii prutů - 
+                      každý aspekt je vědecky promyšlen pro maximální efektivitu a komfort při rybaření.
                     </p>
-                    <div className="mt-8 pt-6 border-t border-stone-600/30">
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="text-center p-3 bg-stone-800/30 rounded-lg border border-stone-600/20">
+                        <div className="text-2xl font-bold text-stone-200">±0.1g</div>
+                        <div className="text-xs text-stone-300/80">přesnost vah</div>
+                      </div>
+                      <div className="text-center p-3 bg-stone-800/30 rounded-lg border border-stone-600/20">
+                        <div className="text-2xl font-bold text-stone-200">100%</div>
+                        <div className="text-xs text-stone-300/80">kontrola kvality</div>
+                      </div>
+                    </div>
+                    <div className="pt-6 border-t border-stone-600/30">
                       <div className="flex items-center justify-center space-x-2 text-stone-300/80">
                         <div className="w-2 h-2 bg-stone-400 rounded-full"></div>
-                        <span className="text-sm font-medium">Vyladěno do detailu</span>
+                        <span className="text-sm font-medium">Měřeno v laboratořích</span>
                       </div>
                     </div>
                   </div>
@@ -193,14 +222,60 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
                       </svg>
                     </div>
                     <h3 className="text-3xl font-bold text-emerald-100 mb-6 tracking-tight">Tradice</h3>
-                    <p className="text-emerald-200/90 leading-relaxed text-lg">
-                      Respektujeme osvědčené metody předávané generacemi rybářů a spojujeme je s moderními inovacemi.
+                    <p className="text-emerald-200/90 leading-relaxed text-lg mb-6">
+                      Čerpáme z bohatého dědictví evropského rybaření, které spojujeme s nejnovějšími technologiemi. 
+                      Víme, že nejlepší rybářské techniky prošly zkouškou času.
                     </p>
-                    <div className="mt-8 pt-6 border-t border-emerald-600/30">
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="text-center p-3 bg-emerald-800/30 rounded-lg border border-emerald-600/20">
+                        <div className="text-2xl font-bold text-emerald-200">150+</div>
+                        <div className="text-xs text-emerald-300/80">let zkušeností</div>
+                      </div>
+                      <div className="text-center p-3 bg-emerald-800/30 rounded-lg border border-emerald-600/20">
+                        <div className="text-2xl font-bold text-emerald-200">4</div>
+                        <div className="text-xs text-emerald-300/80">generace</div>
+                      </div>
+                    </div>
+                    <div className="pt-6 border-t border-emerald-600/30">
                       <div className="flex items-center justify-center space-x-2 text-emerald-300/80">
                         <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
-                        <span className="text-sm font-medium">Generace zkušeností</span>
+                        <span className="text-sm font-medium">Ověřeno časem</span>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Call to Action */}
+            <div className="mt-16 text-center">
+              <div className="relative inline-block">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl"></div>
+                <div className="relative bg-gradient-to-r from-primary/10 to-accent/10 backdrop-blur-sm border border-primary/20 rounded-2xl p-8">
+                  <h3 className="text-2xl font-bold text-foreground mb-4">
+                    Připraveni na váš nejlepší úlovek?
+                  </h3>
+                  <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                    Objevte naši pečlivě kurátorskou kolekci produktů, které vám pomohou dosáhnout 
+                    lepších výsledků na vodě. Každý produkt je testován a doporučen našimi experty.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button 
+                      onClick={() => {
+                        const productsSection = document.getElementById('products');
+                        if (productsSection) {
+                          const rect = productsSection.getBoundingClientRect();
+                          const offset = rect.top + window.pageYOffset - 100;
+                          window.scrollTo({ top: offset, behavior: 'smooth' });
+                        }
+                      }}
+                      className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
+                    >
+                      Prohlédnout produkty
+                    </button>
+                    <div className="flex items-center space-x-2 text-muted-foreground">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <span className="text-sm">Aktuálně skladem 240+ produktů</span>
                     </div>
                   </div>
                 </div>
