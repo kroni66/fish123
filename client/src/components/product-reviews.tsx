@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Star, ThumbsUp, User, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -41,6 +41,15 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
     comment: "",
   });
 
+  // Log when component mounts
+  useEffect(() => {
+    console.log(`[REVIEW] ProductReviews component mounted for product ${productId}:`, {
+      productId,
+      timestamp: new Date().toISOString(),
+      action: 'component_mount'
+    });
+  }, [productId]);
+
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -50,9 +59,28 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
   });
 
   const createReviewMutation = useMutation({
-    mutationFn: (reviewData: any) => 
-      apiRequest("/api/reviews", "POST", { ...reviewData, productId }),
-    onSuccess: () => {
+    mutationFn: (reviewData: any) => {
+      // Log review submission attempt
+      console.log(`[REVIEW] Submitting review for product ${productId}:`, {
+        customerName: reviewData.customerName,
+        rating: reviewData.rating,
+        titleLength: reviewData.title?.length || 0,
+        commentLength: reviewData.comment?.length || 0,
+        timestamp: new Date().toISOString(),
+        productId
+      });
+      
+      return apiRequest("/api/reviews", "POST", { ...reviewData, productId });
+    },
+    onSuccess: (data) => {
+      console.log(`[REVIEW] Successfully submitted review for product ${productId}:`, {
+        reviewId: data?.id,
+        customerName: reviewForm.customerName,
+        rating: reviewForm.rating,
+        timestamp: new Date().toISOString(),
+        productId
+      });
+      
       queryClient.invalidateQueries({ queryKey: ["/api/products", productId, "reviews"] });
       setShowReviewForm(false);
       setReviewForm({
@@ -67,7 +95,15 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
         description: "Děkujeme za vaši recenzi!",
       });
     },
-    onError: () => {
+    onError: (error) => {
+      console.error(`[REVIEW] Failed to submit review for product ${productId}:`, {
+        error: error?.message || 'Unknown error',
+        customerName: reviewForm.customerName,
+        rating: reviewForm.rating,
+        timestamp: new Date().toISOString(),
+        productId
+      });
+      
       toast({
         title: "Chyba",
         description: "Nepodařilo se přidat recenzi. Zkuste to prosím znovu.",
@@ -77,15 +113,60 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
   });
 
   const markHelpfulMutation = useMutation({
-    mutationFn: (reviewId: number) =>
-      apiRequest(`/api/reviews/${reviewId}/helpful`, "PATCH"),
-    onSuccess: () => {
+    mutationFn: (reviewId: number) => {
+      console.log(`[REVIEW] Marking review ${reviewId} as helpful:`, {
+        reviewId,
+        productId,
+        timestamp: new Date().toISOString(),
+        action: 'mark_helpful'
+      });
+      
+      return apiRequest(`/api/reviews/${reviewId}/helpful`, "PATCH");
+    },
+    onSuccess: (data, reviewId) => {
+      console.log(`[REVIEW] Successfully marked review ${reviewId} as helpful:`, {
+        reviewId,
+        productId,
+        timestamp: new Date().toISOString(),
+        newHelpfulCount: data?.helpful || 'unknown'
+      });
+      
       queryClient.invalidateQueries({ queryKey: ["/api/products", productId, "reviews"] });
+    },
+    onError: (error, reviewId) => {
+      console.error(`[REVIEW] Failed to mark review ${reviewId} as helpful:`, {
+        error: error?.message || 'Unknown error',
+        reviewId,
+        productId,
+        timestamp: new Date().toISOString()
+      });
     },
   });
 
   const handleSubmitReview = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    console.log(`[REVIEW] Form submission attempted for product ${productId}:`, {
+      formData: {
+        customerName: reviewForm.customerName,
+        hasEmail: !!reviewForm.customerEmail,
+        rating: reviewForm.rating,
+        titleLength: reviewForm.title.length,
+        commentLength: reviewForm.comment.length
+      },
+      validation: {
+        isValid: reviewForm.customerName && reviewForm.customerEmail && reviewForm.title && reviewForm.comment,
+        missingFields: [
+          !reviewForm.customerName && 'customerName',
+          !reviewForm.customerEmail && 'customerEmail', 
+          !reviewForm.title && 'title',
+          !reviewForm.comment && 'comment'
+        ].filter(Boolean)
+      },
+      timestamp: new Date().toISOString(),
+      productId
+    });
+    
     createReviewMutation.mutate(reviewForm);
   };
 
@@ -169,7 +250,15 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
                   <Input
                     id="customerName"
                     value={reviewForm.customerName}
-                    onChange={(e) => setReviewForm(prev => ({ ...prev, customerName: e.target.value }))}
+                    onChange={(e) => {
+                      console.log(`[REVIEW] User input - customerName changed:`, {
+                        productId,
+                        field: 'customerName',
+                        valueLength: e.target.value.length,
+                        timestamp: new Date().toISOString()
+                      });
+                      setReviewForm(prev => ({ ...prev, customerName: e.target.value }));
+                    }}
                     required
                   />
                 </div>

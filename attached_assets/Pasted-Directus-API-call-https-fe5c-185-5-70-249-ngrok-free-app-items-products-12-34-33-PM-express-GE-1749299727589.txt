@@ -1,0 +1,28 @@
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/products
+12:34:33 PM [express] GET /api/cart/session_1749159880471_d5vtgng0n 304 in 2ms :: []
+Directus API error: 401 Unauthorized for https://fe5c-185-5-70-249.ngrok-free.app/items/products
+Directus API fetch error for https://fe5c-185-5-70-249.ngrok-free.app/items/products: Error: Directus request failed: 401 Unauthorized
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:91:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getProducts (/home/runner/workspace/server/directus-storage.ts:207:20)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:55:24)
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/product
+Directus API error: 401 Unauthorized for https://fe5c-185-5-70-249.ngrok-free.app/items/product
+Directus API fetch error for https://fe5c-185-5-70-249.ngrok-free.app/items/product: Error: Directus request failed: 401 Unauthorized
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:91:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getProducts (/home/runner/workspace/server/directus-storage.ts:215:22)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:55:24)
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/fishing_products
+Directus API error: 401 Unauthorized for https://fe5c-185-5-70-249.ngrok-free.app/items/fishing_products
+Directus API fetch error for https://fe5c-185-5-70-249.ngrok-free.app/items/fishing_products: Error: Directus request failed: 401 Unauthorized
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:91:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getProducts (/home/runner/workspace/server/directus-storage.ts:221:22)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:55:24)
+Failed to fetch products from Directus: Error: Directus request failed: 401 Unauthorized
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:91:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getProducts (/home/runner/workspace/server/directus-storage.ts:221:22)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:55:24)
+12:34:34 PM [express] GET /api/products 304 in 927ms :: []

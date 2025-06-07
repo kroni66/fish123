@@ -1,5 +1,18 @@
 import { IStorage } from "./storage";
-import { Category, Product, CartItem, Order, Review, InsertCategory, InsertProduct, InsertCartItem, InsertOrder, InsertReview } from "@shared/schema";
+import {
+  Category,
+  Product,
+  CartItem,
+  Order,
+  Review,
+  InsertCategory,
+  InsertProduct,
+  InsertCartItem,
+  InsertOrder,
+  InsertReview,
+} from "@shared/schema";
+import dotenv from "dotenv";
+dotenv.config();
 
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const DIRECTUS_API_KEY = process.env.DIRECTUS_API_KEY;
@@ -44,9 +57,11 @@ export class DirectusStorage implements IStorage {
 
   constructor() {
     if (!DIRECTUS_URL || !DIRECTUS_API_KEY) {
-      throw new Error("DIRECTUS_URL and DIRECTUS_API_KEY environment variables are required");
+      throw new Error(
+        "DIRECTUS_URL and DIRECTUS_API_KEY environment variables are required",
+      );
     }
-    this.baseUrl = DIRECTUS_URL.replace(/\/$/, ''); // Remove trailing slash
+    this.baseUrl = DIRECTUS_URL.replace(/\/$/, ""); // Remove trailing slash
     this.apiKey = DIRECTUS_API_KEY;
     console.log(`Directus configured: ${this.baseUrl}`);
   }
@@ -54,7 +69,7 @@ export class DirectusStorage implements IStorage {
   private async request(endpoint: string, options: RequestInit = {}) {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${this.apiKey}`,
+      Authorization: `Bearer ${this.apiKey}`,
     };
 
     const url = `${this.baseUrl}${endpoint}`;
@@ -70,12 +85,18 @@ export class DirectusStorage implements IStorage {
       });
 
       if (!response.ok) {
-        console.error(`Directus API error: ${response.status} ${response.statusText} for ${url}`);
-        throw new Error(`Directus request failed: ${response.status} ${response.statusText}`);
+        console.error(
+          `Directus API error: ${response.status} ${response.statusText} for ${url}`,
+        );
+        throw new Error(
+          `Directus request failed: ${response.status} ${response.statusText}`,
+        );
       }
 
       const data = await response.json();
-      console.log(`Directus API success: ${url} returned ${data.data?.length || 0} items`);
+      console.log(
+        `Directus API success: ${url} returned ${data.data?.length || 0} items`,
+      );
       return data;
     } catch (error) {
       console.error(`Directus API fetch error for ${url}:`, error);
@@ -138,9 +159,11 @@ export class DirectusStorage implements IStorage {
           response = await this.request("/items/fishing_categories");
         }
       }
-      
+
       if (response.data && Array.isArray(response.data)) {
-        return response.data.map((category: DirectusCategory) => this.transformCategory(category));
+        return response.data.map((category: DirectusCategory) =>
+          this.transformCategory(category),
+        );
       }
       return [];
     } catch (error) {
@@ -151,7 +174,9 @@ export class DirectusStorage implements IStorage {
 
   async getCategoryBySlug(slug: string): Promise<Category | undefined> {
     try {
-      const response = await this.request(`/items/categories?filter[slug][_eq]=${slug}`);
+      const response = await this.request(
+        `/items/categories?filter[slug][_eq]=${slug}`,
+      );
       const category = response.data[0];
       return category ? this.transformCategory(category) : undefined;
     } catch (error) {
@@ -177,7 +202,7 @@ export class DirectusStorage implements IStorage {
       if (categoryId) {
         endpoint += `?filter[category][_eq]=${categoryId}`;
       }
-      
+
       try {
         response = await this.request(endpoint);
       } catch (e) {
@@ -196,9 +221,11 @@ export class DirectusStorage implements IStorage {
           response = await this.request(endpoint);
         }
       }
-      
+
       if (response.data && Array.isArray(response.data)) {
-        return response.data.map((product: DirectusProduct) => this.transformProduct(product));
+        return response.data.map((product: DirectusProduct) =>
+          this.transformProduct(product),
+        );
       }
       return [];
     } catch (error) {
@@ -219,7 +246,9 @@ export class DirectusStorage implements IStorage {
 
   async getProductBySlug(slug: string): Promise<Product | undefined> {
     try {
-      const response = await this.request(`/items/products?filter[slug][_eq]=${slug}`);
+      const response = await this.request(
+        `/items/products?filter[slug][_eq]=${slug}`,
+      );
       const product = response.data[0];
       return product ? this.transformProduct(product) : undefined;
     } catch (error) {
@@ -249,8 +278,12 @@ export class DirectusStorage implements IStorage {
 
   async searchProducts(query: string): Promise<Product[]> {
     try {
-      const response = await this.request(`/items/products?search=${encodeURIComponent(query)}`);
-      return response.data.map((product: DirectusProduct) => this.transformProduct(product));
+      const response = await this.request(
+        `/items/products?search=${encodeURIComponent(query)}`,
+      );
+      return response.data.map((product: DirectusProduct) =>
+        this.transformProduct(product),
+      );
     } catch (error) {
       console.error("Failed to search products in Directus:", error);
       return [];
@@ -262,7 +295,9 @@ export class DirectusStorage implements IStorage {
   private currentCartItemId: number = 1;
 
   async getCartItems(sessionId: string): Promise<CartItem[]> {
-    return Array.from(this.cartItems.values()).filter(item => item.sessionId === sessionId);
+    return Array.from(this.cartItems.values()).filter(
+      (item) => item.sessionId === sessionId,
+    );
   }
 
   async addToCart(insertCartItem: InsertCartItem): Promise<CartItem> {
@@ -299,7 +334,7 @@ export class DirectusStorage implements IStorage {
         itemsToDelete.push(id);
       }
     });
-    itemsToDelete.forEach(id => this.cartItems.delete(id));
+    itemsToDelete.forEach((id) => this.cartItems.delete(id));
   }
 
   // Orders - these can also use Directus if you have an orders collection
@@ -328,13 +363,20 @@ export class DirectusStorage implements IStorage {
   // Reviews
   async getProductReviews(productId: number): Promise<Review[]> {
     try {
-      const response = await this.request(`/items/reviews?filter[product_id][_eq]=${productId}&sort=-date_created`);
+      const response = await this.request(
+        `/items/reviews?filter[product_id][_eq]=${productId}&sort=-date_created`,
+      );
       if (response.data && Array.isArray(response.data)) {
-        return response.data.map((review: DirectusReview) => this.transformReview(review));
+        return response.data.map((review: DirectusReview) =>
+          this.transformReview(review),
+        );
       }
       return [];
     } catch (error) {
-      console.error(`Failed to fetch reviews for product ${productId} from Directus:`, error);
+      console.error(
+        `Failed to fetch reviews for product ${productId} from Directus:`,
+        error,
+      );
       return [];
     }
   }

@@ -1,0 +1,48 @@
+The above error occurred in the <ProductReviews> component:
+
+    at ProductReviews (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/src/components/product-reviews.tsx?t=1749300065550:33:34)
+    at div
+    at https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-KYDO7B72.js?v=ba385801:42:13
+    at Presence (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-Z24FTOOA.js?v=ba385801:115:11)
+    at https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=ba385801:389:13
+    at _c5 (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/src/components/ui/tabs.tsx:72:12)
+    at div
+    at https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-KYDO7B72.js?v=ba385801:42:13
+    at Provider (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-Z24FTOOA.js?v=ba385801:35:15)
+    at https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=ba385801:267:7
+    at div
+    at div
+    at div
+    at div
+    at div
+    at ProductModal (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/src/components/product-modal.tsx:27:32)
+    at ProductGrid (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/src/components/product-grid.tsx:24:31)
+    at div
+    at Home (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/src/pages/home.tsx:27:22)
+    at Route (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=ba385801:323:16)
+    at Switch (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=ba385801:379:17)
+    at Router
+    at CartProvider (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/src/hooks/use-cart.tsx:30:32)
+    at Provider (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-Z24FTOOA.js?v=ba385801:35:15)
+    at TooltipProvider (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=ba385801:2244:5)
+    at QueryClientProvider (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=ba385801:2805:3)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+React is not defined
+[vite] hot updated: /src/components/product-reviews.tsx
+[vite] hot updated: /src/index.css?v=30Ut7aMvIkFDj3klB7ivP
+[REVIEW] ProductReviews component mounted for product 2: 
+Object {productId: 2, timestamp: "2025-06-07T12:41:16.112Z", action: "component_mount"}
+[REVIEW] Form submission attempted for product 2: 
+Object {formData: {…}, validation: {…}, timestamp: "2025-06-07T12:41:28.062Z", productId: 2}
+[REVIEW] Submitting review for product 2: 
+Object {customerName: "Láďa Hruška", rating: 5, titleLength: 5, commentLength: 5, timestamp: "2025-06-07T12:41:28.063Z", …}
+[REVIEW] Failed to submit review for product 2: 
+Object {error: "Failed to execute 'fetch' on 'Window': '/api/reviews' is not a valid HTTP method.", customerName: "Láďa Hruška", rating: 5, timestamp: "2025-06-07T12:41:28.063Z", productId: 2}
+
+at t.value (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://8f82d9b2-57a9-480d-8bdf-911fd12a92db-00-38k1lrfhgj15z.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
