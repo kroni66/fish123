@@ -7,7 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useQuery } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import type { Category } from "@shared/schema";
 
 interface EnhancedSearchProps {
   searchQuery: string;
@@ -25,9 +25,8 @@ export function EnhancedSearch({
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [tempSearch, setTempSearch] = useState(searchQuery);
 
-  const { data: categories = [] } = useQuery({
+  const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
-    queryFn: () => apiRequest("/api/categories"),
   });
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -102,7 +101,7 @@ export function EnhancedSearch({
                       />
                       <Label className="text-sm">Všechny kategorie</Label>
                     </div>
-                    {categories.map((category: any) => (
+                    {categories.map((category) => (
                       <div key={category.id} className="flex items-center space-x-2">
                         <Checkbox
                           checked={categoryId === category.id}
@@ -166,7 +165,7 @@ export function EnhancedSearch({
 
             {categoryId && (
               <Badge variant="secondary" className="gap-1 px-3 py-1">
-                {categories.find((c: any) => c.id === categoryId)?.name || 'Kategorie'}
+                {categories.find((c) => c.id === categoryId)?.name || 'Kategorie'}
                 <Button
                   variant="ghost"
                   size="sm"
