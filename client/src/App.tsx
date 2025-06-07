@@ -12,6 +12,7 @@ import Home from "@/pages/home";
 import About from "@/pages/about";
 import Contact from "@/pages/contact";
 import Inspiration from "@/pages/inspiration";
+import Wishlist from "@/pages/wishlist";
 import ProductDetail from "@/pages/product-detail";
 import Checkout from "@/pages/checkout";
 import OrderConfirmation from "@/pages/order-confirmation";
@@ -30,6 +31,7 @@ function Router() {
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
           <Route path="/inspiration" component={Inspiration} />
+          <Route path="/wishlist" component={Wishlist} />
           <Route path="/product/:slug" component={ProductDetail} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/order-confirmation" component={OrderConfirmation} />

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { ShoppingCart, Menu, X, Fish, Search, User, LogOut } from "lucide-react";
+import { ShoppingCart, Menu, X, Fish, Search, User, LogOut, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/use-cart";
+import { useWishlist } from "@/hooks/useWishlist";
 import { useAuth } from "@/hooks/use-auth";
 import { CartOverlay } from "@/components/cart-overlay";
 
@@ -11,7 +12,10 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { itemCount, openCart } = useCart();
+  const { wishlistItems } = useWishlist();
   const { user, isAuthenticated, logout, isLoading } = useAuth();
+  
+  const wishlistCount = Array.isArray(wishlistItems) ? wishlistItems.length : 0;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -226,6 +230,22 @@ export function Navbar() {
               >
                 <Search className="w-5 h-5" />
               </Button>
+
+              {/* Wishlist Button */}
+              <Link href="/wishlist">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg relative"
+                >
+                  <Heart className="w-5 h-5" />
+                  {wishlistCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                      {wishlistCount}
+                    </span>
+                  )}
+                </Button>
+              </Link>
 
               {/* Authentication Buttons */}
               {!isLoading && (
