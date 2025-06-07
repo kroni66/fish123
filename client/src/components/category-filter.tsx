@@ -13,7 +13,7 @@ export function CategoryFilter({ selectedCategory, onCategoryChange }: CategoryF
   });
 
   return (
-    <section className="py-8 bg-white" id="categories">
+    <section className="py-8 bg-[#28282800]" id="categories">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap justify-center gap-4">
           {categories.map((category) => (
