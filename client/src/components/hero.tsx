@@ -2,9 +2,65 @@ import { Search, Fish, Target, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocation } from "wouter";
+import { useState, useEffect, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export function Hero() {
   const [, setLocation] = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  // Fetch products for autocomplete
+  const { data: products = [] } = useQuery<Product[]>({
+    queryKey: ["/api/products"],
+  });
+
+  // Filter products based on search query
+  const suggestions = searchQuery.length >= 2 
+    ? products
+        .filter((product: Product) => 
+          product.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .slice(0, 5)
+    : [];
+
+  // Handle click outside to close suggestions
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    setShowSuggestions(value.length >= 2);
+  };
+
+  const handleSuggestionClick = (productName: string) => {
+    setSearchQuery(productName);
+    setShowSuggestions(false);
+    // Navigate to products section with search
+    const productsSection = document.getElementById('products');
+    if (productsSection) {
+      productsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      setShowSuggestions(false);
+      const productsSection = document.getElementById('products');
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center fishing-gradient overflow-hidden">
@@ -425,14 +481,44 @@ export function Hero() {
             </p>
           </div>
           
-          {/* Search Bar */}
+          {/* Search Bar with Autocomplete */}
           <div className="max-w-2xl mx-auto">
-            <div className="relative group">
-              <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 h-6 w-6 text-slate-400 group-hover:text-primary transition-colors" />
-              <Input 
-                placeholder="Vyhledejte rybářské vybavení..."
-                className="pl-16 pr-6 py-8 text-lg font-medium rounded-2xl bg-slate-900/60 backdrop-blur-md border-2 border-slate-600/50 hover:border-primary/60 focus:border-primary text-slate-100 placeholder:text-slate-400 shadow-2xl transition-all duration-300"
-              />
+            <div className="relative group" ref={searchRef}>
+              <form onSubmit={handleSearchSubmit}>
+                <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 h-6 w-6 text-slate-400 group-hover:text-primary transition-colors z-10" />
+                <Input 
+                  value={searchQuery}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  placeholder="Vyhledejte rybářské vybavení..."
+                  className="pl-16 pr-6 py-8 text-lg font-medium rounded-2xl bg-slate-900/60 backdrop-blur-md border-2 border-slate-600/50 hover:border-primary/60 focus:border-primary text-slate-100 placeholder:text-slate-400 shadow-2xl transition-all duration-300"
+                  autoComplete="off"
+                />
+              </form>
+              
+              {/* Autocomplete Suggestions */}
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800/95 backdrop-blur-md border border-slate-600/50 rounded-xl shadow-2xl z-50 overflow-hidden">
+                  {suggestions.map((product, index) => (
+                    <button
+                      key={product.id}
+                      onClick={() => handleSuggestionClick(product.name)}
+                      className="w-full px-6 py-4 text-left hover:bg-slate-700/50 transition-colors border-b border-slate-600/30 last:border-b-0 group"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <Search className="h-4 w-4 text-slate-400 group-hover:text-primary transition-colors" />
+                        <div>
+                          <div className="text-slate-100 font-medium">{product.name}</div>
+                          {product.description && (
+                            <div className="text-slate-400 text-sm truncate max-w-md">
+                              {product.description}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           
