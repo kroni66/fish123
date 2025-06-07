@@ -45,15 +45,17 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
     try {
       await addToCart(product.id, quantity);
       toast({
-        title: "Added to cart",
-        description: `${quantity} ${product.name}${quantity > 1 ? 's' : ''} added to your cart.`,
+        title: "Přidáno do košíku",
+        description: `${quantity}x ${product.name} bylo přidáno do košíku.`,
+        duration: 2000,
       });
       onClose();
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to add item to cart. Please try again.",
+        title: "Chyba",
+        description: "Nepodařilo se přidat položku do košíku. Zkuste to znovu.",
         variant: "destructive",
+        duration: 2000,
       });
     } finally {
       setIsAddingToCart(false);

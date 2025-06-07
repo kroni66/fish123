@@ -27,12 +27,14 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
       toast({
         title: "Přidáno do košíku",
         description: `${product.name} byl přidán do vašeho košíku.`,
+        duration: 2000,
       });
     } catch (error) {
       toast({
         title: "Chyba",
         description: "Nepodařilo se přidat položku do košíku. Zkuste to prosím znovu.",
         variant: "destructive",
+        duration: 2000,
       });
     } finally {
       setIsAddingToCart(false);
