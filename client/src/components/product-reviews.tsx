@@ -210,7 +210,17 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
           <CardTitle className="flex items-center justify-between">
             <span>Hodnocení zákazníků</span>
             <Button
-              onClick={() => setShowReviewForm(!showReviewForm)}
+              onClick={() => {
+                const newState = !showReviewForm;
+                console.log(`[REVIEW] Review form toggle:`, {
+                  productId,
+                  action: newState ? 'open_form' : 'close_form',
+                  previousState: showReviewForm,
+                  newState,
+                  timestamp: new Date().toISOString()
+                });
+                setShowReviewForm(newState);
+              }}
               variant="outline"
               size="sm"
             >
@@ -268,7 +278,15 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
                     id="customerEmail"
                     type="email"
                     value={reviewForm.customerEmail}
-                    onChange={(e) => setReviewForm(prev => ({ ...prev, customerEmail: e.target.value }))}
+                    onChange={(e) => {
+                      console.log(`[REVIEW] User input - customerEmail changed:`, {
+                        productId,
+                        field: 'customerEmail',
+                        hasValue: !!e.target.value,
+                        timestamp: new Date().toISOString()
+                      });
+                      setReviewForm(prev => ({ ...prev, customerEmail: e.target.value }));
+                    }}
                     required
                   />
                 </div>
@@ -276,9 +294,16 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
 
               <div>
                 <Label>Hodnocení *</Label>
-                {renderStars(reviewForm.rating, true, (rating) =>
-                  setReviewForm(prev => ({ ...prev, rating }))
-                )}
+                {renderStars(reviewForm.rating, true, (rating) => {
+                  console.log(`[REVIEW] Rating changed:`, {
+                    productId,
+                    previousRating: reviewForm.rating,
+                    newRating: rating,
+                    timestamp: new Date().toISOString(),
+                    action: 'rating_change'
+                  });
+                  setReviewForm(prev => ({ ...prev, rating }));
+                })}
               </div>
 
               <div>
@@ -286,7 +311,15 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
                 <Input
                   id="title"
                   value={reviewForm.title}
-                  onChange={(e) => setReviewForm(prev => ({ ...prev, title: e.target.value }))}
+                  onChange={(e) => {
+                    console.log(`[REVIEW] User input - title changed:`, {
+                      productId,
+                      field: 'title',
+                      valueLength: e.target.value.length,
+                      timestamp: new Date().toISOString()
+                    });
+                    setReviewForm(prev => ({ ...prev, title: e.target.value }));
+                  }}
                   placeholder="Stručný nadpis vaší recenze"
                   required
                 />
@@ -297,7 +330,16 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
                 <Textarea
                   id="comment"
                   value={reviewForm.comment}
-                  onChange={(e) => setReviewForm(prev => ({ ...prev, comment: e.target.value }))}
+                  onChange={(e) => {
+                    console.log(`[REVIEW] User input - comment changed:`, {
+                      productId,
+                      field: 'comment',
+                      valueLength: e.target.value.length,
+                      wordCount: e.target.value.split(/\s+/).filter(word => word.length > 0).length,
+                      timestamp: new Date().toISOString()
+                    });
+                    setReviewForm(prev => ({ ...prev, comment: e.target.value }));
+                  }}
                   placeholder="Podělte se o své zkušenosti s tímto produktem..."
                   rows={4}
                   required
