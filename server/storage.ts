@@ -3,14 +3,17 @@ import {
   products, 
   cartItems, 
   orders,
+  reviews,
   type Category, 
   type Product, 
   type CartItem, 
   type Order,
+  type Review,
   type InsertCategory, 
   type InsertProduct, 
   type InsertCartItem, 
-  type InsertOrder 
+  type InsertOrder,
+  type InsertReview
 } from "@shared/schema";
 
 export interface IStorage {
@@ -36,6 +39,12 @@ export interface IStorage {
   // Orders
   createOrder(order: InsertOrder): Promise<Order>;
   getOrder(id: number): Promise<Order | undefined>;
+
+  // Reviews
+  getProductReviews(productId: number): Promise<Review[]>;
+  createReview(review: InsertReview): Promise<Review>;
+  getReview(id: number): Promise<Review | undefined>;
+  markReviewHelpful(id: number): Promise<Review>;
 }
 
 export class MemStorage implements IStorage {
@@ -43,20 +52,24 @@ export class MemStorage implements IStorage {
   private products: Map<number, Product>;
   private cartItems: Map<number, CartItem>;
   private orders: Map<number, Order>;
+  private reviews: Map<number, Review>;
   private currentCategoryId: number;
   private currentProductId: number;
   private currentCartItemId: number;
   private currentOrderId: number;
+  private currentReviewId: number;
 
   constructor() {
     this.categories = new Map();
     this.products = new Map();
     this.cartItems = new Map();
     this.orders = new Map();
+    this.reviews = new Map();
     this.currentCategoryId = 1;
     this.currentProductId = 1;
     this.currentCartItemId = 1;
     this.currentOrderId = 1;
+    this.currentReviewId = 1;
 
     // Initialize with sample data
     this.initializeSampleData();
