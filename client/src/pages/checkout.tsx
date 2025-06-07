@@ -305,7 +305,7 @@ export default function Checkout() {
           <div>
             <Card>
               <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
+                <CardTitle>Shrnutí objednávky</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -323,7 +323,7 @@ export default function Checkout() {
                           {item.product?.name}
                         </h4>
                         <p className="text-sm text-muted-foreground">
-                          Quantity: {item.quantity}
+                          Množství: {item.quantity}
                         </p>
                       </div>
                       <span className="font-medium text-foreground">
@@ -364,7 +364,7 @@ export default function Checkout() {
                   {isProcessing ? (
                     <div className="flex items-center space-x-2">
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span>Processing...</span>
+                      <span>Zpracovávám...</span>
                     </div>
                   ) : (
                     `Dokončit objednávku - ${formatPrice(total * 1.21)} Kč`
