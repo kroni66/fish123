@@ -77,11 +77,15 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
 
   return (
     <>
-      <section id="products" className="py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,theme(colors.primary.500/10),transparent_70%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,theme(colors.accent.500/10),transparent_70%)]"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_48%,theme(colors.primary.500/5)_49%,theme(colors.primary.500/5)_51%,transparent_52%)] bg-[#1d1711]"></div>
+      <section id="products" className="py-20 relative">
+        {/* Unified radial gradient background elements */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_30%,_var(--tw-gradient-stops))] from-cyan-900/25 via-cyan-950/15 to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_70%,_var(--tw-gradient-stops))] from-blue-900/20 via-blue-950/10 to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_20%,_var(--tw-gradient-stops))] from-teal-800/15 via-transparent to-transparent"></div>
+        
+        {/* Atmospheric depth effects */}
+        <div className="absolute top-0 left-1/3 w-[400px] h-[400px] bg-cyan-400/6 rounded-full blur-[100px] animate-pulse delay-500"></div>
+        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-blue-400/8 rounded-full blur-[80px] animate-pulse delay-1500"></div>
         
         <div className="container mx-auto px-4 relative">
           {/* Category Filter */}
@@ -113,17 +117,24 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
 
           {/* Editorial Content Block */}
           <div className="relative bg-gradient-to-br from-slate-900/90 via-slate-800/80 to-slate-900/90 backdrop-blur-sm rounded-3xl border border-slate-700/50 p-12 mb-16 overflow-hidden">
-            {/* Background Effects */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,theme(colors.primary.500/15),transparent_70%)]"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,theme(colors.accent.500/10),transparent_70%)]"></div>
+            {/* Unified radial gradient background effects */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,_var(--tw-gradient-stops))] from-cyan-900/20 via-cyan-950/10 to-transparent"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,_var(--tw-gradient-stops))] from-blue-900/15 via-blue-950/8 to-transparent"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_50%,_var(--tw-gradient-stops))] from-teal-800/10 via-transparent to-transparent"></div>
             
-            {/* Floating Elements */}
-            <div className="absolute top-8 right-8 w-32 h-32 opacity-10">
-              <svg viewBox="0 0 100 100" className="w-full h-full text-primary">
-                <path d="M20 50 Q 30 30 50 40 Q 70 50 80 35 Q 85 45 75 55 Q 65 65 50 60 Q 35 55 20 50" 
-                      fill="currentColor" className="animate-pulse"/>
+            {/* Floating underwater elements */}
+            <div className="absolute top-8 right-8 w-32 h-32 opacity-15 animate-pulse delay-1000">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-cyan-400">
+                <path d="M25 50 Q40 35 60 45 Q40 55 25 50 Z" fill="currentColor" opacity="0.6" />
+                <circle cx="50" cy="45" r="2" fill="#1e40af" />
+                <path d="M20 50 Q13 45 10 50 Q13 55 20 50 Z" fill="currentColor" opacity="0.4" />
               </svg>
             </div>
+            
+            {/* Additional floating bubbles */}
+            <div className="absolute bottom-8 left-8 w-4 h-4 bg-cyan-300/20 rounded-full animate-pulse delay-2000"></div>
+            <div className="absolute top-16 left-16 w-2 h-2 bg-blue-300/30 rounded-full animate-pulse delay-3000"></div>
+            <div className="absolute bottom-16 right-16 w-3 h-3 bg-teal-300/25 rounded-full animate-pulse delay-500"></div>
             
             <div className="relative max-w-4xl mx-auto text-center">
               <div className="mb-8">
