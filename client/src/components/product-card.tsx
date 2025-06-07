@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Heart, ShoppingCart, Eye } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
 import { formatPrice } from "@/lib/utils";
-import { ProductQuickView } from "./product-quick-view";
 import type { Product } from "@shared/schema";
 
 interface ProductCardProps {
@@ -16,7 +15,6 @@ interface ProductCardProps {
 export function ProductCard({ product, onProductClick }: ProductCardProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [showQuickView, setShowQuickView] = useState(false);
   const { addToCart } = useCart();
   const { toast } = useToast();
 
@@ -48,11 +46,6 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
     setIsLiked(!isLiked);
   };
 
-  const handleQuickView = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowQuickView(true);
-  };
-
   return (
     <article 
       className="bg-card/80 backdrop-blur-sm rounded-2xl shadow-2xl hover:shadow-primary/20 transition-all duration-500 overflow-hidden group cursor-pointer border border-border/50 hover:border-primary/30 transform hover:-translate-y-2"
@@ -81,18 +74,6 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
               </span>
             </div>
           )}
-
-          {/* Quick View Button */}
-          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={handleQuickView}
-              className="h-10 w-10 p-0 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg border border-primary/20"
-            >
-              <Eye className="h-4 w-4" />
-            </Button>
-          </div>
 
           <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
             <div className="bg-white/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg">
@@ -139,13 +120,6 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
           </Button>
         </div>
       </div>
-
-      {/* Quick View Modal */}
-      <ProductQuickView
-        product={product}
-        isOpen={showQuickView}
-        onClose={() => setShowQuickView(false)}
-      />
     </article>
   );
 }
