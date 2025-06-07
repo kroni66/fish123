@@ -102,6 +102,59 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
             </div>
           )}
 
+          {/* Core Values Section */}
+          <div className="mb-20">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Prémiová kvalita */}
+              <div className="group relative bg-gradient-to-br from-amber-900/90 to-amber-800/90 rounded-2xl p-8 text-center overflow-hidden hover:scale-105 transition-all duration-300">
+                <div className="absolute inset-0 bg-black/10 opacity-30"></div>
+                <div className="relative z-10">
+                  <div className="w-16 h-16 mx-auto mb-6 bg-amber-200/20 rounded-full flex items-center justify-center">
+                    <svg className="w-8 h-8 text-amber-200" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-amber-100 mb-4">Prémiová kvalita</h3>
+                  <p className="text-amber-200/90 leading-relaxed">
+                    Vybíráme pouze ty nejlepší materiály a komponenty, které prošly důkladným testováním v nejnáročnějších podmínkách.
+                  </p>
+                </div>
+              </div>
+
+              {/* Přesnost */}
+              <div className="group relative bg-gradient-to-br from-stone-800/90 to-stone-700/90 rounded-2xl p-8 text-center overflow-hidden hover:scale-105 transition-all duration-300">
+                <div className="absolute inset-0 bg-black/10 opacity-30"></div>
+                <div className="relative z-10">
+                  <div className="w-16 h-16 mx-auto mb-6 bg-stone-200/20 rounded-full flex items-center justify-center">
+                    <svg className="w-8 h-8 text-stone-200" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-stone-100 mb-4">Přesnost</h3>
+                  <p className="text-stone-200/90 leading-relaxed">
+                    Každý detail je pečlivě promyšlen a vyladěn pro maximální účinnost. Preciznost, která rozhoduje o úspěchu.
+                  </p>
+                </div>
+              </div>
+
+              {/* Tradice */}
+              <div className="group relative bg-gradient-to-br from-emerald-900/90 to-emerald-800/90 rounded-2xl p-8 text-center overflow-hidden hover:scale-105 transition-all duration-300">
+                <div className="absolute inset-0 bg-black/10 opacity-30"></div>
+                <div className="relative z-10">
+                  <div className="w-16 h-16 mx-auto mb-6 bg-emerald-200/20 rounded-full flex items-center justify-center">
+                    <svg className="w-8 h-8 text-emerald-200" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2M21,9V7L15,1H9V3H15L19,7V9H21M5,7V9H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19V19H5V7M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-emerald-100 mb-4">Tradice</h3>
+                  <p className="text-emerald-200/90 leading-relaxed">
+                    Respektujeme osvědčené metody předávané generacemi rybářů a spojujeme je s moderními inovacemi.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Product Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
             {displayedProducts.map((product) => (
