@@ -23,7 +23,11 @@ export default function Landing() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Multi-layered radial gradient background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-950/30 via-slate-950 to-slate-900"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-blue-950/20 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-teal-950/15 via-transparent to-transparent"></div>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Floating particles */}
@@ -79,10 +83,15 @@ export default function Landing() {
             {/* Main Heading */}
             <div className="space-y-6">
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tighter">
-                <span className="block bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent">
-                  RIG OF DEATH je nový způsob
+                <span className="block bg-gradient-to-r from-cyan-300 via-blue-400 to-cyan-500 bg-clip-text text-transparent relative">
+                  <span className="animate-gradient-x bg-gradient-to-r from-cyan-200 via-blue-300 to-teal-300 bg-clip-text text-transparent">
+                    RIG OF DEATH
+                  </span>
                 </span>
-                <span className="block bg-gradient-to-r from-blue-300 via-cyan-300 to-teal-300 bg-clip-text text-transparent mt-2">
+                <span className="block bg-gradient-to-r from-slate-200 via-white to-slate-300 bg-clip-text text-transparent mt-2">
+                  je nový způsob
+                </span>
+                <span className="block bg-gradient-to-r from-teal-300 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
                   jak lovit ryby.
                 </span>
               </h1>
@@ -194,7 +203,8 @@ export default function Landing() {
         </section>
 
         {/* Pricing Section */}
-        <section className="py-24 px-4 bg-gradient-to-b from-transparent to-slate-950/50">
+        <section className="py-24 px-4 relative">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900/50 via-slate-950 to-slate-950"></div>
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <Badge className="mb-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/20">
