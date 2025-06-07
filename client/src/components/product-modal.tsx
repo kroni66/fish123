@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { X, Heart, Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
 import { formatPrice } from "@/lib/utils";
+import { ProductReviews } from "@/components/product-reviews";
 import type { Product } from "@shared/schema";
 
 interface ProductModalProps {
@@ -128,36 +130,47 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                 )}
               </div>
 
-              <div className="space-y-4 mb-8">
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">Description</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {product.description}
-                  </p>
-                </div>
-
-                {product.features && product.features.length > 0 && (
+              <Tabs defaultValue="details" className="mb-8">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="details">Popis produktu</TabsTrigger>
+                  <TabsTrigger value="reviews">Hodnocení</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="details" className="space-y-4 mt-4">
                   <div>
-                    <h3 className="font-semibold text-foreground mb-2">Features</h3>
-                    <ul className="text-muted-foreground space-y-1">
-                      {product.features.map((feature, index) => (
-                        <li key={index}>• {feature}</li>
-                      ))}
-                    </ul>
+                    <h3 className="font-semibold text-foreground mb-2">Popis</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {product.description}
+                    </p>
                   </div>
-                )}
 
-                {product.dimensions && (
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-2">Dimensions</h3>
-                    <p className="text-muted-foreground">{product.dimensions}</p>
-                  </div>
-                )}
-              </div>
+                  {product.features && product.features.length > 0 && (
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Vlastnosti</h3>
+                      <ul className="text-muted-foreground space-y-1">
+                        {product.features.map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {product.dimensions && (
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Rozměry</h3>
+                      <p className="text-muted-foreground">{product.dimensions}</p>
+                    </div>
+                  )}
+                </TabsContent>
+                
+                <TabsContent value="reviews" className="mt-4">
+                  <ProductReviews productId={product.id} />
+                </TabsContent>
+              </Tabs>
 
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
-                  <span className="font-medium text-foreground">Quantity:</span>
+                  <span className="font-medium text-foreground">Množství:</span>
                   <div className="flex items-center space-x-2">
                     <Button
                       variant="outline"
@@ -195,7 +208,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                         <span>Adding...</span>
                       </div>
                     ) : (
-                      "Add to Cart"
+                      "Přidat do košíku"
                     )}
                   </Button>
                   <Button
