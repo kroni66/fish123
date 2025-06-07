@@ -12,14 +12,14 @@ export function Hero() {
   const searchRef = useRef<HTMLDivElement>(null);
 
   // Fetch products for autocomplete
-  const { data: products = [] } = useQuery<Product[]>({
+  const { data: products = [] } = useQuery({
     queryKey: ["/api/products"],
   });
 
   // Filter products based on search query
   const suggestions = searchQuery.length >= 2 
-    ? products
-        .filter((product: Product) => 
+    ? (products as any[])
+        .filter((product: any) => 
           product.name.toLowerCase().includes(searchQuery.toLowerCase())
         )
         .slice(0, 5)
@@ -498,7 +498,7 @@ export function Hero() {
               {/* Autocomplete Suggestions */}
               {showSuggestions && suggestions.length > 0 && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800/95 backdrop-blur-md border border-slate-600/50 rounded-xl shadow-2xl z-50 overflow-hidden">
-                  {suggestions.map((product, index) => (
+                  {suggestions.map((product: any, index: number) => (
                     <button
                       key={product.id}
                       onClick={() => handleSuggestionClick(product.name)}
