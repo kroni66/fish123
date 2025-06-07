@@ -7,6 +7,7 @@ import {
   reviews,
   articles,
   articleCategories,
+  wishlistItems,
   type User,
   type Category, 
   type Product, 
@@ -15,6 +16,7 @@ import {
   type Review,
   type Article,
   type ArticleCategory,
+  type WishlistItem,
   type InsertUser,
   type InsertCategory, 
   type InsertProduct, 
@@ -22,7 +24,8 @@ import {
   type InsertOrder,
   type InsertReview,
   type InsertArticle,
-  type InsertArticleCategory
+  type InsertArticleCategory,
+  type InsertWishlistItem
 } from "@shared/schema";
 
 export interface IStorage {
@@ -67,6 +70,12 @@ export interface IStorage {
   getArticleBySlug(slug: string): Promise<Article | undefined>;
   createArticle(article: InsertArticle): Promise<Article>;
   getArticleCategories(): Promise<ArticleCategory[]>;
+
+  // Wishlist
+  getWishlistItems(sessionId: string): Promise<WishlistItem[]>;
+  addToWishlist(item: InsertWishlistItem): Promise<WishlistItem>;
+  removeFromWishlist(id: number): Promise<void>;
+  isInWishlist(sessionId: string, productId: number): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -78,6 +87,7 @@ export class MemStorage implements IStorage {
   private reviews: Map<number, Review>;
   private articles: Map<number, Article>;
   private articleCategories: Map<number, ArticleCategory>;
+  private wishlistItems: Map<number, WishlistItem>;
   private currentUserId: number;
   private currentCategoryId: number;
   private currentProductId: number;
@@ -86,6 +96,7 @@ export class MemStorage implements IStorage {
   private currentReviewId: number;
   private currentArticleId: number;
   private currentArticleCategoryId: number;
+  private currentWishlistItemId: number;
 
   constructor() {
     this.users = new Map();
@@ -96,6 +107,7 @@ export class MemStorage implements IStorage {
     this.reviews = new Map();
     this.articles = new Map();
     this.articleCategories = new Map();
+    this.wishlistItems = new Map();
     this.currentUserId = 1;
     this.currentCategoryId = 1;
     this.currentProductId = 1;

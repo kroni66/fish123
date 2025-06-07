@@ -98,6 +98,13 @@ export const articleCategories = pgTable("article_categories", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const wishlistItems = pgTable("wishlist_items", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").notNull(),
+  productId: integer("product_id").references(() => products.id).notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertCategorySchema = createInsertSchema(categories).omit({
   id: true,
 });
@@ -143,6 +150,11 @@ export const insertArticleCategorySchema = createInsertSchema(articleCategories)
   createdAt: true,
 });
 
+export const insertWishlistItemSchema = createInsertSchema(wishlistItems).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Authentication schemas
 export const loginSchema = z.object({
   email: z.string().email("Neplatná e-mailová adresa"),
@@ -164,6 +176,7 @@ export type Order = typeof orders.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
 export type Article = typeof articles.$inferSelect;
 export type ArticleCategory = typeof articleCategories.$inferSelect;
+export type WishlistItem = typeof wishlistItems.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type InsertCategory = z.infer<typeof insertCategorySchema>;
 export type InsertProduct = z.infer<typeof insertProductSchema>;
@@ -172,5 +185,6 @@ export type InsertOrder = z.infer<typeof insertOrderSchema>;
 export type InsertReview = z.infer<typeof insertReviewSchema>;
 export type InsertArticle = z.infer<typeof insertArticleSchema>;
 export type InsertArticleCategory = z.infer<typeof insertArticleCategorySchema>;
+export type InsertWishlistItem = z.infer<typeof insertWishlistItemSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
 export type RegisterData = z.infer<typeof registerSchema>;
