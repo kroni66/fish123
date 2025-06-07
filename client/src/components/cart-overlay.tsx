@@ -38,10 +38,10 @@ export function CartOverlay() {
       className="fixed inset-0 bg-black bg-opacity-50 z-50"
       onClick={handleBackdropClick}
     >
-      <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl cart-slide-in">
+      <div className="absolute right-0 top-0 h-full w-full max-w-md bg-card backdrop-blur-sm shadow-2xl cart-slide-in border-l border-border">
         <div className="flex flex-col h-full">
           {/* Cart Header */}
-          <div className="flex items-center justify-between p-6 border-b">
+          <div className="flex items-center justify-between p-6 border-b border-border">
             <h3 className="text-lg font-semibold text-foreground">
               Nákupní košík ({items.length})
             </h3>
@@ -92,7 +92,7 @@ export function CartOverlay() {
                         >
                           <Minus className="h-4 w-4" />
                         </Button>
-                        <span className="text-sm font-medium w-8 text-center">
+                        <span className="text-sm font-medium w-8 text-center text-foreground">
                           {item.quantity}
                         </span>
                         <Button
@@ -121,7 +121,7 @@ export function CartOverlay() {
 
           {/* Cart Footer */}
           {items.length > 0 && (
-            <div className="border-t p-6">
+            <div className="border-t border-border p-6">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-lg font-semibold text-foreground">Celkem:</span>
                 <span className="text-2xl font-bold text-primary">
