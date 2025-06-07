@@ -227,6 +227,41 @@ export function Navbar() {
                 <Search className="w-5 h-5" />
               </Button>
 
+              {/* Authentication Buttons */}
+              {!isLoading && (
+                <>
+                  {isAuthenticated ? (
+                    <div className="hidden md:flex items-center space-x-2">
+                      <span className="text-slate-300 text-sm">
+                        {user?.firstName || user?.email}
+                      </span>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                        onClick={logout}
+                        title="Odhlásit se"
+                      >
+                        <LogOut className="w-5 h-5" />
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="hidden md:flex items-center space-x-2">
+                      <Link href="/login">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                        >
+                          <User className="w-4 h-4 mr-2" />
+                          Přihlásit se
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+                </>
+              )}
+
               {/* Cart Button */}
               <Button
                 variant="ghost"
@@ -276,6 +311,55 @@ export function Navbar() {
                     {item.name}
                   </Link>
                 ))}
+                
+                {/* Mobile Authentication */}
+                <div className="border-t border-slate-700/50 pt-4 mt-4">
+                  {!isLoading && (
+                    <>
+                      {isAuthenticated ? (
+                        <div className="space-y-3">
+                          <div className="px-4 py-2 text-slate-300 text-sm">
+                            Přihlášen jako: {user?.firstName || user?.email}
+                          </div>
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                            onClick={() => {
+                              logout();
+                              setIsMobileMenuOpen(false);
+                            }}
+                          >
+                            <LogOut className="w-4 h-4 mr-2" />
+                            Odhlásit se
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          <Link href="/login">
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              <User className="w-4 h-4 mr-2" />
+                              Přihlásit se
+                            </Button>
+                          </Link>
+                          <Link href="/register">
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              <User className="w-4 h-4 mr-2" />
+                              Registrovat se
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           )}
