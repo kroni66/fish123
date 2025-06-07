@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Calendar, User, ArrowRight, Fish, Target, Award } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
+import { useMarineAnimations, marinePresets, splitTextForWave } from "@/hooks/use-marine-animations";
 import type { Article, ArticleCategory } from "@shared/schema";
 
 interface BlogPost extends Article {
@@ -14,6 +16,16 @@ interface BlogPost extends Article {
 export default function Inspiration() {
   const [selectedCategory, setSelectedCategory] = useState("Všechny");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  
+  // Marine-themed animations
+  const { 
+    containerVariants, 
+    itemVariants, 
+    cardVariants, 
+    waveTextVariants, 
+    waveLetterVariants,
+    bubbleVariants 
+  } = useMarineAnimations(marinePresets.articleList);
 
   // Fetch articles from Directus
   const { data: articles = [], isLoading: articlesLoading } = useQuery({
@@ -113,12 +125,30 @@ export default function Inspiration() {
       <section className="py-24 fishing-gradient">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-8">
-            <h1 className="text-5xl md:text-7xl font-bold text-foreground font-poppins tracking-tight">
-              <span className="block text-primary drop-shadow-lg">INSPIRACE</span>
-              <span className="block text-2xl md:text-3xl text-muted-foreground font-light mt-4 tracking-wide">
+            <motion.h1 
+              className="text-5xl md:text-7xl font-bold text-foreground font-poppins tracking-tight"
+              variants={waveTextVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.span className="block text-primary drop-shadow-lg">
+                {splitTextForWave("INSPIRACE").map((letter, index) => (
+                  <motion.span
+                    key={index}
+                    variants={waveLetterVariants}
+                    className="inline-block"
+                  >
+                    {letter.char}
+                  </motion.span>
+                ))}
+              </motion.span>
+              <motion.span 
+                className="block text-2xl md:text-3xl text-muted-foreground font-light mt-4 tracking-wide"
+                variants={itemVariants}
+              >
                 FISHING STORIES
-              </span>
-            </h1>
+              </motion.span>
+            </motion.h1>
             
             <p className="text-xl md:text-2xl text-foreground/90 font-light leading-relaxed">
               Články, tipy a příběhy od zkušených rybářů
@@ -190,42 +220,52 @@ export default function Inspiration() {
             )}
 
             {/* Article Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
               {filteredPosts.slice(1).map((post) => (
-                <Card 
-                  key={post.id} 
-                  className="bg-card/80 backdrop-blur-sm border-border/50 overflow-hidden hover:border-primary/30 transition-all duration-300 cursor-pointer"
-                  onClick={() => setSelectedPost(post)}
+                <motion.div
+                  key={post.id}
+                  variants={cardVariants}
+                  whileHover="hover"
                 >
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img 
-                      src={post.image} 
-                      alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <CardContent className="p-6 space-y-4">
-                    <Badge className="bg-primary/20 text-primary text-xs">
-                      {post.category}
-                    </Badge>
-                    <h3 className="text-xl font-bold text-foreground leading-tight">
-                      {post.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between pt-4 border-t border-border">
-                      <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                        <span>{post.author}</span>
-                        <span>•</span>
-                        <span>{post.readTime} min</span>
-                      </div>
-                      <ArrowRight className="h-4 w-4 text-primary" />
+                  <Card 
+                    className="bg-card/80 backdrop-blur-sm border-border/50 overflow-hidden hover:border-primary/30 transition-all duration-300 cursor-pointer h-full"
+                    onClick={() => setSelectedPost(post)}
+                  >
+                    <div className="aspect-[4/3] overflow-hidden">
+                      <img 
+                        src={post.image} 
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
-                  </CardContent>
-                </Card>
+                    <CardContent className="p-6 space-y-4">
+                      <Badge className="bg-primary/20 text-primary text-xs">
+                        {post.category}
+                      </Badge>
+                      <h3 className="text-xl font-bold text-foreground leading-tight">
+                        {post.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                      <div className="flex items-center justify-between pt-4 border-t border-border">
+                        <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+                          <span>{post.author}</span>
+                          <span>•</span>
+                          <span>{post.readTime} min</span>
+                        </div>
+                        <ArrowRight className="h-4 w-4 text-primary" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {/* Featured Tips Section */}
             <div className="mt-24">

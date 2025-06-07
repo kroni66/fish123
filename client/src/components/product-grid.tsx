@@ -80,15 +80,21 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
           )}
 
           {/* Product Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {displayedProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onProductClick={setSelectedProduct}
-              />
+              <motion.div key={product.id} variants={cardVariants} whileHover="hover">
+                <ProductCard
+                  product={product}
+                  onProductClick={setSelectedProduct}
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Editorial Content Block */}
           <div className="relative bg-gradient-to-br from-slate-900/90 via-slate-800/80 to-slate-900/90 backdrop-blur-sm rounded-3xl border border-slate-700/50 p-12 mb-16 overflow-hidden">
