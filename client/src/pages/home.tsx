@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { ProductGrid } from "@/components/product-grid";
 import { EnhancedSearch } from "@/components/enhanced-search";
-import { CartOverlay } from "@/components/cart-overlay";
 import { Footer } from "@/components/footer";
 
 export default function Home() {
@@ -32,7 +30,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       <Hero />
       
       <EnhancedSearch
@@ -48,7 +45,6 @@ export default function Home() {
         onCategoryChange={setSelectedCategory}
       />
       <Footer />
-      <CartOverlay />
     </div>
   );
 }
