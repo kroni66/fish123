@@ -63,7 +63,12 @@ export function Hero() {
             <Button 
               size="lg" 
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-8 text-xl rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold"
-              onClick={() => setLocation("/#products")}
+              onClick={() => {
+                const productsSection = document.getElementById('products');
+                if (productsSection) {
+                  productsSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
             >
               Prohlédnout kolekci
             </Button>
