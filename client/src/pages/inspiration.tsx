@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
+import { UnderwaterLoading, UnderwaterSkeleton } from "@/components/loading-animations";
 import { useMarineAnimations, marinePresets, splitTextForWave } from "@/hooks/use-marine-animations";
 import type { Article, ArticleCategory } from "@shared/schema";
 
@@ -56,8 +57,31 @@ export default function Inspiration() {
   // Show loading state while articles are being fetched
   if (articlesLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" aria-label="Loading"/>
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+        <div className="container mx-auto px-4 py-24">
+          <UnderwaterLoading 
+            isLoading={true} 
+            message="Načítám inspirativní příběhy z mořských hlubin..." 
+            variant="default"
+            size="lg"
+          />
+          
+          {/* Article skeleton grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Card key={i} className="bg-slate-800/50 backdrop-blur-sm border-slate-700/50 animate-shimmer">
+                <div className="aspect-[16/9] bg-gradient-to-br from-slate-700/50 to-slate-600/50 rounded-t-lg animate-shimmer"></div>
+                <CardContent className="p-6 space-y-4">
+                  <UnderwaterSkeleton lines={3} />
+                  <div className="flex items-center space-x-4">
+                    <div className="w-8 h-8 bg-slate-700/50 rounded-full animate-shimmer"></div>
+                    <UnderwaterSkeleton lines={1} className="flex-1" />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }

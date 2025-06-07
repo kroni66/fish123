@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { UnderwaterLoading, ReviewSkeleton } from "@/components/loading-animations";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { formatDistanceToNow } from "date-fns";
@@ -238,10 +239,20 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
 
   if (isLoading) {
     return (
-      <div className="space-y-4">
-        <div className="h-8 bg-muted rounded animate-pulse" />
-        <div className="h-32 bg-muted rounded animate-pulse" />
-        <div className="h-32 bg-muted rounded animate-pulse" />
+      <div className="space-y-6">
+        <UnderwaterLoading 
+          isLoading={true} 
+          message="Načítám hodnocení z hlubin..." 
+          variant="inline"
+          size="md"
+        />
+        
+        {/* Review skeletons */}
+        <div className="space-y-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <ReviewSkeleton key={i} />
+          ))}
+        </div>
       </div>
     );
   }
