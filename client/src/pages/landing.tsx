@@ -191,14 +191,81 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* Product Preview Section */}
-        <section className="py-24 px-4 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Vybavení pro <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">profesionály</span>
+        {/* Professional Equipment Section */}
+        <section className="py-32 px-4 relative overflow-hidden z-10">
+          {/* Enhanced atmospheric background */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,_var(--tw-gradient-stops))] from-cyan-900/40 via-cyan-950/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,_var(--tw-gradient-stops))] from-blue-900/35 via-blue-950/18 to-transparent"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_50%,_var(--tw-gradient-stops))] from-teal-900/25 via-transparent to-transparent"></div>
+            
+            {/* Underwater current effects */}
+            <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/15 to-transparent animate-pulse delay-500"></div>
+            <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-blue-400/12 to-transparent animate-pulse delay-1500"></div>
+            <div className="absolute top-0 left-2/3 w-px h-full bg-gradient-to-b from-transparent via-teal-400/10 to-transparent animate-pulse delay-2500"></div>
+            
+            {/* Floating marine elements */}
+            <div className="absolute top-16 right-16 w-24 h-24 opacity-8 animate-pulse delay-1000">
+              <svg viewBox="0 0 80 80" className="w-full h-full text-cyan-400">
+                <path d="M20 40 Q35 25 55 35 Q40 50 20 40 Z" fill="currentColor" opacity="0.4" />
+                <circle cx="45" cy="35" r="2" fill="#0ea5e9" opacity="0.6" />
+                <path d="M15 40 Q8 35 5 40 Q8 45 15 40 Z" fill="currentColor" opacity="0.3" />
+              </svg>
+            </div>
+            
+            <div className="absolute bottom-20 left-20 w-16 h-16 opacity-6 animate-pulse delay-3000">
+              <svg viewBox="0 0 60 60" className="w-full h-full text-teal-400">
+                <path d="M15 30 Q25 20 40 25 Q30 40 15 30 Z" fill="currentColor" opacity="0.5" />
+                <circle cx="32" cy="26" r="1.5" fill="#14b8a6" opacity="0.7" />
+              </svg>
+            </div>
+            
+            {/* Bubble clusters */}
+            <div className="absolute top-1/4 left-1/6 opacity-15">
+              <div className="w-3 h-3 bg-cyan-300/50 rounded-full animate-pulse delay-2000"></div>
+              <div className="w-2 h-2 bg-blue-300/60 rounded-full mt-2 ml-3 animate-pulse delay-2500"></div>
+              <div className="w-4 h-4 bg-teal-300/40 rounded-full mt-1 ml-1 animate-pulse delay-3000"></div>
+            </div>
+            
+            <div className="absolute bottom-1/3 right-1/5 opacity-12">
+              <div className="w-5 h-5 bg-cyan-400/40 rounded-full animate-pulse delay-3500"></div>
+              <div className="w-2 h-2 bg-blue-400/50 rounded-full mt-2 ml-4 animate-pulse delay-4000"></div>
+              <div className="w-3 h-3 bg-teal-400/45 rounded-full mt-1 ml-2 animate-pulse delay-4500"></div>
+            </div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="text-center mb-20">
+              {/* Section badge */}
+              <div className="inline-block mb-8">
+                <span className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-primary/25 to-accent/25 border border-primary/40 text-primary text-sm font-semibold tracking-wide uppercase">
+                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                  Profesionální řada
+                </span>
+              </div>
+              
+              {/* Enhanced title */}
+              <h2 className="text-5xl md:text-7xl font-bold text-white mb-8 font-poppins leading-tight">
+                Vybavení pro{" "}
+                <span className="relative inline-block">
+                  <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-400 bg-clip-text text-transparent">
+                    profesionály
+                  </span>
+                  <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400/50 via-blue-500/50 to-teal-400/50 rounded-full"></div>
+                </span>
               </h2>
-              <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+              
+              {/* Decorative divider */}
+              <div className="flex items-center justify-center mb-8">
+                <div className="w-20 h-px bg-gradient-to-r from-transparent to-cyan-400"></div>
+                <div className="w-4 h-4 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full mx-6 animate-pulse"></div>
+                <div className="w-20 h-px bg-gradient-to-l from-transparent to-cyan-400"></div>
+              </div>
+              
+              {/* Enhanced description */}
+              <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
                 Objevte naši pečlivě vybranou kolekci, která vás přivede k úspěchu na vodě
               </p>
             </div>

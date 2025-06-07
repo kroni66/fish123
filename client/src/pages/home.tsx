@@ -224,46 +224,150 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Feature Cards Section */}
-        <section className="py-24 px-4 relative">
+        {/* Professional Equipment Section */}
+        <section className="py-32 px-4 relative overflow-hidden">
+          {/* Enhanced atmospheric background */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,_var(--tw-gradient-stops))] from-cyan-900/40 via-cyan-950/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,_var(--tw-gradient-stops))] from-blue-900/35 via-blue-950/18 to-transparent"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_50%,_var(--tw-gradient-stops))] from-teal-900/25 via-transparent to-transparent"></div>
+            
+            {/* Underwater current effects */}
+            <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/15 to-transparent animate-pulse delay-500"></div>
+            <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-blue-400/12 to-transparent animate-pulse delay-1500"></div>
+            <div className="absolute top-0 left-2/3 w-px h-full bg-gradient-to-b from-transparent via-teal-400/10 to-transparent animate-pulse delay-2500"></div>
+            
+            {/* Floating marine elements */}
+            <div className="absolute top-16 right-16 w-24 h-24 opacity-8 animate-pulse delay-1000">
+              <svg viewBox="0 0 80 80" className="w-full h-full text-cyan-400">
+                <path d="M20 40 Q35 25 55 35 Q40 50 20 40 Z" fill="currentColor" opacity="0.4" />
+                <circle cx="45" cy="35" r="2" fill="#0ea5e9" opacity="0.6" />
+                <path d="M15 40 Q8 35 5 40 Q8 45 15 40 Z" fill="currentColor" opacity="0.3" />
+              </svg>
+            </div>
+            
+            <div className="absolute bottom-20 left-20 w-16 h-16 opacity-6 animate-pulse delay-3000">
+              <svg viewBox="0 0 60 60" className="w-full h-full text-teal-400">
+                <path d="M15 30 Q25 20 40 25 Q30 40 15 30 Z" fill="currentColor" opacity="0.5" />
+                <circle cx="32" cy="26" r="1.5" fill="#14b8a6" opacity="0.7" />
+              </svg>
+            </div>
+            
+            {/* Bubble clusters */}
+            <div className="absolute top-1/4 left-1/6 opacity-15">
+              <div className="w-3 h-3 bg-cyan-300/50 rounded-full animate-pulse delay-2000"></div>
+              <div className="w-2 h-2 bg-blue-300/60 rounded-full mt-2 ml-3 animate-pulse delay-2500"></div>
+              <div className="w-4 h-4 bg-teal-300/40 rounded-full mt-1 ml-1 animate-pulse delay-3000"></div>
+            </div>
+            
+            <div className="absolute bottom-1/3 right-1/5 opacity-12">
+              <div className="w-5 h-5 bg-cyan-400/40 rounded-full animate-pulse delay-3500"></div>
+              <div className="w-2 h-2 bg-blue-400/50 rounded-full mt-2 ml-4 animate-pulse delay-4000"></div>
+              <div className="w-3 h-3 bg-teal-400/45 rounded-full mt-1 ml-2 animate-pulse delay-4500"></div>
+            </div>
+          </div>
+          
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Vybavení pro <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">profesionály</span>
+            <div className="text-center mb-20">
+              {/* Section badge */}
+              <div className="inline-block mb-8">
+                <span className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-primary/25 to-accent/25 border border-primary/40 text-primary text-sm font-semibold tracking-wide uppercase">
+                  <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                  Profesionální řada
+                </span>
+              </div>
+              
+              {/* Enhanced title */}
+              <h2 className="text-5xl md:text-7xl font-bold text-white mb-8 font-poppins leading-tight">
+                Vybavení pro{" "}
+                <span className="relative inline-block">
+                  <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-400 bg-clip-text text-transparent">
+                    profesionály
+                  </span>
+                  <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400/50 via-blue-500/50 to-teal-400/50 rounded-full"></div>
+                </span>
               </h2>
-              <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+              
+              {/* Decorative divider */}
+              <div className="flex items-center justify-center mb-8">
+                <div className="w-20 h-px bg-gradient-to-r from-transparent to-cyan-400"></div>
+                <div className="w-4 h-4 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full mx-6 animate-pulse"></div>
+                <div className="w-20 h-px bg-gradient-to-l from-transparent to-cyan-400"></div>
+              </div>
+              
+              {/* Enhanced description */}
+              <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
                 Objevte naši pečlivě vybranou kolekci, která vás přivede k úspěchu na vodě
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <Card className="bg-slate-800/50 backdrop-blur border-slate-700/50 hover:border-cyan-500/30 transition-all duration-300 group">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <Package className="h-8 w-8 text-cyan-400" />
+            {/* Enhanced feature cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+              <Card className="relative bg-gradient-to-br from-slate-800/80 via-slate-850/80 to-slate-900/80 backdrop-blur-xl border border-slate-700/50 hover:border-cyan-400/50 transition-all duration-500 group overflow-hidden">
+                {/* Card glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <CardContent className="p-10 text-center relative">
+                  {/* Enhanced icon container */}
+                  <div className="relative mb-8">
+                    <div className="w-20 h-20 bg-gradient-to-br from-cyan-500/25 to-blue-500/25 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 border border-cyan-400/30">
+                      <Package className="h-10 w-10 text-cyan-400 group-hover:text-cyan-300 transition-colors duration-300" />
+                    </div>
+                    {/* Floating particles around icon */}
+                    <div className="absolute -top-2 -right-2 w-2 h-2 bg-cyan-400/40 rounded-full animate-pulse delay-500"></div>
+                    <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-blue-400/30 rounded-full animate-pulse delay-1000"></div>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4">Prémiová kvalita</h3>
-                  <p className="text-slate-400">Každý produkt je testován v extrémních podmínkách</p>
+                  
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-cyan-100 transition-colors duration-300">Prémiová kvalita</h3>
+                  <p className="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300">
+                    Každý produkt je testován v extrémních podmínkách hlubinného rybolovu
+                  </p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-slate-800/50 backdrop-blur border-slate-700/50 hover:border-cyan-500/30 transition-all duration-300 group">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <Users className="h-8 w-8 text-cyan-400" />
+              <Card className="relative bg-gradient-to-br from-slate-800/80 via-slate-850/80 to-slate-900/80 backdrop-blur-xl border border-slate-700/50 hover:border-teal-400/50 transition-all duration-500 group overflow-hidden">
+                {/* Card glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <CardContent className="p-10 text-center relative">
+                  {/* Enhanced icon container */}
+                  <div className="relative mb-8">
+                    <div className="w-20 h-20 bg-gradient-to-br from-teal-500/25 to-cyan-500/25 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 border border-teal-400/30">
+                      <Users className="h-10 w-10 text-teal-400 group-hover:text-teal-300 transition-colors duration-300" />
+                    </div>
+                    {/* Floating particles around icon */}
+                    <div className="absolute -top-2 -right-2 w-2 h-2 bg-teal-400/40 rounded-full animate-pulse delay-700"></div>
+                    <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-cyan-400/30 rounded-full animate-pulse delay-1200"></div>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4">Komunita rybářů</h3>
-                  <p className="text-slate-400">Připojte se k tisícům spokojených zákazníků</p>
+                  
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-teal-100 transition-colors duration-300">Komunita rybářů</h3>
+                  <p className="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300">
+                    Připojte se k tisícům spokojených zákazníků z celého světa
+                  </p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-slate-800/50 backdrop-blur border-slate-700/50 hover:border-cyan-500/30 transition-all duration-300 group">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <Award className="h-8 w-8 text-cyan-400" />
+              <Card className="relative bg-gradient-to-br from-slate-800/80 via-slate-850/80 to-slate-900/80 backdrop-blur-xl border border-slate-700/50 hover:border-blue-400/50 transition-all duration-500 group overflow-hidden">
+                {/* Card glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <CardContent className="p-10 text-center relative">
+                  {/* Enhanced icon container */}
+                  <div className="relative mb-8">
+                    <div className="w-20 h-20 bg-gradient-to-br from-blue-500/25 to-cyan-500/25 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 border border-blue-400/30">
+                      <Award className="h-10 w-10 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
+                    </div>
+                    {/* Floating particles around icon */}
+                    <div className="absolute -top-2 -right-2 w-2 h-2 bg-blue-400/40 rounded-full animate-pulse delay-900"></div>
+                    <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-cyan-400/30 rounded-full animate-pulse delay-1400"></div>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4">Expertní výběr</h3>
-                  <p className="text-slate-400">Vybráno profesionálními rybáři pro rybáře</p>
+                  
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-100 transition-colors duration-300">Expertní výběr</h3>
+                  <p className="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300">
+                    Vybráno profesionálními rybáři pro nejnáročnější podmínky
+                  </p>
                 </CardContent>
               </Card>
             </div>
