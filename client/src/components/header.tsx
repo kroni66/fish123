@@ -27,22 +27,22 @@ export function Header() {
   ];
 
   return (
-    <header className="bg-white/95 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+    <header className="bg-background/95 backdrop-blur-md border-b border-border sticky top-0 z-50 shadow-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Personal Brand Logo */}
+          {/* Brand Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-cyan-500 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-lg">🎣</span>
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-primary/30">
+                  <span className="text-primary font-bold text-xl">💀</span>
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">
-                    Rybářské příběhy
+                  <h1 className="text-2xl font-bold text-foreground font-poppins tracking-tight">
+                    RIG OF DEATH
                   </h1>
-                  <p className="text-xs text-gray-500 font-medium">
-                    Vášeň pro rybaření
+                  <p className="text-xs text-muted-foreground font-medium tracking-wide">
+                    STAY IN STYLE
                   </p>
                 </div>
               </div>

@@ -46,7 +46,7 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
 
   return (
     <article 
-      className="bg-white rounded-2xl shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 overflow-hidden group cursor-pointer border border-gray-100 transform hover:-translate-y-1"
+      className="bg-card/80 backdrop-blur-sm rounded-2xl shadow-2xl hover:shadow-primary/20 transition-all duration-500 overflow-hidden group cursor-pointer border border-border/50 hover:border-primary/30 transform hover:-translate-y-2"
       onClick={() => onProductClick(product)}
     >
       <div className="relative">

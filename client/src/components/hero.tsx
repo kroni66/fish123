@@ -1,52 +1,106 @@
+import { Search, Fish, Target, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useLocation } from "wouter";
 
 export function Hero() {
   const [, setLocation] = useLocation();
 
   return (
-    <section className="relative py-20 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-white to-emerald-50"></div>
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="mb-8">
-          <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-            Vítejte ve světě rybářských příběhů
-          </span>
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            Každý úlovek<br />
-            <span className="text-primary">má svůj příběh</span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Objevte s námi kouzlo rybaření. Naše pečlivě vybrané produkty 
-            vám pomohou prožít nezapomenutelné chvíle u vody a dosáhnout vytouženého úlovku.
-          </p>
+    <section className="relative min-h-screen flex items-center justify-center fishing-gradient overflow-hidden">
+      {/* Hero Background Image Overlay */}
+      <div className="absolute inset-0 hero-overlay" />
+      
+      {/* Atmospheric Background Pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-1/4 left-10 animate-pulse">
+          <Fish className="h-12 w-12 text-primary/40 transform rotate-12" />
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/50">
-            <div className="text-3xl mb-3">🎣</div>
-            <h3 className="font-semibold text-gray-800 mb-2">Precizní náčiní</h3>
-            <p className="text-gray-600 text-sm">Profesionální rybářské vybavení</p>
+        <div className="absolute top-1/3 right-20 animate-pulse delay-1000">
+          <Target className="h-8 w-8 text-accent/30 transform -rotate-45" />
+        </div>
+        <div className="absolute bottom-1/3 left-1/4 animate-pulse delay-500">
+          <Award className="h-10 w-10 text-primary/30 transform rotate-45" />
+        </div>
+      </div>
+      
+      <div className="container mx-auto px-4 z-10 relative">
+        <div className="max-w-5xl mx-auto text-center space-y-12">
+          {/* Main Brand */}
+          <div className="space-y-6">
+            <h1 className="text-6xl md:text-8xl font-bold text-foreground leading-tight font-poppins tracking-tight">
+              <span className="block text-primary drop-shadow-lg">RIG OF DEATH</span>
+              <span className="block text-3xl md:text-4xl text-muted-foreground font-light mt-4 tracking-wide">
+                STAY IN STYLE
+              </span>
+            </h1>
           </div>
-          <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/50">
-            <div className="text-3xl mb-3">🎯</div>
-            <h3 className="font-semibold text-gray-800 mb-2">Úspěšný lov</h3>
-            <p className="text-gray-600 text-sm">Vybavení pro každý typ vody</p>
+          
+          {/* Tagline */}
+          <div className="max-w-3xl mx-auto space-y-4">
+            <p className="text-xl md:text-2xl text-foreground/90 font-light leading-relaxed">
+              Autentické rybářské vybavení pro moderní rybáře
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Objevte naši pečlivě vybranou kolekci prémiového vybavení. 
+              Od profesionálních prutů po speciální návnady – vše pro váš úspěch na vodě.
+            </p>
           </div>
-          <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-white/50">
-            <div className="text-3xl mb-3">💎</div>
-            <h3 className="font-semibold text-gray-800 mb-2">Prémiová kvalita</h3>
-            <p className="text-gray-600 text-sm">Výběr těch nejlepších značek</p>
+          
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto">
+            <div className="relative group">
+              <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
+              <Input 
+                placeholder="Vyhledejte rybářské vybavení..."
+                className="pl-16 pr-6 py-8 text-lg rounded-2xl bg-card/80 backdrop-blur-sm border-2 border-border hover:border-primary/50 focus:border-primary shadow-2xl transition-all duration-300"
+              />
+            </div>
+          </div>
+          
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-8 text-xl rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold"
+              onClick={() => setLocation("/#products")}
+            >
+              Prohlédnout kolekci
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-2 border-foreground/20 text-foreground hover:bg-foreground/10 hover:border-primary px-12 py-8 text-xl rounded-2xl backdrop-blur-sm transition-all duration-300"
+            >
+              Naše příběhy
+            </Button>
+          </div>
+          
+          {/* Features */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-16 max-w-4xl mx-auto">
+            <div className="text-center space-y-3">
+              <div className="inline-flex p-4 rounded-full bg-primary/20 backdrop-blur-sm">
+                <Award className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">Prémiová kvalita</h3>
+              <p className="text-muted-foreground">Pouze ověřené značky a materiály</p>
+            </div>
+            <div className="text-center space-y-3">
+              <div className="inline-flex p-4 rounded-full bg-accent/20 backdrop-blur-sm">
+                <Target className="h-8 w-8 text-accent" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">Přesnost</h3>
+              <p className="text-muted-foreground">Vybavení pro precizní rybolov</p>
+            </div>
+            <div className="text-center space-y-3">
+              <div className="inline-flex p-4 rounded-full bg-primary/20 backdrop-blur-sm">
+                <Fish className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">Tradice</h3>
+              <p className="text-muted-foreground">Respekt k rybářské kultuře</p>
+            </div>
           </div>
         </div>
-
-        <Button
-          size="lg"
-          className="bg-primary text-white hover:bg-primary/90 px-12 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
-          onClick={() => setLocation("/#products")}
-        >
-          Začít objevovat
-        </Button>
       </div>
     </section>
   );

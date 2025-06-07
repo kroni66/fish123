@@ -3,27 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --background: 140 20% 98%; /* #F7FBF8 */
-  --foreground: 140 22% 18%; /* #1E3A23 */
-  --muted: 140 30% 96%; /* #F0F7F2 */
-  --muted-foreground: 140 15% 40%; /* #4A5D4F */
-  --popover: 0 0% 100%; /* #FFFFFF */
-  --popover-foreground: 140 22% 18%; /* #1E3A23 */
-  --card: 0 0% 100%; /* #FFFFFF */
-  --card-foreground: 140 22% 18%; /* #1E3A23 */
-  --border: 140 25% 88%; /* #D5E7DA */
-  --input: 140 25% 90%; /* #DDE9E2 */
-  --primary: 150 65% 35%; /* #1F7A47 */
-  --primary-foreground: 0 0% 100%; /* #FFFFFF */
-  --secondary: 140 25% 88%; /* #D5E7DA */
-  --secondary-foreground: 140 22% 18%; /* #1E3A23 */
-  --accent: 165 75% 40%; /* #19A85A */
-  --accent-foreground: 0 0% 100%; /* #FFFFFF */
-  --destructive: 0 75% 60%; /* #E53E3E */
-  --destructive-foreground: 0 0% 98%; /* #FAFAFA */
-  --ring: 150 65% 35%; /* #1F7A47 */
-  --success: 150 65% 45%; /* #22C55E */
-  --radius: 0.5rem;
+  --background: 28 25% 9%; /* #1A1611 - Dark earthy background */
+  --foreground: 43 51% 95%; /* #F4F1E8 - Warm white text */
+  --muted: 28 25% 15%; /* #252018 - Secondary dark */
+  --muted-foreground: 43 23% 70%; /* #B8B0A0 - Muted warm text */
+  --popover: 28 25% 11%; /* #1F1B16 - Slightly lighter */
+  --popover-foreground: 43 51% 95%;
+  --card: 28 25% 11%; /* #1F1B16 - Card background */
+  --card-foreground: 43 51% 95%;
+  --border: 28 25% 20%; /* #2C2419 - Subtle border */
+  --input: 28 25% 15%;
+  --primary: 25 95% 53%; /* #E67E22 - Warm orange accent */
+  --primary-foreground: 28 25% 9%;
+  --secondary: 28 25% 15%;
+  --secondary-foreground: 43 51% 95%;
+  --accent: 150 65% 45%; /* #22C55E - Fish green accent */
+  --accent-foreground: 28 25% 9%;
+  --destructive: 0 75% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 25 95% 53%;
+  --success: 150 65% 45%;
+  --radius: 0.75rem;
 }
 
 .dark {
@@ -72,8 +72,15 @@
     font-family: 'Poppins', system-ui, -apple-system, sans-serif;
   }
 
-  .ocean-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+  .fishing-gradient {
+    background: linear-gradient(135deg, 
+      hsl(28, 25%, 9%) 0%, 
+      hsl(28, 25%, 12%) 50%, 
+      hsl(25, 40%, 15%) 100%);
+  }
+  
+  .hero-overlay {
+    background: linear-gradient(rgba(26, 22, 17, 0.7), rgba(26, 22, 17, 0.4));
   }
 
   .product-card-hover {
