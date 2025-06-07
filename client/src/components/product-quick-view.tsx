@@ -22,8 +22,26 @@ export function ProductQuickView({ product, isOpen, onClose }: ProductQuickViewP
 
   if (!isOpen) return null;
 
-  const images = product.images ? JSON.parse(product.images as string) : [product.imageUrl];
-  const validImages = images.filter(Boolean);
+  const getImages = (): string[] => {
+    try {
+      if (!product.images) return product.imageUrl ? [product.imageUrl] : [];
+      
+      if (Array.isArray(product.images)) {
+        return product.images;
+      }
+      
+      if (typeof product.images === 'string') {
+        return JSON.parse(product.images);
+      }
+      
+      return product.imageUrl ? [product.imageUrl] : [];
+    } catch (error) {
+      console.warn('Failed to parse product images:', error);
+      return product.imageUrl ? [product.imageUrl] : [];
+    }
+  };
+
+  const validImages = getImages().filter(Boolean);
   const currentImage = validImages[currentImageIndex] || product.imageUrl || "/placeholder-product.jpg";
 
   const handleAddToCart = async () => {
@@ -120,7 +138,7 @@ export function ProductQuickView({ product, isOpen, onClose }: ProductQuickViewP
             {/* Image Thumbnails */}
             {validImages.length > 1 && (
               <div className="flex space-x-2 overflow-x-auto">
-                {validImages.map((image, index) => (
+                {validImages.map((image: string, index: number) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
@@ -174,11 +192,32 @@ export function ProductQuickView({ product, isOpen, onClose }: ProductQuickViewP
               <div>
                 <h3 className="font-semibold text-foreground mb-3">Vlastnosti:</h3>
                 <div className="flex flex-wrap gap-2">
-                  {JSON.parse(product.features as string).map((feature: string, index: number) => (
-                    <Badge key={index} variant="outline" className="text-xs">
-                      {feature}
-                    </Badge>
-                  ))}
+                  {(() => {
+                    const getFeatures = (): string[] => {
+                      try {
+                        if (!product.features) return [];
+                        
+                        if (Array.isArray(product.features)) {
+                          return product.features;
+                        }
+                        
+                        if (typeof product.features === 'string') {
+                          return JSON.parse(product.features);
+                        }
+                        
+                        return [];
+                      } catch (error) {
+                        console.warn('Failed to parse product features:', error);
+                        return [];
+                      }
+                    };
+
+                    return getFeatures().map((feature: string, index: number) => (
+                      <Badge key={index} variant="outline" className="text-xs">
+                        {feature}
+                      </Badge>
+                    ));
+                  })()}
                 </div>
               </div>
             )}
