@@ -97,7 +97,7 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
             key={star}
             className={cn(
               "h-4 w-4",
-              star <= rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300",
+              star <= rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground",
               interactive && "cursor-pointer hover:text-yellow-400"
             )}
             onClick={() => interactive && onChange && onChange(star)}
@@ -114,9 +114,9 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
   if (isLoading) {
     return (
       <div className="space-y-4">
-        <div className="h-8 bg-gray-200 rounded animate-pulse" />
-        <div className="h-32 bg-gray-200 rounded animate-pulse" />
-        <div className="h-32 bg-gray-200 rounded animate-pulse" />
+        <div className="h-8 bg-muted rounded animate-pulse" />
+        <div className="h-32 bg-muted rounded animate-pulse" />
+        <div className="h-32 bg-muted rounded animate-pulse" />
       </div>
     );
   }

@@ -69,7 +69,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
       onClick={handleBackdropClick}
     >
       <div className="flex items-center justify-center min-h-screen p-4">
-        <div className="bg-white rounded-2xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="bg-card backdrop-blur-sm rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-border">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
             {/* Product Images */}
             <div>
@@ -181,7 +181,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-                    <span className="text-lg font-medium w-12 text-center">
+                    <span className="text-lg font-medium w-12 text-center text-foreground">
                       {quantity}
                     </span>
                     <Button
