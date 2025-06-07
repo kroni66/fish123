@@ -322,6 +322,37 @@ export class MemStorage implements IStorage {
   async getOrder(id: number): Promise<Order | undefined> {
     return this.orders.get(id);
   }
+
+  async getProductReviews(productId: number): Promise<Review[]> {
+    return Array.from(this.reviews.values()).filter(review => review.productId === productId);
+  }
+
+  async createReview(insertReview: InsertReview): Promise<Review> {
+    const id = this.currentReviewId++;
+    const review: Review = { 
+      ...insertReview, 
+      id,
+      createdAt: new Date(),
+      verified: insertReview.verified || false,
+      helpful: 0
+    };
+    this.reviews.set(id, review);
+    return review;
+  }
+
+  async getReview(id: number): Promise<Review | undefined> {
+    return this.reviews.get(id);
+  }
+
+  async markReviewHelpful(id: number): Promise<Review> {
+    const review = this.reviews.get(id);
+    if (!review) {
+      throw new Error(`Review ${id} not found`);
+    }
+    review.helpful = (review.helpful || 0) + 1;
+    this.reviews.set(id, review);
+    return review;
+  }
 }
 
 export const storage = new MemStorage();
