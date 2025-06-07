@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import { DirectusStorage } from "./directus-storage";
 import { storage as localStorage, type IStorage } from "./storage";
@@ -6,6 +6,21 @@ import { directusAuth } from "./directus-auth";
 import { insertProductSchema, insertCartItemSchema, insertOrderSchema, insertReviewSchema, insertWishlistItemSchema, loginSchema, registerSchema } from "@shared/schema";
 import { z } from "zod";
 import Stripe from "stripe";
+
+declare module 'express-serve-static-core' {
+  interface Request {
+    session: {
+      user?: {
+        id: string;
+        email: string;
+        firstName?: string;
+        lastName?: string;
+        accessToken: string;
+        refreshToken: string;
+      };
+    } & any;
+  }
+}
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
@@ -41,7 +56,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const loginData = loginSchema.parse(req.body);
       const { user, tokens } = await directusAuth.login(loginData);
       
-      // Store or update user in our database
+      // Store user session with access token for profile fetching
+      req.session.user = {
+        id: user.id,
+        email: user.email,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        accessToken: tokens.access_token,
+        refreshToken: tokens.refresh_token,
+      };
+      
       // Return user data from Directus directly
       res.json({
         user: {
@@ -115,6 +139,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Token refresh error:", error);
       res.status(401).json({ 
         message: error instanceof Error ? error.message : "Obnova tokenu se nezdařila" 
+      });
+    }
+  });
+
+  app.get("/api/auth/user", async (req, res) => {
+    try {
+      // Check if user is authenticated with session
+      const sessionUser = req.session?.user;
+      if (!sessionUser) {
+        return res.status(401).json({ message: "Nepřihlášen" });
+      }
+
+      // Get user data from Directus using the access token
+      const directusUser = await directusAuth.getCurrentUser(sessionUser.accessToken);
+      
+      // Return the user profile data
+      res.json({
+        id: directusUser.id,
+        email: directusUser.email,
+        firstName: directusUser.first_name || null,
+        lastName: directusUser.last_name || null,
+        directusId: directusUser.id,
+        status: directusUser.status,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+    } catch (error) {
+      console.error("Get user error:", error);
+      res.status(401).json({ 
+        message: error instanceof Error ? error.message : "Nepodařilo se získat uživatele" 
       });
     }
   });
