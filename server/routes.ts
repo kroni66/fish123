@@ -25,9 +25,7 @@ declare module 'express-serve-static-core' {
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
 }
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2023-10-16",
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Initialize storage - use Directus exclusively for products and categories
 let storage: IStorage;
@@ -92,6 +90,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const registerData = registerSchema.parse(req.body);
       const { user, tokens } = await directusAuth.register(registerData);
       
+      // Store user session with access token for profile fetching
+      req.session.user = {
+        id: user.id,
+        email: user.email,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        accessToken: tokens.access_token,
+        refreshToken: tokens.refresh_token,
+      };
+      
       // Return user data from Directus directly
       res.json({
         user: {
@@ -115,13 +123,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/auth/logout", async (req, res) => {
     try {
-      const { refreshToken } = req.body;
+      // Get refresh token from session or request body
+      const refreshToken = req.session?.user?.refreshToken || req.body.refreshToken;
+      
       if (refreshToken) {
         await directusAuth.logout(refreshToken);
       }
+      
+      // Clear session data
+      req.session.user = undefined;
+      
       res.json({ message: "Úspěšně odhlášen" });
     } catch (error) {
       console.error("Logout error:", error);
+      // Clear session even if Directus logout fails
+      req.session.user = undefined;
       res.json({ message: "Úspěšně odhlášen" }); // Always succeed logout
     }
   });
