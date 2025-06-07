@@ -56,6 +56,29 @@ interface DirectusReview {
   date_created: string;
 }
 
+interface DirectusArticle {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  author: string;
+  category: string;
+  image_url: string;
+  read_time: number;
+  published: boolean;
+  date_created: string;
+  date_updated: string;
+}
+
+interface DirectusArticleCategory {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  date_created: string;
+}
+
 export class DirectusStorage implements IStorage {
   private baseUrl: string;
   private apiKey: string;

@@ -75,6 +75,29 @@ export const reviews = pgTable("reviews", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const articles = pgTable("articles", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  excerpt: text("excerpt").notNull(),
+  content: text("content").notNull(),
+  author: text("author").notNull(),
+  category: text("category").notNull(),
+  imageUrl: text("image_url"),
+  readTime: integer("read_time").notNull(),
+  published: boolean("published").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const articleCategories = pgTable("article_categories", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertCategorySchema = createInsertSchema(categories).omit({
   id: true,
 });
@@ -109,6 +132,17 @@ export const insertReviewSchema = createInsertSchema(reviews).omit({
   comment: z.string().min(5, "Komentář musí mít alespoň 5 znaků"),
 });
 
+export const insertArticleSchema = createInsertSchema(articles).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertArticleCategorySchema = createInsertSchema(articleCategories).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Authentication schemas
 export const loginSchema = z.object({
   email: z.string().email("Neplatná e-mailová adresa"),
@@ -128,11 +162,15 @@ export type Product = typeof products.$inferSelect;
 export type CartItem = typeof cartItems.$inferSelect;
 export type Order = typeof orders.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
+export type Article = typeof articles.$inferSelect;
+export type ArticleCategory = typeof articleCategories.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type InsertCategory = z.infer<typeof insertCategorySchema>;
 export type InsertProduct = z.infer<typeof insertProductSchema>;
 export type InsertCartItem = z.infer<typeof insertCartItemSchema>;
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
 export type InsertReview = z.infer<typeof insertReviewSchema>;
+export type InsertArticle = z.infer<typeof insertArticleSchema>;
+export type InsertArticleCategory = z.infer<typeof insertArticleCategorySchema>;
 export type LoginData = z.infer<typeof loginSchema>;
 export type RegisterData = z.infer<typeof registerSchema>;

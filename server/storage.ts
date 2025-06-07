@@ -54,6 +54,13 @@ export interface IStorage {
   createReview(review: InsertReview): Promise<Review>;
   getReview(id: number): Promise<Review | undefined>;
   markReviewHelpful(id: number): Promise<Review>;
+
+  // Articles
+  getArticles(categorySlug?: string): Promise<Article[]>;
+  getArticleById(id: number): Promise<Article | undefined>;
+  getArticleBySlug(slug: string): Promise<Article | undefined>;
+  createArticle(article: InsertArticle): Promise<Article>;
+  getArticleCategories(): Promise<ArticleCategory[]>;
 }
 
 export class MemStorage implements IStorage {
