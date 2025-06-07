@@ -178,7 +178,9 @@ export default function Home() {
 
         {/* Feature Cards Section */}
         <section className="py-24 px-4 relative">
-          <div className="max-w-7xl mx-auto">
+          {/* Section-specific gradient overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900/30 via-slate-950/60 to-slate-950"></div>
+          <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                 Vybavení pro <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">profesionály</span>
@@ -221,20 +223,22 @@ export default function Home() {
             </div>
 
             {/* Stats Section */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-16 border-t border-b border-slate-700/50">
-              <div className="text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-16 border-t border-b border-slate-700/50 relative">
+              {/* Stats background glow */}
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,_var(--tw-gradient-stops))] from-cyan-900/20 via-transparent to-transparent blur-xl"></div>
+              <div className="text-center relative z-10">
                 <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">10K+</div>
                 <div className="text-slate-400">Spokojených rybářů</div>
               </div>
-              <div className="text-center">
+              <div className="text-center relative z-10">
                 <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">500+</div>
                 <div className="text-slate-400">Produktů</div>
               </div>
-              <div className="text-center">
+              <div className="text-center relative z-10">
                 <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">24/7</div>
                 <div className="text-slate-400">Podpora</div>
               </div>
-              <div className="text-center">
+              <div className="text-center relative z-10">
                 <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">5.0</div>
                 <div className="text-slate-400 flex items-center justify-center gap-1">
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
@@ -247,23 +251,39 @@ export default function Home() {
       </div>
 
       {/* Enhanced Search Section */}
-      <EnhancedSearch
-        searchQuery={searchQuery}
-        categoryId={selectedCategory}
-        onSearchChange={setSearchQuery}
-        onCategoryChange={setSelectedCategory}
-      />
+      <div className="relative">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-950/40 to-slate-950"></div>
+        <div className="relative z-10">
+          <EnhancedSearch
+            searchQuery={searchQuery}
+            categoryId={selectedCategory}
+            onSearchChange={setSearchQuery}
+            onCategoryChange={setSelectedCategory}
+          />
+        </div>
+      </div>
 
       {/* Products Section */}
-      <div id="products">
-        <ProductGrid 
-          categoryId={selectedCategory}
-          searchQuery={searchQuery}
-          onCategoryChange={setSelectedCategory}
-        />
+      <div id="products" className="relative">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-teal-900/15 via-slate-950/50 to-slate-950"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_75%,_var(--tw-gradient-stops))] from-cyan-900/10 via-transparent to-transparent"></div>
+        <div className="relative z-10">
+          <ProductGrid 
+            categoryId={selectedCategory}
+            searchQuery={searchQuery}
+            onCategoryChange={setSelectedCategory}
+          />
+        </div>
       </div>
       
-      <Footer />
+      {/* Footer Section */}
+      <div className="relative">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900/60 via-slate-950 to-black"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,_var(--tw-gradient-stops))] from-cyan-900/15 via-transparent to-transparent"></div>
+        <div className="relative z-10">
+          <Footer />
+        </div>
+      </div>
     </div>
   );
 }

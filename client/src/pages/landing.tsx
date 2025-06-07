@@ -135,7 +135,9 @@ export default function Landing() {
 
         {/* Product Preview Section */}
         <section className="py-24 px-4 relative">
-          <div className="max-w-7xl mx-auto">
+          {/* Section-specific gradient overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900/30 via-slate-950/60 to-slate-950"></div>
+          <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                 Vybavení pro <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">profesionály</span>
