@@ -1,0 +1,27 @@
+Directus API success: https://fe5c-185-5-70-249.ngrok-free.app/items/categories returned 2 items
+4:07:36 PM [express] GET /api/categories 304 in 175ms :: [{"id":1,"name":"Kategorie1","slug":"katego…
+Directus API success: https://fe5c-185-5-70-249.ngrok-free.app/items/products returned 8 items
+4:07:36 PM [express] GET /api/products 304 in 176ms :: [{"id":1,"name":"Experimentální produkt","slu…
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/products
+Directus API success: https://fe5c-185-5-70-249.ngrok-free.app/items/products returned 8 items
+4:07:37 PM [express] GET /api/products 304 in 158ms :: [{"id":1,"name":"Experimentální produkt","slu…
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/articles
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/articles?filter[published][_eq]=true&sort=-date_created
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/article_categories
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/article_categories?sort=name
+Directus API error: 403 Forbidden for https://fe5c-185-5-70-249.ngrok-free.app/items/articles?filter[published][_eq]=true&sort=-date_created
+Directus API fetch error for https://fe5c-185-5-70-249.ngrok-free.app/items/articles?filter[published][_eq]=true&sort=-date_created: Error: Directus request failed: 403 Forbidden
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:159:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getArticles (/home/runner/workspace/server/directus-storage.ts:548:24)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:386:24)
+Failed to fetch articles from Directus: Error: Directus request failed: 403 Forbidden
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:159:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getArticles (/home/runner/workspace/server/directus-storage.ts:548:24)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:386:24)
+4:12:12 PM [express] GET /api/articles 200 in 340ms :: []
+Directus API success: https://fe5c-185-5-70-249.ngrok-free.app/items/article_categories?sort=name returned 0 items
+Directus API success: https://fe5c-185-5-70-249.ngrok-free.app/items/article_categories returned 0 items
+4:12:12 PM [express] GET /api/article-categories 200 in 331ms :: []
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/articles

@@ -95,19 +95,10 @@ export default function Inspiration() {
                 <p className="text-xl text-muted-foreground leading-relaxed mb-8">
                   {selectedPost.excerpt}
                 </p>
-                <div className="text-muted-foreground leading-relaxed space-y-4">
-                  <p>{selectedPost.content}</p>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  </p>
-                  <p>
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
-                    eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-                    sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  </p>
-                </div>
+                <div 
+                  className="text-muted-foreground leading-relaxed space-y-4 prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground prose-em:text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: selectedPost.content }}
+                />
               </div>
             </article>
           </div>

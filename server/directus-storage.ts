@@ -105,16 +105,22 @@ export class DirectusStorage implements IStorage {
   }
 
   async getUserByDirectusId(directusId: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.directusId, directusId));
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.directusId, directusId));
     return user || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db.insert(users).values({
-      ...insertUser,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }).returning();
+    const [user] = await db
+      .insert(users)
+      .values({
+        ...insertUser,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .returning();
     return user;
   }
 
@@ -127,7 +133,7 @@ export class DirectusStorage implements IStorage {
       })
       .where(eq(users.id, id))
       .returning();
-    
+
     if (!user) {
       throw new Error("User not found");
     }
@@ -431,11 +437,13 @@ export class DirectusStorage implements IStorage {
   // Reviews
   async getProductReviews(productId: number): Promise<Review[]> {
     try {
-      const filterParam = encodeURIComponent(`{"product_id":{"_eq":${productId}}}`);
+      const filterParam = encodeURIComponent(
+        `{"product_id":{"_eq":${productId}}}`,
+      );
       const response = await this.request(
         `/items/reviews?filter=${filterParam}&sort[]=-date_created`,
       );
-      
+
       if (response.data && Array.isArray(response.data)) {
         return response.data.map((review: DirectusReview) =>
           this.transformReview(review),
@@ -525,7 +533,9 @@ export class DirectusStorage implements IStorage {
     };
   }
 
-  private transformArticleCategory(directusCategory: DirectusArticleCategory): ArticleCategory {
+  private transformArticleCategory(
+    directusCategory: DirectusArticleCategory,
+  ): ArticleCategory {
     return {
       id: directusCategory.id,
       name: directusCategory.name,
@@ -539,17 +549,20 @@ export class DirectusStorage implements IStorage {
   async getArticles(categorySlug?: string): Promise<Article[]> {
     try {
       console.log("Directus API call: " + this.baseUrl + "/items/articles");
-      
-      let url = "/items/articles?filter[published][_eq]=true&sort=-date_created";
+
+      let url =
+        "/items/articles?filter[published][_eq]=true&sort=-date_created";
       if (categorySlug) {
         url += `&filter[category][_eq]=${categorySlug}`;
       }
 
       const response = await this.request(url);
-      console.log(`Directus API success: ${this.baseUrl}/items/articles returned ${response.data.length} items`);
-      
+      console.log(
+        `Directus API success: ${this.baseUrl}/items/articles returned ${response.data.length} items`,
+      );
+
       return response.data.map((article: DirectusArticle) =>
-        this.transformArticle(article)
+        this.transformArticle(article),
       );
     } catch (error) {
       console.error("Failed to fetch articles from Directus:", error);
@@ -569,13 +582,18 @@ export class DirectusStorage implements IStorage {
 
   async getArticleBySlug(slug: string): Promise<Article | undefined> {
     try {
-      const response = await this.request(`/items/articles?filter[slug][_eq]=${slug}&limit=1`);
+      const response = await this.request(
+        `/items/articles?filter[published][_eq]=true&sort=-date_created`,
+      );
       if (response.data && response.data.length > 0) {
         return this.transformArticle(response.data[0]);
       }
       return undefined;
     } catch (error) {
-      console.error(`Failed to fetch article with slug ${slug} from Directus:`, error);
+      console.error(
+        `Failed to fetch article with slug ${slug} from Directus:`,
+        error,
+      );
       return undefined;
     }
   }
@@ -608,13 +626,19 @@ export class DirectusStorage implements IStorage {
 
   async getArticleCategories(): Promise<ArticleCategory[]> {
     try {
-      console.log("Directus API call: " + this.baseUrl + "/items/article_categories");
-      
-      const response = await this.request("/items/article_categories?sort=name");
-      console.log(`Directus API success: ${this.baseUrl}/items/article_categories returned ${response.data.length} items`);
-      
+      console.log(
+        "Directus API call: " + this.baseUrl + "/items/article_categories",
+      );
+
+      const response = await this.request(
+        "/items/article_categories?sort=name",
+      );
+      console.log(
+        `Directus API success: ${this.baseUrl}/items/article_categories returned ${response.data.length} items`,
+      );
+
       return response.data.map((category: DirectusArticleCategory) =>
-        this.transformArticleCategory(category)
+        this.transformArticleCategory(category),
       );
     } catch (error) {
       console.error("Failed to fetch article categories from Directus:", error);
