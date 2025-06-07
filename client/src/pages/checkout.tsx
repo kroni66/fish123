@@ -12,7 +12,7 @@ import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { useStripe, useElements, PaymentElement, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { Header } from "@/components/header";
+
 import { Footer } from "@/components/footer";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
@@ -78,45 +78,59 @@ const CheckoutForm = () => {
 
     setIsProcessing(true);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/order-confirmation`,
-        receipt_email: formData.email,
-        shipping: {
-          name: formData.name,
-          address: {
-            line1: formData.address,
-            city: formData.city,
-            postal_code: formData.postalCode,
-            country: 'CZ',
+    try {
+      console.log("Starting payment confirmation...");
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/order-confirmation`,
+          receipt_email: formData.email,
+          shipping: {
+            name: formData.name,
+            address: {
+              line1: formData.address,
+              city: formData.city,
+              postal_code: formData.postalCode,
+              country: 'CZ',
+            },
           },
         },
-      },
-    });
+      });
 
-    if (error) {
+      console.log("Payment confirmation result:", { error });
+
+      if (error) {
+        console.error("Payment error:", error);
+        toast({
+          title: "Chyba platby",
+          description: error.message || "Došlo k chybě při zpracování platby",
+          variant: "destructive",
+          duration: 2000,
+        });
+      } else {
+        console.log("Payment successful, clearing cart...");
+        clearCart();
+        toast({
+          title: "Platba byla úspěšná",
+          description: "Děkujeme za vaši objednávku!",
+          duration: 2000,
+        });
+      }
+    } catch (err) {
+      console.error("Payment processing error:", err);
       toast({
         title: "Chyba platby",
-        description: error.message,
+        description: "Došlo k neočekávané chybě při zpracování platby",
         variant: "destructive",
         duration: 2000,
       });
-    } else {
-      clearCart();
-      toast({
-        title: "Platba byla úspěšná",
-        description: "Děkujeme za vaši objednávku!",
-        duration: 2000,
-      });
+    } finally {
+      setIsProcessing(false);
     }
-
-    setIsProcessing(false);
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <Button
           variant="ghost"
@@ -131,17 +145,18 @@ const CheckoutForm = () => {
           Pokladna
         </h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Checkout Form */}
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Truck className="h-5 w-5 mr-2" />
-                  Doručovací údaje
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
+        <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Checkout Form */}
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Truck className="h-5 w-5 mr-2" />
+                    Doručovací údaje
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
                 <div>
                   <Label htmlFor="name">Celé jméno</Label>
                   <Input
@@ -284,27 +299,26 @@ const CheckoutForm = () => {
                   </div>
                 </div>
 
-                <form onSubmit={handleSubmit}>
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full mt-6 bg-primary text-white hover:bg-primary/90"
-                    disabled={!stripe || isProcessing}
-                  >
-                    {isProcessing ? (
-                      <div className="flex items-center space-x-2">
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        <span>Zpracovávám platbu...</span>
-                      </div>
-                    ) : (
-                      `Zaplatit - ${formatPrice(total * 1.21)} Kč`
-                    )}
-                  </Button>
-                </form>
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full mt-6 bg-primary text-white hover:bg-primary/90"
+                  disabled={!stripe || isProcessing}
+                >
+                  {isProcessing ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Zpracovávám platbu...</span>
+                    </div>
+                  ) : (
+                    `Zaplatit - ${formatPrice(total * 1.21)} Kč`
+                  )}
+                </Button>
               </CardContent>
             </Card>
           </div>
         </div>
+        </form>
       </div>
       <Footer />
     </div>
@@ -359,7 +373,6 @@ export default function Checkout() {
   if (!clientSecret) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
         <div className="h-screen flex items-center justify-center">
           <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" aria-label="Loading"/>
         </div>
