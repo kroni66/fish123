@@ -1,6 +1,16 @@
-import { pgTable, text, serial, integer, boolean, decimal, timestamp, json } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, decimal, timestamp, json, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  firstName: varchar("first_name", { length: 100 }),
+  lastName: varchar("last_name", { length: 100 }),
+  directusId: varchar("directus_id", { length: 255 }).unique(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
 
 export const categories = pgTable("categories", {
   id: serial("id").primaryKey(),
@@ -83,6 +93,12 @@ export const insertOrderSchema = createInsertSchema(orders).omit({
   createdAt: true,
 });
 
+export const insertUserSchema = createInsertSchema(users).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export const insertReviewSchema = createInsertSchema(reviews).omit({
   id: true,
   createdAt: true,
@@ -93,13 +109,30 @@ export const insertReviewSchema = createInsertSchema(reviews).omit({
   comment: z.string().min(5, "Komentář musí mít alespoň 5 znaků"),
 });
 
+// Authentication schemas
+export const loginSchema = z.object({
+  email: z.string().email("Neplatná e-mailová adresa"),
+  password: z.string().min(6, "Heslo musí mít alespoň 6 znaků"),
+});
+
+export const registerSchema = z.object({
+  email: z.string().email("Neplatná e-mailová adresa"),
+  password: z.string().min(6, "Heslo musí mít alespoň 6 znaků"),
+  firstName: z.string().min(1, "Jméno je povinné"),
+  lastName: z.string().min(1, "Příjmení je povinné"),
+});
+
+export type User = typeof users.$inferSelect;
 export type Category = typeof categories.$inferSelect;
 export type Product = typeof products.$inferSelect;
 export type CartItem = typeof cartItems.$inferSelect;
 export type Order = typeof orders.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;
 export type InsertCategory = z.infer<typeof insertCategorySchema>;
 export type InsertProduct = z.infer<typeof insertProductSchema>;
 export type InsertCartItem = z.infer<typeof insertCartItemSchema>;
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
 export type InsertReview = z.infer<typeof insertReviewSchema>;
+export type LoginData = z.infer<typeof loginSchema>;
+export type RegisterData = z.infer<typeof registerSchema>;

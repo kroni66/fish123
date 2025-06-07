@@ -1,14 +1,17 @@
 import { 
+  users,
   categories, 
   products, 
   cartItems, 
   orders,
   reviews,
+  type User,
   type Category, 
   type Product, 
   type CartItem, 
   type Order,
   type Review,
+  type InsertUser,
   type InsertCategory, 
   type InsertProduct, 
   type InsertCartItem, 
@@ -17,6 +20,12 @@ import {
 } from "@shared/schema";
 
 export interface IStorage {
+  // Users
+  getUserByEmail(email: string): Promise<User | undefined>;
+  getUserByDirectusId(directusId: string): Promise<User | undefined>;
+  createUser(user: InsertUser): Promise<User>;
+  updateUser(id: number, user: Partial<User>): Promise<User>;
+
   // Categories
   getCategories(): Promise<Category[]>;
   getCategoryBySlug(slug: string): Promise<Category | undefined>;
@@ -48,11 +57,13 @@ export interface IStorage {
 }
 
 export class MemStorage implements IStorage {
+  private users: Map<number, User>;
   private categories: Map<number, Category>;
   private products: Map<number, Product>;
   private cartItems: Map<number, CartItem>;
   private orders: Map<number, Order>;
   private reviews: Map<number, Review>;
+  private currentUserId: number;
   private currentCategoryId: number;
   private currentProductId: number;
   private currentCartItemId: number;
