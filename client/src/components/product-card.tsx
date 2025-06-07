@@ -61,7 +61,7 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
           
           {product.inStock ? (
             <div className="absolute top-4 left-4">
-              <span className="bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg">
+              <span className="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg border border-emerald-400 transition-colors duration-200">
                 Skladem
               </span>
             </div>

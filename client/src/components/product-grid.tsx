@@ -4,7 +4,7 @@ import { ProductCard } from "./product-card";
 import { ProductModal } from "./product-modal";
 import { CategoryFilter } from "./category-filter";
 import { Button } from "./ui/button";
-import type { Product } from "@/types";
+import type { Product } from "@shared/schema";
 
 interface ProductGridProps {
   categoryId?: number | null;
@@ -61,7 +61,7 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
         {/* Background Elements */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,theme(colors.primary.500/10),transparent_70%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,theme(colors.accent.500/10),transparent_70%)]"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_48%,theme(colors.primary.500/5)_49%,theme(colors.primary.500/5)_51%,transparent_52%)]"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_48%,theme(colors.primary.500/5)_49%,theme(colors.primary.500/5)_51%,transparent_52%)] bg-[#1d1711]"></div>
         
         <div className="container mx-auto px-4 relative">
           {/* Category Filter */}
@@ -141,7 +141,6 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
           )}
         </div>
       </section>
-
       {selectedProduct && (
         <ProductModal
           product={selectedProduct}
