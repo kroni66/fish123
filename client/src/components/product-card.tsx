@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Heart, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { WishlistButton } from "@/components/wishlist-button";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
 import { formatPrice } from "@/lib/utils";
@@ -13,7 +14,6 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, onProductClick }: ProductCardProps) {
-  const [isLiked, setIsLiked] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const { addToCart } = useCart();
   const { toast } = useToast();
@@ -39,11 +39,6 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
     } finally {
       setIsAddingToCart(false);
     }
-  };
-
-  const handleLikeToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsLiked(!isLiked);
   };
 
   return (
@@ -74,6 +69,14 @@ export function ProductCard({ product, onProductClick }: ProductCardProps) {
               </span>
             </div>
           )}
+
+          <div className="absolute top-4 right-4">
+            <WishlistButton 
+              productId={product.id} 
+              productName={product.name}
+              variant="card"
+            />
+          </div>
 
           <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
             <div className="bg-white/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg">
