@@ -41,11 +41,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const response = await apiRequest("POST", "/api/auth/login", data);
       const loginResult = await response.json();
+      
+      // Set initial user data from login response
       setUser(loginResult.user);
-      // Force a refresh of user data from the server to ensure consistency
-      const userResponse = await apiRequest("GET", "/api/auth/user");
-      const userData = await userResponse.json();
-      setUser(userData);
+      
+      // Wait a moment for session to be established, then fetch fresh data
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      try {
+        const userResponse = await apiRequest("GET", "/api/auth/user");
+        const userData = await userResponse.json();
+        setUser(userData);
+      } catch (userError) {
+        // If fetching user data fails, keep the login result user data
+        console.warn("Failed to fetch updated user data:", userError);
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Přihlášení se nezdařilo";
       setError(errorMessage);
@@ -61,11 +71,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const response = await apiRequest("POST", "/api/auth/register", data);
       const registerResult = await response.json();
+      
+      // Set initial user data from registration response
       setUser(registerResult.user);
-      // Force a refresh of user data from the server to ensure consistency
-      const userResponse = await apiRequest("GET", "/api/auth/user");
-      const userData = await userResponse.json();
-      setUser(userData);
+      
+      // Wait a moment for session to be established, then fetch fresh data
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      try {
+        const userResponse = await apiRequest("GET", "/api/auth/user");
+        const userData = await userResponse.json();
+        setUser(userData);
+      } catch (userError) {
+        // If fetching user data fails, keep the registration result user data
+        console.warn("Failed to fetch updated user data:", userError);
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Registrace se nezdařila";
       setError(errorMessage);
