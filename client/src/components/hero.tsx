@@ -495,7 +495,7 @@ export function Hero() {
               
               {/* Autocomplete Suggestions */}
               {showSuggestions && suggestions.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800/95 backdrop-blur-md border border-slate-600/50 rounded-xl shadow-2xl z-50 overflow-hidden">
+                <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800/95 backdrop-blur-md border border-slate-600/50 rounded-xl shadow-2xl z-50 max-h-80 overflow-y-auto custom-scrollbar">
                   {suggestions.map((product: any, index: number) => (
                     <button
                       key={product.id}

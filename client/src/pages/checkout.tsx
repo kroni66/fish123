@@ -59,6 +59,12 @@ const CheckoutForm = () => {
     e.preventDefault();
 
     if (!stripe || !elements) {
+      toast({
+        title: "Inicializace platby",
+        description: "Platební systém se načítá, zkuste to prosím znovu.",
+        variant: "destructive",
+        duration: 2000,
+      });
       return;
     }
 
@@ -75,14 +81,26 @@ const CheckoutForm = () => {
     }
 
     const formData = form.getValues();
+    console.log("Form data:", formData);
+    console.log("Stripe instance:", !!stripe);
+    console.log("Elements instance:", !!elements);
 
     setIsProcessing(true);
 
     try {
       console.log("Starting payment confirmation...");
       
-      // For testing purposes, simulate successful payment
-      // In production, you would use real Stripe payment methods
+      // Validate that elements is ready
+      if (!elements) {
+        throw new Error("Payment elements not initialized");
+      }
+
+      // Submit the form to validate all fields
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        throw submitError;
+      }
+      
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -92,12 +110,21 @@ const CheckoutForm = () => {
       });
 
       if (error) {
-        // Check if this is the expected test card decline
+        console.error("Payment error:", error);
+        
+        // Handle different types of errors
         if (error.type === 'card_error') {
           toast({
-            title: "Testovací platba",
-            description: "Pro testování použijte číslo karty: 4242 4242 4242 4242",
-            variant: "default",
+            title: "Chyba platební karty",
+            description: error.message || "Zkontrolujte údaje platební karty",
+            variant: "destructive",
+            duration: 3000,
+          });
+        } else if (error.type === 'validation_error') {
+          toast({
+            title: "Chyba ověření",
+            description: "Zkontrolujte všechna povinná pole",
+            variant: "destructive",
             duration: 3000,
           });
         } else {
@@ -110,11 +137,11 @@ const CheckoutForm = () => {
         }
       }
       // Note: Stripe will handle the redirect to return_url on success
-    } catch (err) {
+    } catch (err: any) {
       console.error("Payment processing error:", err);
       toast({
         title: "Chyba platby",
-        description: "Došlo k neočekávané chybě při zpracování platby",
+        description: err.message || "Došlo k neočekávané chybě při zpracování platby",
         variant: "destructive",
         duration: 2000,
       });
@@ -336,10 +363,12 @@ export default function Checkout() {
   const [, setLocation] = useLocation();
   const { items } = useCart();
   const [clientSecret, setClientSecret] = useState("");
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    if (items.length > 0) {
+    if (items.length > 0 && !isInitialized) {
+      setIsInitialized(true);
       const total = items.reduce((sum, item) => {
         return sum + (parseFloat(item.product?.price || "0") * item.quantity);
       }, 0);
@@ -353,9 +382,10 @@ export default function Checkout() {
         })
         .catch((error) => {
           console.error("Error creating payment intent:", error);
+          setIsInitialized(false); // Allow retry
         });
     }
-  }, [items]);
+  }, [items, isInitialized]);
 
   if (items.length === 0) {
     return (
@@ -388,9 +418,24 @@ export default function Checkout() {
     );
   }
 
+  // Create stable options object to prevent re-renders
+  const stripeOptions = {
+    clientSecret,
+    appearance: {
+      theme: 'night' as const,
+      variables: {
+        colorPrimary: '#e67e22',
+        colorBackground: '#1f1b16',
+        colorText: '#f4f1e8',
+        colorDanger: '#ef4444',
+        borderRadius: '8px',
+      },
+    },
+  };
+
   // Make SURE to wrap the form in <Elements> which provides the stripe context.
   return (
-    <Elements stripe={stripePromise} options={{ clientSecret }}>
+    <Elements stripe={stripePromise} options={stripeOptions}>
       <CheckoutForm />
     </Elements>
   );
