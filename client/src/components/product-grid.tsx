@@ -124,8 +124,9 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
                   
                   <div className="relative z-10">
                     <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-br from-amber-200/30 to-amber-300/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-amber-400/20 group-hover:scale-110 transition-transform duration-300">
-                      <svg className="w-10 h-10 text-amber-200" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                      <svg className="w-12 h-12 text-amber-200" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L14.5 7.5L20 8L15.5 12L17 18L12 15L7 18L8.5 12L4 8L9.5 7.5L12 2Z"/>
+                        <circle cx="12" cy="10" r="1.5" fill="currentColor" opacity="0.8"/>
                       </svg>
                     </div>
                     <h3 className="text-3xl font-bold text-amber-100 mb-6 tracking-tight">Prémiová kvalita</h3>
@@ -152,8 +153,12 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
                   
                   <div className="relative z-10">
                     <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-br from-stone-200/30 to-stone-300/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-stone-400/20 group-hover:scale-110 transition-transform duration-300">
-                      <svg className="w-10 h-10 text-stone-200" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
+                      <svg className="w-12 h-12 text-stone-200" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18m9-9H3"/>
+                        <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1"/>
+                        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5"/>
+                        <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                        <path strokeLinecap="round" d="m9 9 3 3m3-3-3 3"/>
                       </svg>
                     </div>
                     <h3 className="text-3xl font-bold text-stone-100 mb-6 tracking-tight">Přesnost</h3>
@@ -180,8 +185,11 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
                   
                   <div className="relative z-10">
                     <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-br from-emerald-200/30 to-emerald-300/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-emerald-400/20 group-hover:scale-110 transition-transform duration-300">
-                      <svg className="w-10 h-10 text-emerald-200" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2M21,9V7L15,1H9V3H15L19,7V9H21M5,7V9H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19V19H5V7M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
+                      <svg className="w-12 h-12 text-emerald-200" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M3 12c0 4.418 3.582 8 8 8s8-3.582 8-8-3.582-8-8-8-8 3.582 8 8z"/>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 8h8M7 16h10"/>
+                        <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 6L18 18M18 6L6 18" opacity="0.3"/>
                       </svg>
                     </div>
                     <h3 className="text-3xl font-bold text-emerald-100 mb-6 tracking-tight">Tradice</h3>
@@ -223,17 +231,29 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
-                  <div className="text-2xl mb-2">🔬</div>
+                  <div className="w-12 h-12 mx-auto mb-3 bg-blue-100 rounded-xl flex items-center justify-center">
+                    <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 14.5M14.25 3.104c.251.023.501.05.75.082M19.8 14.5l-5.069 5.069A2.25 2.25 0 0113.5 21.25H8.25a2.25 2.25 0 01-2.122-1.5L5.5 17M19.8 14.5l1.45 1.45a2.25 2.25 0 010 3.182l-4.088 4.088A2.25 2.25 0 0115.75 24H8.25a2.25 2.25 0 01-2.25-2.25V19.5"/>
+                    </svg>
+                  </div>
                   <h4 className="font-semibold text-gray-800 mb-1">Testováno</h4>
                   <p className="text-gray-600 text-sm">V reálných podmínkách</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl mb-2">🌱</div>
+                  <div className="w-12 h-12 mx-auto mb-3 bg-green-100 rounded-xl flex items-center justify-center">
+                    <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
+                    </svg>
+                  </div>
                   <h4 className="font-semibold text-gray-800 mb-1">Ekologické</h4>
                   <p className="text-gray-600 text-sm">Šetrné k prostředí</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl mb-2">💝</div>
+                  <div className="w-12 h-12 mx-auto mb-3 bg-red-100 rounded-xl flex items-center justify-center">
+                    <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+                    </svg>
+                  </div>
                   <h4 className="font-semibold text-gray-800 mb-1">S láskou</h4>
                   <p className="text-gray-600 text-sm">Vybráno s péčí</p>
                 </div>

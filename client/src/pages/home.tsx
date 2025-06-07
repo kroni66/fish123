@@ -35,17 +35,12 @@ export default function Home() {
       <Header />
       <Hero />
       
-      {/* Enhanced Search Section */}
-      <section className="py-8 bg-gray-50/50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <EnhancedSearch
-            searchQuery={searchQuery}
-            categoryId={selectedCategory}
-            onSearchChange={setSearchQuery}
-            onCategoryChange={setSelectedCategory}
-          />
-        </div>
-      </section>
+      <EnhancedSearch
+        searchQuery={searchQuery}
+        categoryId={selectedCategory}
+        onSearchChange={setSearchQuery}
+        onCategoryChange={setSelectedCategory}
+      />
 
       <ProductGrid 
         categoryId={selectedCategory}
