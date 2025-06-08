@@ -372,28 +372,7 @@ export default function Home() {
               </Card>
             </div>
 
-            {/* Stats Section */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-16 border-t border-b border-slate-700/50 relative">
-              <div className="text-center relative z-10">
-                <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">10K+</div>
-                <div className="text-slate-400">Spokojených rybářů</div>
-              </div>
-              <div className="text-center relative z-10">
-                <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">500+</div>
-                <div className="text-slate-400">Produktů</div>
-              </div>
-              <div className="text-center relative z-10">
-                <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">24/7</div>
-                <div className="text-slate-400">Podpora</div>
-              </div>
-              <div className="text-center relative z-10">
-                <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">5.0</div>
-                <div className="text-slate-400 flex items-center justify-center gap-1">
-                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  Hodnocení
-                </div>
-              </div>
-            </div>
+            
           </div>
         </section>
       </div>

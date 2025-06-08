@@ -85,6 +85,13 @@ interface DirectusArticleCategory {
   date_created: string;
 }
 
+interface DirectusWishlistItem {
+  id: number;
+  session_id: string;
+  product_id: number;
+  date_created: string;
+}
+
 export class DirectusStorage implements IStorage {
   private baseUrl: string;
   private apiKey: string;
@@ -547,6 +554,15 @@ export class DirectusStorage implements IStorage {
     };
   }
 
+  private transformWishlistItem(directusWishlistItem: DirectusWishlistItem): WishlistItem {
+    return {
+      id: directusWishlistItem.id,
+      sessionId: directusWishlistItem.session_id,
+      productId: directusWishlistItem.product_id,
+      createdAt: new Date(directusWishlistItem.date_created),
+    };
+  }
+
   // Article methods
   async getArticles(categorySlug?: string): Promise<Article[]> {
     try {
@@ -648,32 +664,72 @@ export class DirectusStorage implements IStorage {
     }
   }
 
-  // Wishlist methods - using in-memory storage for simplicity
-  private wishlistItems: Map<number, WishlistItem> = new Map();
-  private currentWishlistItemId: number = 1;
-
+  // Wishlist methods - integrated with Directus backend
   async getWishlistItems(sessionId: string): Promise<WishlistItem[]> {
-    return Array.from(this.wishlistItems.values()).filter(item => item.sessionId === sessionId);
+    try {
+      console.log(`Directus API call: ${this.baseUrl}/items/wishlist_items?filter[session_id][_eq]=${sessionId}`);
+      
+      const response = await this.request(`/items/wishlist_items?filter[session_id][_eq]=${sessionId}&sort=-date_created`);
+      console.log(`Directus API success: ${this.baseUrl}/items/wishlist_items returned ${response.data.length} items for session ${sessionId}`);
+      
+      return response.data.map((item: DirectusWishlistItem) => this.transformWishlistItem(item));
+    } catch (error) {
+      console.error(`Failed to fetch wishlist items for session ${sessionId} from Directus:`, error);
+      return [];
+    }
   }
 
   async addToWishlist(insertWishlistItem: InsertWishlistItem): Promise<WishlistItem> {
-    const id = this.currentWishlistItemId++;
-    const wishlistItem: WishlistItem = { 
-      ...insertWishlistItem, 
-      id,
-      createdAt: new Date()
-    };
-    this.wishlistItems.set(id, wishlistItem);
-    return wishlistItem;
+    try {
+      const directusWishlistData = {
+        session_id: insertWishlistItem.sessionId,
+        product_id: insertWishlistItem.productId,
+      };
+
+      console.log(`Directus API call: ${this.baseUrl}/items/wishlist_items (POST)`);
+      
+      const response = await this.request("/items/wishlist_items", {
+        method: "POST",
+        body: JSON.stringify(directusWishlistData),
+      });
+
+      console.log(`Directus API success: Added wishlist item for product ${insertWishlistItem.productId} in session ${insertWishlistItem.sessionId}`);
+      
+      return this.transformWishlistItem(response.data);
+    } catch (error) {
+      console.error("Failed to add wishlist item to Directus:", error);
+      throw error;
+    }
   }
 
   async removeFromWishlist(id: number): Promise<void> {
-    this.wishlistItems.delete(id);
+    try {
+      console.log(`Directus API call: ${this.baseUrl}/items/wishlist_items/${id} (DELETE)`);
+      
+      await this.request(`/items/wishlist_items/${id}`, {
+        method: "DELETE",
+      });
+
+      console.log(`Directus API success: Removed wishlist item ${id}`);
+    } catch (error) {
+      console.error(`Failed to remove wishlist item ${id} from Directus:`, error);
+      throw error;
+    }
   }
 
   async isInWishlist(sessionId: string, productId: number): Promise<boolean> {
-    return Array.from(this.wishlistItems.values()).some(
-      item => item.sessionId === sessionId && item.productId === productId
-    );
+    try {
+      console.log(`Directus API call: ${this.baseUrl}/items/wishlist_items?filter[session_id][_eq]=${sessionId}&filter[product_id][_eq]=${productId}`);
+      
+      const response = await this.request(`/items/wishlist_items?filter[session_id][_eq]=${sessionId}&filter[product_id][_eq]=${productId}`);
+      
+      const exists = response.data.length > 0;
+      console.log(`Directus API success: Product ${productId} in wishlist for session ${sessionId}: ${exists}`);
+      
+      return exists;
+    } catch (error) {
+      console.error(`Failed to check wishlist status for session ${sessionId} and product ${productId}:`, error);
+      return false;
+    }
   }
 }
