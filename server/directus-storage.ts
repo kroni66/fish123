@@ -150,10 +150,10 @@ export class DirectusStorage implements IStorage {
     return user;
   }
 
-  private async request(endpoint: string, options: RequestInit = {}) {
+  private async request(endpoint: string, options: RequestInit = {}, accessToken?: string) {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${this.apiKey}`,
+      Authorization: `Bearer ${accessToken || this.apiKey}`,
     };
 
     const url = `${this.baseUrl}${endpoint}`;
