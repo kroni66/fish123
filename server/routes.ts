@@ -64,19 +64,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         refreshToken: tokens.refresh_token,
       };
       
-      // Return user data from Directus directly
-      res.json({
-        user: {
-          id: user.id,
-          email: user.email,
-          firstName: user.first_name,
-          lastName: user.last_name,
-          directusId: user.id,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        tokens,
+      console.log(`Login successful - User: ${user.id}, Session ID: ${req.sessionID}`);
+      
+      // Ensure session is saved before responding
+      req.session.save((err) => {
+        if (err) {
+          console.error('Session save error:', err);
+          return res.status(500).json({ message: "Chyba při ukládání relace" });
+        }
+        
+        console.log(`Session saved for user: ${user.id}`);
+        
+        // Return user data from Directus directly
+        res.json({
+          user: {
+            id: user.id,
+            email: user.email,
+            firstName: user.first_name,
+            lastName: user.last_name,
+            directusId: user.id,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          },
+          tokens,
+        });
       });
+      
     } catch (error) {
       console.error("Login error:", error);
       res.status(401).json({ 
@@ -163,12 +176,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       // Check if user is authenticated with session
       const sessionUser = req.session?.user;
+      
+      console.log(`Auth check - Session ID: ${req.sessionID}, Session User:`, sessionUser ? 'exists' : 'missing');
+      
       if (!sessionUser) {
         return res.status(401).json({ message: "Nepřihlášen" });
       }
 
       // Get user data from Directus using the access token
       const directusUser = await directusAuth.getCurrentUser(sessionUser.accessToken);
+      
+      console.log(`Successfully authenticated user: ${directusUser.id}`);
       
       // Return the user profile data
       res.json({
