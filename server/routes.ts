@@ -456,8 +456,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json([]);
       }
       
-      // For authenticated users, get their user-specific wishlist
-      const wishlistItems = await storage.getWishlistItemsByUser(userId);
+      // For authenticated users, get their user-specific wishlist with access token
+      const accessToken = req.session.user?.accessToken;
+      const wishlistItems = await storage.getWishlistItemsByUser(userId, accessToken);
       console.log(`Fetching wishlist for authenticated user: ${userId}, Found ${wishlistItems.length} items`);
       
       // Get product details for each wishlist item
@@ -501,7 +502,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`Adding item to wishlist for authenticated user: ${userId}, Product: ${wishlistItemData.productId}`);
       
-      const wishlistItem = await storage.addToWishlist(enhancedWishlistData);
+      const accessToken = req.session.user?.accessToken;
+      const wishlistItem = await storage.addToWishlist(enhancedWishlistData, accessToken);
       console.log(`Successfully added wishlist item:`, wishlistItem);
       res.json(wishlistItem);
     } catch (error) {

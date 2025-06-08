@@ -73,8 +73,8 @@ export interface IStorage {
 
   // Wishlist
   getWishlistItems(sessionId: string): Promise<WishlistItem[]>;
-  getWishlistItemsByUser(userId: string): Promise<WishlistItem[]>;
-  addToWishlist(item: InsertWishlistItem): Promise<WishlistItem>;
+  getWishlistItemsByUser(userId: string, accessToken?: string): Promise<WishlistItem[]>;
+  addToWishlist(item: InsertWishlistItem, accessToken?: string): Promise<WishlistItem>;
   removeFromWishlist(id: number): Promise<void>;
   isInWishlist(sessionId: string, productId: number): Promise<boolean>;
   isInWishlistByUser(userId: string, productId: number): Promise<boolean>;
@@ -492,11 +492,11 @@ export class MemStorage implements IStorage {
     return Array.from(this.wishlistItems.values()).filter(item => item.sessionId === sessionId);
   }
 
-  async getWishlistItemsByUser(userId: string): Promise<WishlistItem[]> {
+  async getWishlistItemsByUser(userId: string, accessToken?: string): Promise<WishlistItem[]> {
     return Array.from(this.wishlistItems.values()).filter(item => item.userId === userId);
   }
 
-  async addToWishlist(insertWishlistItem: InsertWishlistItem): Promise<WishlistItem> {
+  async addToWishlist(insertWishlistItem: InsertWishlistItem, accessToken?: string): Promise<WishlistItem> {
     const id = this.currentWishlistItemId++;
     const wishlistItem: WishlistItem = { 
       id,

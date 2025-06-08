@@ -685,12 +685,12 @@ export class DirectusStorage implements IStorage {
     }
   }
 
-  async getWishlistItemsByUser(userId: string): Promise<WishlistItem[]> {
+  async getWishlistItemsByUser(userId: string, accessToken?: string): Promise<WishlistItem[]> {
     // Try Directus first, fallback to in-memory storage
     try {
       console.log(`Directus API call: ${this.baseUrl}/items/wishlist_items?filter[user_id][_eq]=${userId}`);
       
-      const response = await this.request(`/items/wishlist_items?filter[user_id][_eq]=${userId}`);
+      const response = await this.request(`/items/wishlist_items?filter[user_id][_eq]=${userId}`, {}, accessToken);
       
       console.log(`Directus API success: Fetched ${response.data.length} wishlist items for user ${userId}`);
       
@@ -701,7 +701,7 @@ export class DirectusStorage implements IStorage {
     }
   }
 
-  async addToWishlist(insertWishlistItem: InsertWishlistItem): Promise<WishlistItem> {
+  async addToWishlist(insertWishlistItem: InsertWishlistItem, accessToken?: string): Promise<WishlistItem> {
     // For authenticated users, try Directus first, fallback to in-memory storage
     if (insertWishlistItem.userId) {
       try {
@@ -715,7 +715,7 @@ export class DirectusStorage implements IStorage {
         const response = await this.request(`/items/wishlist_items`, {
           method: "POST",
           body: JSON.stringify(directusWishlistData),
-        });
+        }, accessToken);
 
         console.log(`Directus API success: Added wishlist item for user ${insertWishlistItem.userId}`);
         
