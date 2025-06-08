@@ -2,20 +2,30 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { ShoppingCart, Menu, X, Fish, Search, User, LogOut, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useCart } from "@/hooks/use-cart";
 import { useWishlist } from "@/hooks/useWishlist";
 import { useAuth } from "@/hooks/use-auth";
 import { CartOverlay } from "@/components/cart-overlay";
+import { useQuery } from "@tanstack/react-query";
 
 export function Navbar() {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const { itemCount, openCart } = useCart();
   const { wishlistItems } = useWishlist();
   const { user, isAuthenticated, logout, isLoading } = useAuth();
   
   const wishlistCount = Array.isArray(wishlistItems) ? wishlistItems.length : 0;
+
+  // Search products query
+  const { data: searchResults = [] } = useQuery({
+    queryKey: ['/api/products/search', searchQuery],
+    enabled: searchQuery.length > 2,
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +35,30 @@ export function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const searchContainer = document.getElementById('navbar-search');
+      if (searchContainer && !searchContainer.contains(event.target as Node)) {
+        setIsSearchOpen(false);
+      }
+    };
+
+    if (isSearchOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isSearchOpen]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      window.location.href = `/products?search=${encodeURIComponent(searchQuery.trim())}`;
+      setIsSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
 
   const navigation = [
     { name: 'Domů', href: '/' },
@@ -215,21 +249,93 @@ export function Navbar() {
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
               {/* Search Button */}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
-                onClick={() => {
-                  const searchInput = document.querySelector('input[placeholder*="Vyhledejte"]') as HTMLInputElement;
-                  if (searchInput) {
-                    searchInput.focus();
-                  } else {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-              >
-                <Search className="w-5 h-5" />
-              </Button>
+              <div className="relative" id="navbar-search">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={`text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg transition-colors ${
+                    isSearchOpen ? 'text-primary bg-primary/10' : ''
+                  }`}
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                >
+                  <Search className="w-5 h-5" />
+                </Button>
+
+                {/* Search Box */}
+                {isSearchOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-80 bg-slate-800/95 backdrop-blur-md border border-slate-700/50 rounded-lg shadow-2xl z-50">
+                    <form onSubmit={handleSearchSubmit} className="p-4">
+                      <div className="relative">
+                        <Input
+                          type="text"
+                          placeholder="Vyhledat produkty..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="w-full bg-slate-900/50 border-slate-600 text-white placeholder-slate-400 focus:ring-primary focus:border-primary"
+                          autoFocus
+                        />
+                        <Button
+                          type="submit"
+                          size="sm"
+                          className="absolute right-1 top-1 h-8 w-8 p-0"
+                        >
+                          <Search className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </form>
+
+                    {/* Search Results */}
+                    {searchQuery.length > 2 && searchResults.length > 0 && (
+                      <div className="border-t border-slate-700/50 max-h-64 overflow-y-auto">
+                        {searchResults.slice(0, 5).map((product: any) => (
+                          <Link
+                            key={product.id}
+                            href={`/product/${product.slug}`}
+                            className="flex items-center p-3 hover:bg-slate-700/50 transition-colors"
+                            onClick={() => {
+                              setIsSearchOpen(false);
+                              setSearchQuery("");
+                            }}
+                          >
+                            <img
+                              src={product.imageUrl}
+                              alt={product.name}
+                              className="w-10 h-10 object-cover rounded mr-3"
+                            />
+                            <div className="flex-1">
+                              <h4 className="text-white text-sm font-medium">{product.name}</h4>
+                              <p className="text-slate-400 text-xs">{product.price} Kč</p>
+                            </div>
+                          </Link>
+                        ))}
+                        {searchResults.length > 5 && (
+                          <div className="p-3 text-center">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-primary hover:text-primary/80"
+                              onClick={() => {
+                                window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
+                                setIsSearchOpen(false);
+                                setSearchQuery("");
+                              }}
+                            >
+                              Zobrazit všechny výsledky ({searchResults.length})
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* No Results */}
+                    {searchQuery.length > 2 && searchResults.length === 0 && (
+                      <div className="border-t border-slate-700/50 p-4 text-center text-slate-400 text-sm">
+                        Žádné produkty nenalezeny
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
 
               {/* Wishlist Button */}
               <Link href="/wishlist">
