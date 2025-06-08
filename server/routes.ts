@@ -405,13 +405,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/wishlist", async (req, res) => {
     try {
+      const userId = req.session?.user?.id;
       const wishlistItemData = insertWishlistItemSchema.parse(req.body);
-      const wishlistItem = await storage.addToWishlist(wishlistItemData);
+      
+      // Enhanced wishlist data with user authentication
+      const enhancedWishlistData = {
+        ...wishlistItemData,
+        userId: userId || null, // Set userId if authenticated, null for guests
+      };
+      
+      console.log(`Adding item to wishlist: ${userId ? `user ${userId}` : `guest session ${wishlistItemData.sessionId}`}`);
+      
+      const wishlistItem = await storage.addToWishlist(enhancedWishlistData);
       res.json(wishlistItem);
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ message: "Invalid wishlist item data", errors: error.errors });
       }
+      console.error("Failed to add item to wishlist:", error);
       res.status(500).json({ message: "Failed to add item to wishlist" });
     }
   });
