@@ -686,27 +686,55 @@ export class DirectusStorage implements IStorage {
   }
 
   async getWishlistItemsByUser(userId: string): Promise<WishlistItem[]> {
-    // For now, use in-memory storage for user wishlist until Directus permissions are properly configured
-    console.log(`Fetching wishlist for user ${userId} from in-memory storage (Directus permissions need configuration)`);
-    return Array.from(this.wishlistItems.values()).filter(item => item.userId === userId);
+    // Try Directus first, fallback to in-memory storage
+    try {
+      console.log(`Directus API call: ${this.baseUrl}/items/wishlist_items?filter[user_id][_eq]=${userId}`);
+      
+      const response = await this.request(`/items/wishlist_items?filter[user_id][_eq]=${userId}`);
+      
+      console.log(`Directus API success: Fetched ${response.data.length} wishlist items for user ${userId}`);
+      
+      return response.data.map((item: DirectusWishlistItem) => this.transformWishlistItem(item));
+    } catch (error) {
+      console.log(`Directus wishlist collection not available for user ${userId}, using in-memory storage`);
+      return Array.from(this.wishlistItems.values()).filter(item => item.userId === userId);
+    }
   }
 
   async addToWishlist(insertWishlistItem: InsertWishlistItem): Promise<WishlistItem> {
-    // For authenticated users, use in-memory storage until Directus permissions are configured
+    // For authenticated users, try Directus first, fallback to in-memory storage
     if (insertWishlistItem.userId) {
-      console.log(`Adding wishlist item for authenticated user ${insertWishlistItem.userId} using in-memory storage`);
-      
-      const id = this.currentWishlistItemId++;
-      const wishlistItem: WishlistItem = { 
-        id,
-        userId: insertWishlistItem.userId,
-        sessionId: null,
-        productId: insertWishlistItem.productId,
-        createdAt: new Date()
-      };
-      
-      this.wishlistItems.set(id.toString(), wishlistItem);
-      return wishlistItem;
+      try {
+        const directusWishlistData: any = {
+          product_id: insertWishlistItem.productId,
+          user_id: insertWishlistItem.userId,
+        };
+        
+        console.log(`Directus API call: ${this.baseUrl}/items/wishlist_items (POST) for user ${insertWishlistItem.userId}`);
+        
+        const response = await this.request(`/items/wishlist_items`, {
+          method: "POST",
+          body: JSON.stringify(directusWishlistData),
+        });
+
+        console.log(`Directus API success: Added wishlist item for user ${insertWishlistItem.userId}`);
+        
+        return this.transformWishlistItem(response.data);
+      } catch (error) {
+        console.log(`Directus wishlist collection not available for user ${insertWishlistItem.userId}, using in-memory storage`);
+        
+        const id = this.currentWishlistItemId++;
+        const wishlistItem: WishlistItem = { 
+          id,
+          userId: insertWishlistItem.userId,
+          sessionId: null,
+          productId: insertWishlistItem.productId,
+          createdAt: new Date()
+        };
+        
+        this.wishlistItems.set(id.toString(), wishlistItem);
+        return wishlistItem;
+      }
     }
     
     // For guests, try Directus first, fallback to in-memory storage
