@@ -32,7 +32,7 @@ export default function WishlistPage() {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || authLoading) {
     return (
       <PageTransition>
         <MarineBackground intensity="medium" theme="default" />
@@ -40,6 +40,42 @@ export default function WishlistPage() {
           <div className="text-center">
             <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
             <p className="text-muted-foreground">Načítám seznam přání...</p>
+          </div>
+        </div>
+      </PageTransition>
+    );
+  }
+
+  // Show authentication required message for unauthenticated users
+  if (!isAuthenticated) {
+    return (
+      <PageTransition>
+        <MarineBackground intensity="medium" theme="default" />
+        <div className="min-h-screen pt-24 pb-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center py-16">
+              <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Lock className="w-12 h-12 text-primary" />
+              </div>
+              <h1 className="text-3xl font-bold text-foreground mb-4">
+                Přihlášení vyžadováno
+              </h1>
+              <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+                Pro zobrazení a správu vašeho seznamu přání se musíte přihlásit do svého účtu.
+              </p>
+              <div className="space-x-4">
+                <a href="/api/login">
+                  <Button size="lg" className="bg-primary hover:bg-primary/90">
+                    Přihlásit se
+                  </Button>
+                </a>
+                <Link href="/">
+                  <Button size="lg" variant="outline">
+                    Zpět na hlavní stránku
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </PageTransition>
