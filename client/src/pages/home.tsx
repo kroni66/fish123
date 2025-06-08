@@ -173,9 +173,46 @@ export default function Home() {
         {/* Hero Section */}
         <section className="min-h-screen flex items-center justify-center px-4 relative">
           <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
-            {/* Badge with enhanced glow */}
-            <div className="inline-flex items-center px-4 py-2 bg-slate-800/70 border border-cyan-500/30 rounded-full backdrop-blur-sm shadow-lg shadow-cyan-500/10">
-              <span className="text-cyan-300 text-sm font-medium">🎣 Nová kolekce rybářského vybavení</span>
+            {/* Premium animated badge */}
+            <div className="relative group">
+              {/* Glow backdrop */}
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/25 to-teal-500/20 blur-xl rounded-full scale-110 opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+              
+              {/* Main badge */}
+              <div className="relative inline-flex items-center px-6 py-3 bg-gradient-to-r from-slate-800/90 via-slate-700/80 to-slate-800/90 border border-cyan-400/40 rounded-full backdrop-blur-lg shadow-2xl hover:shadow-cyan-400/20 transition-all duration-300 group-hover:scale-105">
+                {/* Animated border gradient */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/50 to-cyan-400/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
+                
+                {/* Content */}
+                <div className="relative flex items-center space-x-3">
+                  {/* Animated fish icon */}
+                  <div className="w-5 h-5 relative">
+                    <svg viewBox="0 0 24 24" className="w-full h-full text-cyan-400 group-hover:text-cyan-300 transition-colors duration-300">
+                      <path d="M12 2C8.5 2 5.5 4.5 5.5 8c0 2 1 4 2.5 5.5L12 18l4-4.5c1.5-1.5 2.5-3.5 2.5-5.5 0-3.5-3-6-6.5-6z" fill="currentColor" opacity="0.7"/>
+                      <circle cx="12" cy="8" r="2" fill="currentColor"/>
+                      <path d="M2 12c0 2 1 3 2 3s2-1 2-3-1-3-2-3-2 1-2 3z" fill="currentColor" opacity="0.5"/>
+                      <path d="M18 12c0 2 1 3 2 3s2-1 2-3-1-3-2-3-2 1-2 3z" fill="currentColor" opacity="0.5"/>
+                    </svg>
+                    {/* Subtle pulse animation */}
+                    <div className="absolute inset-0 bg-cyan-400/30 rounded-full animate-ping opacity-20"></div>
+                  </div>
+                  
+                  {/* Enhanced text */}
+                  <span className="bg-gradient-to-r from-cyan-200 via-white to-cyan-200 bg-clip-text text-transparent text-sm font-semibold tracking-wide uppercase">
+                    Nová kolekce rybářského vybavení
+                  </span>
+                  
+                  {/* Subtle arrow indicator */}
+                  <div className="w-1 h-1 bg-cyan-400 rounded-full animate-pulse"></div>
+                </div>
+                
+                {/* Inner highlight */}
+                <div className="absolute inset-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent rounded-full pointer-events-none"></div>
+              </div>
+              
+              {/* Floating particles */}
+              <div className="absolute -top-1 left-1/4 w-1 h-1 bg-cyan-400/60 rounded-full animate-pulse delay-1000"></div>
+              <div className="absolute -bottom-1 right-1/3 w-0.5 h-0.5 bg-blue-400/50 rounded-full animate-pulse delay-1500"></div>
             </div>
 
             {/* Main Heading with enhanced effects */}
