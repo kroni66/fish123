@@ -214,9 +214,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const sessionUser = req.session?.user;
       
       console.log(`Auth check - Session ID: ${req.sessionID}, Session User:`, sessionUser ? 'exists' : 'missing');
+      console.log(`Session user details:`, sessionUser);
       
       if (!sessionUser) {
         return res.status(401).json({ message: "Nepřihlášen" });
+      }
+
+      // If demo user, return demo data directly
+      if (sessionUser.accessToken === "demo-access-token") {
+        console.log(`Demo user authenticated: ${sessionUser.id}`);
+        
+        res.json({
+          id: sessionUser.id,
+          email: sessionUser.email,
+          firstName: sessionUser.firstName,
+          lastName: sessionUser.lastName,
+          directusId: sessionUser.id,
+          status: "active",
+          createdAt: new Date(),
+          updatedAt: new Date()
+        });
+        return;
       }
 
       // Get user data from Directus using the access token
