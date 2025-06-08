@@ -376,14 +376,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.session?.user?.id;
       
+      console.log(`Wishlist fetch request - Session user ID: ${userId}, Session ID: ${req.params.sessionId}`);
+      
       if (!userId) {
         // Return empty wishlist for unauthenticated users
+        console.log(`No user in session, returning empty wishlist`);
         return res.json([]);
       }
       
       // For authenticated users, get their user-specific wishlist
       const wishlistItems = await storage.getWishlistItemsByUser(userId);
-      console.log(`Fetching wishlist for authenticated user: ${userId}`);
+      console.log(`Fetching wishlist for authenticated user: ${userId}, Found ${wishlistItems.length} items`);
       
       // Get product details for each wishlist item
       const itemsWithProducts = await Promise.all(
@@ -393,6 +396,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
       );
       
+      console.log(`Returning ${itemsWithProducts.length} wishlist items with product details`);
       res.json(itemsWithProducts);
     } catch (error) {
       console.error("Failed to fetch wishlist items:", error);
@@ -403,6 +407,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/wishlist", async (req, res) => {
     try {
       const userId = req.session?.user?.id;
+      
+      console.log(`Wishlist add request - Session user ID: ${userId}, Session data:`, req.session);
       
       // Require authentication for adding to wishlist
       if (!userId) {
@@ -421,9 +427,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         sessionId: null, // Don't use session for authenticated users
       };
       
-      console.log(`Adding item to wishlist for authenticated user: ${userId}`);
+      console.log(`Adding item to wishlist for authenticated user: ${userId}, Product: ${wishlistItemData.productId}`);
       
       const wishlistItem = await storage.addToWishlist(enhancedWishlistData);
+      console.log(`Successfully added wishlist item:`, wishlistItem);
       res.json(wishlistItem);
     } catch (error) {
       if (error instanceof z.ZodError) {
