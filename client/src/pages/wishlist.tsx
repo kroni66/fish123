@@ -1,4 +1,4 @@
-import { Heart, ShoppingCart, Trash2 } from "lucide-react";
+import { Heart, ShoppingCart, Trash2, Lock } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { PageTransition } from "@/components/page-transition";
@@ -6,12 +6,14 @@ import { MarineBackground } from "@/components/marine-background";
 import { WishlistButton } from "@/components/wishlist-button";
 import { useWishlist } from "@/hooks/useWishlist";
 import { useCart } from "@/hooks/use-cart";
+import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { formatPrice } from "@/lib/utils";
 
 export default function WishlistPage() {
   const { wishlistItems, isLoading, removeFromWishlist } = useWishlist();
   const { addToCart } = useCart();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
   const { toast } = useToast();
 
   const handleAddToCart = async (productId: number, productName: string) => {

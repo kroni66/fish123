@@ -1,5 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { useAuth } from "@/hooks/use-auth";
+import { useToast } from "@/hooks/use-toast";
 import type { WishlistItem, InsertWishlistItem } from "@shared/schema";
 
 function generateSessionId() {
@@ -18,6 +20,8 @@ function getSessionId() {
 export function useWishlist() {
   const queryClient = useQueryClient();
   const sessionId = getSessionId();
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
 
   const {
     data: wishlistItems = [],
@@ -41,6 +45,28 @@ export function useWishlist() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/wishlist", sessionId] });
+      toast({
+        title: "Přidáno do seznamu přání",
+        description: "Produkt byl úspěšně přidán do vašeho seznamu přání.",
+      });
+    },
+    onError: (error: any) => {
+      if (error.message?.includes("401") || error.message?.includes("requireAuth")) {
+        toast({
+          title: "Přihlášení vyžadováno",
+          description: "Pro přidání do seznamu přání se musíte přihlásit.",
+          variant: "destructive",
+        });
+        setTimeout(() => {
+          window.location.href = "/api/login";
+        }, 1500);
+      } else {
+        toast({
+          title: "Chyba",
+          description: "Nepodařilo se přidat produkt do seznamu přání.",
+          variant: "destructive",
+        });
+      }
     },
   });
 
@@ -49,6 +75,28 @@ export function useWishlist() {
       apiRequest("DELETE", `/api/wishlist/${wishlistItemId}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/wishlist", sessionId] });
+      toast({
+        title: "Odebráno ze seznamu přání",
+        description: "Produkt byl úspěšně odebrán z vašeho seznamu přání.",
+      });
+    },
+    onError: (error: any) => {
+      if (error.message?.includes("401") || error.message?.includes("requireAuth")) {
+        toast({
+          title: "Přihlášení vyžadováno",
+          description: "Pro správu seznamu přání se musíte přihlásit.",
+          variant: "destructive",
+        });
+        setTimeout(() => {
+          window.location.href = "/api/login";
+        }, 1500);
+      } else {
+        toast({
+          title: "Chyba",
+          description: "Nepodařilo se odebrat produkt ze seznamu přání.",
+          variant: "destructive",
+        });
+      }
     },
   });
 
@@ -58,10 +106,32 @@ export function useWishlist() {
   });
 
   const addToWishlist = (productId: number) => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Přihlášení vyžadováno",
+        description: "Pro přidání do seznamu přání se musíte přihlásit. Přesměrovávám...",
+        variant: "destructive",
+      });
+      setTimeout(() => {
+        window.location.href = "/api/login";
+      }, 1500);
+      return;
+    }
     addToWishlistMutation.mutate(productId);
   };
 
   const removeFromWishlist = (wishlistItemId: number) => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Přihlášení vyžadováno",
+        description: "Pro správu seznamu přání se musíte přihlásit. Přesměrovávám...",
+        variant: "destructive",
+      });
+      setTimeout(() => {
+        window.location.href = "/api/login";
+      }, 1500);
+      return;
+    }
     removeFromWishlistMutation.mutate(wishlistItemId);
   };
 
