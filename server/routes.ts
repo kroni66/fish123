@@ -371,10 +371,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Wishlist routes
+  // Enhanced wishlist routes with user authentication support
   app.get("/api/wishlist/:sessionId", async (req, res) => {
     try {
-      const wishlistItems = await storage.getWishlistItems(req.params.sessionId);
+      const userId = req.session?.user?.id;
+      const sessionId = req.params.sessionId;
+      
+      let wishlistItems;
+      if (userId) {
+        // For authenticated users, get their user-specific wishlist
+        wishlistItems = await storage.getWishlistItemsByUser(userId);
+        console.log(`Fetching wishlist for authenticated user: ${userId}`);
+      } else {
+        // For guest users, use session-based wishlist
+        wishlistItems = await storage.getWishlistItems(sessionId);
+        console.log(`Fetching wishlist for guest session: ${sessionId}`);
+      }
       
       // Get product details for each wishlist item
       const itemsWithProducts = await Promise.all(
@@ -386,6 +398,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(itemsWithProducts);
     } catch (error) {
+      console.error("Failed to fetch wishlist items:", error);
       res.status(500).json({ message: "Failed to fetch wishlist items" });
     }
   });

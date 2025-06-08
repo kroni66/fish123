@@ -87,7 +87,8 @@ interface DirectusArticleCategory {
 
 interface DirectusWishlistItem {
   id: number;
-  session_id: string;
+  user_id?: string;
+  session_id?: string;
   product_id: number;
   date_created: string;
 }
@@ -557,7 +558,8 @@ export class DirectusStorage implements IStorage {
   private transformWishlistItem(directusWishlistItem: DirectusWishlistItem): WishlistItem {
     return {
       id: directusWishlistItem.id,
-      sessionId: directusWishlistItem.session_id,
+      userId: directusWishlistItem.user_id || null,
+      sessionId: directusWishlistItem.session_id || null,
       productId: directusWishlistItem.product_id,
       createdAt: new Date(directusWishlistItem.date_created),
     };
@@ -706,11 +708,13 @@ export class DirectusStorage implements IStorage {
       
       const id = this.currentWishlistItemId++;
       const wishlistItem: WishlistItem = { 
-        ...insertWishlistItem, 
         id,
+        userId: insertWishlistItem.userId || null,
+        sessionId: insertWishlistItem.sessionId || null,
+        productId: insertWishlistItem.productId,
         createdAt: new Date()
       };
-      this.wishlistItems.set(`${insertWishlistItem.sessionId}-${insertWishlistItem.productId}`, wishlistItem);
+      this.wishlistItems.set(`${insertWishlistItem.sessionId || 'guest'}-${insertWishlistItem.productId}`, wishlistItem);
       return wishlistItem;
     }
   }
@@ -729,7 +733,8 @@ export class DirectusStorage implements IStorage {
       console.log(`Directus wishlist collection not available, removing from in-memory storage: ${id}`);
       
       // Find and remove by ID in in-memory storage
-      for (const [key, item] of this.wishlistItems.entries()) {
+      const entries = Array.from(this.wishlistItems.entries());
+      for (const [key, item] of entries) {
         if (item.id === id) {
           this.wishlistItems.delete(key);
           break;

@@ -100,7 +100,8 @@ export const articleCategories = pgTable("article_categories", {
 
 export const wishlistItems = pgTable("wishlist_items", {
   id: serial("id").primaryKey(),
-  sessionId: text("session_id").notNull(),
+  userId: text("user_id").references(() => users.id),
+  sessionId: text("session_id"),
   productId: integer("product_id").references(() => products.id).notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
