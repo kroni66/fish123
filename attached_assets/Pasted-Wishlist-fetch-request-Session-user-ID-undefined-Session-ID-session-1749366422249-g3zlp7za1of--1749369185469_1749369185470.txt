@@ -1,0 +1,36 @@
+Wishlist fetch request - Session user ID: undefined, Session ID: session_1749366422249_g3zlp7za1of
+No user in session, returning empty wishlist
+7:51:02 AM [express] GET /api/wishlist/session_1749366422249_g3zlp7za1of 304 in 2ms :: []
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/categories
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/products
+7:51:02 AM [express] GET /api/cart/session_1749366422245_ybvgf8h8t 304 in 0ms :: []
+Auth check - Session ID: --WM4IC5pAe0goV5bKbOtgs2BRgw15oD, Session User: missing
+Session user details: undefined
+7:51:02 AM [express] GET /api/auth/user 401 in 1ms :: {"message":"Nepřihlášen"}
+Directus API success: https://fe5c-185-5-70-249.ngrok-free.app/items/products returned 8 items
+7:51:02 AM [express] GET /api/products 304 in 373ms :: [{"id":1,"name":"Experimentální produkt","slu…
+Directus API success: https://fe5c-185-5-70-249.ngrok-free.app/items/categories returned 2 items
+7:51:02 AM [express] GET /api/categories 304 in 418ms :: [{"id":1,"name":"Kategorie1","slug":"katego…
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/products
+Wishlist fetch request - Session user ID: undefined, Session ID: session_1749323615987_zz0eq72dn7
+No user in session, returning empty wishlist
+7:51:03 AM [express] GET /api/wishlist/session_1749323615987_zz0eq72dn7 304 in 1ms :: []
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/categories
+7:51:03 AM [express] GET /api/cart/session_1749159880471_d5vtgng0n 304 in 1ms :: []
+Auth check - Session ID: ntlslFotmzB7YcyDq2DSwX3xMk_RWLad, Session User: missing
+Session user details: undefined
+7:51:03 AM [express] GET /api/auth/user 401 in 1ms :: {"message":"Nepřihlášen"}
+Directus API success: https://fe5c-185-5-70-249.ngrok-free.app/items/categories returned 2 items
+7:51:04 AM [express] GET /api/categories 304 in 156ms :: [{"id":1,"name":"Kategorie1","slug":"katego…
+Directus API success: https://fe5c-185-5-70-249.ngrok-free.app/items/products returned 8 items
+7:51:04 AM [express] GET /api/products 304 in 162ms :: [{"id":1,"name":"Experimentální produkt","slu…
+Directus login successful - User: f88fd440-041c-4981-9f01-de9a4329101f, Session ID: 40UaYVpUM-s9vWWqxNCWdzefe1a8Cn3s
+7:51:14 AM [express] POST /api/auth/login 200 in 1185ms :: {"user":{"id":"f88fd440-041c-4981-9f01-de…
+Auth check - Session ID: 40UaYVpUM-s9vWWqxNCWdzefe1a8Cn3s, Session User: exists
+Session user details: {
+  id: 'f88fd440-041c-4981-9f01-de9a4329101f',
+  accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY4OGZkNDQwLTA0MWMtNDk4MS05ZjAxLWRlOWE0MzI5MTAxZiIsInJvbGUiOm51bGwsImFwcF9hY2Nlc3MiOmZhbHNlLCJhZG1pbl9hY2Nlc3MiOmZhbHNlLCJpYXQiOjE3NDkzNjkwNzEsImV4cCI6MTc0OTM2OTk3MSwiaXNzIjoiZGlyZWN0dXMifQ.GlMmdq8RDrU3LfDxKHKBaT_l5vJHOFlEfcm4vWW1ahM',
+  refreshToken: 'uF5G710xs67ECkLgrT64OjG45s9B-HhwTyqBSYkfQeqOoV3RWWTuNfP2VC-AIcTC'
+}
+Successfully authenticated user: f88fd440-041c-4981-9f01-de9a4329101f
+7:51:15 AM [express] GET /api/auth/user 200 in 189ms :: {"id":"f88fd440-041c-4981-9f01-de9a4329101f"…

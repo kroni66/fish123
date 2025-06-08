@@ -1,5 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
+import connectPg from "connect-pg-simple";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
@@ -20,8 +21,18 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Add session middleware for Directus authentication
+// Configure PostgreSQL session store for persistent authentication
+const PgSession = connectPg(session);
+const sessionStore = new PgSession({
+  conString: process.env.DATABASE_URL,
+  createTableIfMissing: true,
+  tableName: 'session',
+  ttl: 24 * 60 * 60 // 24 hours in seconds
+});
+
+// Add session middleware with persistent storage for Directus authentication
 app.use(session({
+  store: sessionStore,
   secret: process.env.SESSION_SECRET || 'dev-secret-key',
   resave: false,
   saveUninitialized: false,
