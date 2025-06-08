@@ -1,7 +1,7 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import { DirectusStorage } from "./directus-storage";
-import { storage as localStorage, type IStorage } from "./storage";
+import { storage as localStorage, MemStorage, type IStorage } from "./storage";
 import { directusAuth } from "./directus-auth";
 import { insertProductSchema, insertCartItemSchema, insertOrderSchema, insertReviewSchema, insertWishlistItemSchema, loginSchema, registerSchema } from "@shared/schema";
 import { z } from "zod";
@@ -292,7 +292,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const categories = await storage.getCategories();
       res.json(categories);
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch categories" });
+      console.error("Failed to fetch categories from Directus:", error);
+      res.status(503).json({ 
+        message: "Service unavailable - please check Directus connection",
+        error: "Categories collection not accessible"
+      });
     }
   });
 
@@ -315,7 +319,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const products = await storage.getProducts(categoryId);
       res.json(products);
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch products" });
+      console.error("Failed to fetch products from Directus:", error);
+      res.status(503).json({ 
+        message: "Service unavailable - please check Directus connection",
+        error: "Products collection not accessible"
+      });
     }
   });
 
