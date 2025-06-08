@@ -371,22 +371,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Enhanced wishlist routes with user authentication support
+  // Authenticated-only wishlist routes
   app.get("/api/wishlist/:sessionId", async (req, res) => {
     try {
       const userId = req.session?.user?.id;
-      const sessionId = req.params.sessionId;
       
-      let wishlistItems;
-      if (userId) {
-        // For authenticated users, get their user-specific wishlist
-        wishlistItems = await storage.getWishlistItemsByUser(userId);
-        console.log(`Fetching wishlist for authenticated user: ${userId}`);
-      } else {
-        // For guest users, use session-based wishlist
-        wishlistItems = await storage.getWishlistItems(sessionId);
-        console.log(`Fetching wishlist for guest session: ${sessionId}`);
+      if (!userId) {
+        // Return empty wishlist for unauthenticated users
+        return res.json([]);
       }
+      
+      // For authenticated users, get their user-specific wishlist
+      const wishlistItems = await storage.getWishlistItemsByUser(userId);
+      console.log(`Fetching wishlist for authenticated user: ${userId}`);
       
       // Get product details for each wishlist item
       const itemsWithProducts = await Promise.all(
@@ -406,15 +403,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/wishlist", async (req, res) => {
     try {
       const userId = req.session?.user?.id;
+      
+      // Require authentication for adding to wishlist
+      if (!userId) {
+        return res.status(401).json({ 
+          message: "Musíte se přihlásit pro přidání položek do wishlistu",
+          requireAuth: true 
+        });
+      }
+      
       const wishlistItemData = insertWishlistItemSchema.parse(req.body);
       
-      // Enhanced wishlist data with user authentication
+      // Only use user ID for authenticated users
       const enhancedWishlistData = {
         ...wishlistItemData,
-        userId: userId || null, // Set userId if authenticated, null for guests
+        userId: userId,
+        sessionId: null, // Don't use session for authenticated users
       };
       
-      console.log(`Adding item to wishlist: ${userId ? `user ${userId}` : `guest session ${wishlistItemData.sessionId}`}`);
+      console.log(`Adding item to wishlist for authenticated user: ${userId}`);
       
       const wishlistItem = await storage.addToWishlist(enhancedWishlistData);
       res.json(wishlistItem);
@@ -429,18 +436,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.delete("/api/wishlist/:id", async (req, res) => {
     try {
+      const userId = req.session?.user?.id;
+      
+      // Require authentication for removing from wishlist
+      if (!userId) {
+        return res.status(401).json({ 
+          message: "Musíte se přihlásit pro správu wishlistu",
+          requireAuth: true 
+        });
+      }
+      
       await storage.removeFromWishlist(Number(req.params.id));
+      console.log(`Removed wishlist item ${req.params.id} for user: ${userId}`);
       res.status(204).send();
     } catch (error) {
+      console.error("Failed to remove item from wishlist:", error);
       res.status(500).json({ message: "Failed to remove item from wishlist" });
     }
   });
 
   app.get("/api/wishlist/:sessionId/check/:productId", async (req, res) => {
     try {
-      const isInWishlist = await storage.isInWishlist(req.params.sessionId, Number(req.params.productId));
+      const userId = req.session?.user?.id;
+      
+      if (!userId) {
+        // Return false for unauthenticated users
+        return res.json({ isInWishlist: false });
+      }
+      
+      const isInWishlist = await storage.isInWishlistByUser(userId, Number(req.params.productId));
       res.json({ isInWishlist });
     } catch (error) {
+      console.error("Failed to check wishlist status:", error);
       res.status(500).json({ message: "Failed to check wishlist status" });
     }
   });

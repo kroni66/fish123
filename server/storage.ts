@@ -77,6 +77,7 @@ export interface IStorage {
   addToWishlist(item: InsertWishlistItem): Promise<WishlistItem>;
   removeFromWishlist(id: number): Promise<void>;
   isInWishlist(sessionId: string, productId: number): Promise<boolean>;
+  isInWishlistByUser(userId: string, productId: number): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -515,6 +516,12 @@ export class MemStorage implements IStorage {
   async isInWishlist(sessionId: string, productId: number): Promise<boolean> {
     return Array.from(this.wishlistItems.values()).some(
       item => item.sessionId === sessionId && item.productId === productId
+    );
+  }
+
+  async isInWishlistByUser(userId: string, productId: number): Promise<boolean> {
+    return Array.from(this.wishlistItems.values()).some(
+      item => item.userId === userId && item.productId === productId
     );
   }
 }
