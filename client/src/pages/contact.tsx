@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, MessageCircle, Globe, Fish, Users, Shield, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Contact() {
@@ -168,93 +169,284 @@ export default function Contact() {
               <div className="space-y-8">
                 <div>
                   <h2 className="text-3xl font-bold text-foreground font-poppins mb-6">
-                    Kontaktní informace
+                    Kontaktní údaje
                   </h2>
-                  <p className="text-lg text-muted-foreground mb-8">
+                  <p className="text-lg text-muted-foreground mb-4">
                     Jsme tu pro vás. Neváhejte se na nás obrátit s jakýmkoliv dotazem 
                     ohledně našich produktů nebo rybářských technik.
                   </p>
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    <Badge variant="secondary" className="flex items-center gap-1">
+                      <Fish className="w-3 h-3" />
+                      Odborní poradci
+                    </Badge>
+                    <Badge variant="secondary" className="flex items-center gap-1">
+                      <Shield className="w-3 h-3" />
+                      Ověřené produkty
+                    </Badge>
+                    <Badge variant="secondary" className="flex items-center gap-1">
+                      <Truck className="w-3 h-3" />
+                      Rychlé dodání
+                    </Badge>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                  {/* Email kontakt */}
+                  <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/70 transition-all duration-300 group cursor-pointer">
                     <CardContent className="p-6 space-y-4">
-                      <div className="inline-flex p-3 rounded-full bg-primary/20">
+                      <div className="inline-flex p-3 rounded-full bg-primary/20 group-hover:bg-primary/30 transition-colors">
                         <Mail className="h-6 w-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                        <p className="text-muted-foreground">info@rigofdeath.cz</p>
-                        <p className="text-muted-foreground">obchod@rigofdeath.cz</p>
+                        <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                          Email komunikace
+                          <Badge variant="outline" className="text-xs">Preferováno</Badge>
+                        </h3>
+                        <div className="space-y-1">
+                          <p className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+                            <a href="mailto:info@rigofdeath.cz">info@rigofdeath.cz</a>
+                          </p>
+                          <p className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+                            <a href="mailto:obchod@rigofdeath.cz">obchod@rigofdeath.cz</a>
+                          </p>
+                          <p className="text-xs text-muted-foreground/70 mt-2">
+                            Odpovídáme do 2 hodin v pracovní době
+                          </p>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                  {/* Telefonní kontakt */}
+                  <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/70 transition-all duration-300 group cursor-pointer">
                     <CardContent className="p-6 space-y-4">
-                      <div className="inline-flex p-3 rounded-full bg-accent/20">
+                      <div className="inline-flex p-3 rounded-full bg-accent/20 group-hover:bg-accent/30 transition-colors">
                         <Phone className="h-6 w-6 text-accent" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground mb-1">Telefon</h3>
-                        <p className="text-muted-foreground">+420 777 123 456</p>
-                        <p className="text-muted-foreground text-sm">Po-Pá 8:00-17:00</p>
+                        <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                          Telefonní podpora
+                          <Badge variant="outline" className="text-xs">Okamžitě</Badge>
+                        </h3>
+                        <div className="space-y-1">
+                          <p className="text-muted-foreground hover:text-accent transition-colors cursor-pointer text-lg font-medium">
+                            <a href="tel:+420777123456">+420 777 123 456</a>
+                          </p>
+                          <p className="text-sm text-muted-foreground">Po-Pá 8:00-17:00</p>
+                          <p className="text-xs text-muted-foreground/70">
+                            Technická podpora a poradenství
+                          </p>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                  {/* WhatsApp/Messenger */}
+                  <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/70 transition-all duration-300 group cursor-pointer">
                     <CardContent className="p-6 space-y-4">
-                      <div className="inline-flex p-3 rounded-full bg-primary/20">
+                      <div className="inline-flex p-3 rounded-full bg-green-500/20 group-hover:bg-green-500/30 transition-colors">
+                        <MessageCircle className="h-6 w-6 text-green-500" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                          WhatsApp chat
+                          <Badge variant="outline" className="text-xs bg-green-500/10 text-green-600 border-green-500/20">Nové</Badge>
+                        </h3>
+                        <div className="space-y-1">
+                          <p className="text-muted-foreground hover:text-green-500 transition-colors cursor-pointer">
+                            <a href="https://wa.me/420777123456" target="_blank" rel="noopener noreferrer">
+                              +420 777 123 456
+                            </a>
+                          </p>
+                          <p className="text-sm text-muted-foreground">Rychlé dotazy a rady</p>
+                          <p className="text-xs text-muted-foreground/70">
+                            Dostupné 7 dní v týdnu
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Fyzická pobočka */}
+                  <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card/70 transition-all duration-300 group cursor-pointer">
+                    <CardContent className="p-6 space-y-4">
+                      <div className="inline-flex p-3 rounded-full bg-primary/20 group-hover:bg-primary/30 transition-colors">
                         <MapPin className="h-6 w-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground mb-1">Adresa</h3>
-                        <p className="text-muted-foreground">Rybářská 123</p>
-                        <p className="text-muted-foreground">110 00 Praha 1</p>
+                        <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                          Prodejna a sklad
+                          <Badge variant="outline" className="text-xs">Osobní odběr</Badge>
+                        </h3>
+                        <div className="space-y-1">
+                          <p className="text-muted-foreground">Rybářská 123</p>
+                          <p className="text-muted-foreground">110 00 Praha 1</p>
+                          <p className="text-xs text-muted-foreground/70 mt-2">
+                            Možnost vyzkoušení produktů
+                          </p>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                    <CardContent className="p-6 space-y-4">
-                      <div className="inline-flex p-3 rounded-full bg-accent/20">
-                        <Clock className="h-6 w-6 text-accent" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-1">Otevírací doba</h3>
-                        <p className="text-muted-foreground">Po-Pá: 8:00-17:00</p>
-                        <p className="text-muted-foreground">So: 9:00-14:00</p>
+                  {/* Otevírací doba */}
+                  <Card className="bg-card/50 backdrop-blur-sm border-border/50 sm:col-span-2">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="inline-flex p-3 rounded-full bg-accent/20">
+                          <Clock className="h-6 w-6 text-accent" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-foreground mb-4">Otevírací doba</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                              <h4 className="text-sm font-medium text-foreground mb-2">Prodejna</h4>
+                              <div className="space-y-1 text-sm text-muted-foreground">
+                                <p>Po-Pá: 8:00-17:00</p>
+                                <p>So: 9:00-14:00</p>
+                                <p>Ne: Zavřeno</p>
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-medium text-foreground mb-2">Telefonní podpora</h4>
+                              <div className="space-y-1 text-sm text-muted-foreground">
+                                <p>Po-Pá: 8:00-18:00</p>
+                                <p>So: 9:00-15:00</p>
+                                <p>Ne: Jen urgentní případy</p>
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-medium text-foreground mb-2">Online chat</h4>
+                              <div className="space-y-1 text-sm text-muted-foreground">
+                                <p>Po-Ne: 24/7</p>
+                                <p className="text-xs text-green-600">● Právě online</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
                 </div>
 
-                {/* FAQ Section */}
+                {/* Enhanced FAQ Section */}
                 <Card className="bg-card/50 backdrop-blur-sm border-border/50">
                   <CardHeader>
-                    <CardTitle className="text-xl font-bold text-foreground">
+                    <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                      <Users className="w-5 h-5 text-primary" />
                       Často kladené otázky
                     </CardTitle>
+                    <p className="text-muted-foreground text-sm">
+                      Odpovědi na nejčastější dotazy našich zákazníků
+                    </p>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-2">Jak dlouho trvá dodání?</h4>
-                      <p className="text-muted-foreground text-sm">
-                        Standardní dodání trvá 2-3 pracovní dny. Expresní dodání do 24 hodin.
-                      </p>
+                  <CardContent className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div className="border-l-4 border-primary pl-4">
+                          <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                            <Truck className="w-4 h-4 text-primary" />
+                            Jak dlouho trvá dodání?
+                          </h4>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            Standardní dodání: 2-3 pracovní dny<br />
+                            Expresní dodání: do 24 hodin<br />
+                            <span className="text-xs text-primary">Sledování zásilky v reálném čase</span>
+                          </p>
+                        </div>
+                        
+                        <div className="border-l-4 border-accent pl-4">
+                          <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                            <Shield className="w-4 h-4 text-accent" />
+                            Můžu vrátit zboží?
+                          </h4>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            14 dní na vrácení v původním stavu<br />
+                            Bezplatné vrácení při vadě<br />
+                            <span className="text-xs text-accent">Garančí servis až 3 roky</span>
+                          </p>
+                        </div>
+
+                        <div className="border-l-4 border-primary pl-4">
+                          <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                            <Fish className="w-4 h-4 text-primary" />
+                            Poskytujete rybářské poradenství?
+                          </h4>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            Odborní poradci s 10+ lety praxe<br />
+                            Konzultace výběru vybavení zdarma<br />
+                            <span className="text-xs text-primary">Doporučení podle typu rybolovu</span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div className="border-l-4 border-green-500 pl-4">
+                          <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                            <Globe className="w-4 h-4 text-green-500" />
+                            Máte prodejna také online?
+                          </h4>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            Kompletní sortiment online<br />
+                            Rezervace na pobočce možná<br />
+                            <span className="text-xs text-green-600">Osobní vyzkoušení před koupí</span>
+                          </p>
+                        </div>
+
+                        <div className="border-l-4 border-accent pl-4">
+                          <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                            <Mail className="w-4 h-4 text-accent" />
+                            Jaké jsou způsoby platby?
+                          </h4>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            Platba kartou, bankovní převod<br />
+                            PayPal, Apple Pay, Google Pay<br />
+                            <span className="text-xs text-accent">Platba při osobním odběru</span>
+                          </p>
+                        </div>
+
+                        <div className="border-l-4 border-primary pl-4">
+                          <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                            <MessageCircle className="w-4 h-4 text-primary" />
+                            Jak rychle odpovídáte na dotazy?
+                          </h4>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            Email: do 2 hodin v pracovní době<br />
+                            WhatsApp: okamžitě (7 dní v týdnu)<br />
+                            <span className="text-xs text-primary">Telefon: přímé spojení s odborníkem</span>
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-2">Můžu vrátit zboží?</h4>
-                      <p className="text-muted-foreground text-sm">
-                        Ano, máte 14 dní na vrácení zboží v původním stavu.
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-2">Poskytujete technickou podporu?</h4>
-                      <p className="text-muted-foreground text-sm">
-                        Samozřejmě! Naši experti vám rádi poradí s výběrem i použitím produktů.
-                      </p>
+
+                    {/* Additional Services Section */}
+                    <div className="border-t border-border/50 pt-6 mt-6">
+                      <h4 className="font-semibold text-foreground mb-4 text-center">
+                        Další služby pro zákazníky
+                      </h4>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
+                          <Shield className="w-6 h-6 text-primary mx-auto mb-2" />
+                          <p className="text-xs font-medium text-foreground">Záruka kvality</p>
+                          <p className="text-xs text-muted-foreground">Až 3 roky</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-accent/10 border border-accent/20">
+                          <Truck className="w-6 h-6 text-accent mx-auto mb-2" />
+                          <p className="text-xs font-medium text-foreground">Doprava zdarma</p>
+                          <p className="text-xs text-muted-foreground">Od 1500 Kč</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                          <Users className="w-6 h-6 text-green-500 mx-auto mb-2" />
+                          <p className="text-xs font-medium text-foreground">Věrnostní program</p>
+                          <p className="text-xs text-muted-foreground">Slevy až 15%</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
+                          <Fish className="w-6 h-6 text-primary mx-auto mb-2" />
+                          <p className="text-xs font-medium text-foreground">Servis vybavení</p>
+                          <p className="text-xs text-muted-foreground">Údržba a opravy</p>
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
