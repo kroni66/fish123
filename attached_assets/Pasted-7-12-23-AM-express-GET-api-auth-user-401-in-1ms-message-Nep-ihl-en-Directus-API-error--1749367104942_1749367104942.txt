@@ -1,0 +1,26 @@
+7:12:23 AM [express] GET /api/auth/user 401 in 1ms :: {"message":"Nepřihlášen"}
+Directus API error: 403 Forbidden for https://fe5c-185-5-70-249.ngrok-free.app/items/wishlist_items?filter[session_id][_eq]=session_1749366422249_g3zlp7za1of&sort=-date_created
+Directus API fetch error for https://fe5c-185-5-70-249.ngrok-free.app/items/wishlist_items?filter[session_id][_eq]=session_1749366422249_g3zlp7za1of&sort=-date_created: Error: Directus request failed: 403 Forbidden
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:175:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getWishlistItems (/home/runner/workspace/server/directus-storage.ts:678:24)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:387:25)
+Directus wishlist collection not available, using in-memory storage for session session_1749366422249_g3zlp7za1of
+Fetching wishlist for guest session: session_1749366422249_g3zlp7za1of
+7:12:23 AM [express] GET /api/wishlist/session_1749366422249_g3zlp7za1of 304 in 410ms :: []
+Directus API success: https://fe5c-185-5-70-249.ngrok-free.app/items/categories returned 2 items
+7:12:23 AM [express] GET /api/categories 304 in 381ms :: [{"id":1,"name":"Kategorie1","slug":"katego…
+Directus API success: https://fe5c-185-5-70-249.ngrok-free.app/items/products returned 8 items
+7:12:23 AM [express] GET /api/products 304 in 386ms :: [{"id":1,"name":"Experimentální produkt","slu…
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/wishlist_items?filter[session_id][_eq]=session_1749323615987_zz0eq72dn7
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/wishlist_items?filter[session_id][_eq]=session_1749323615987_zz0eq72dn7&sort=-date_created
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/products
+Directus API call: https://fe5c-185-5-70-249.ngrok-free.app/items/categories
+7:12:24 AM [express] GET /api/cart/session_1749159880471_d5vtgng0n 304 in 1ms :: []
+7:12:24 AM [express] GET /api/auth/user 401 in 0ms :: {"message":"Nepřihlášen"}
+Directus API error: 403 Forbidden for https://fe5c-185-5-70-249.ngrok-free.app/items/wishlist_items?filter[session_id][_eq]=session_1749323615987_zz0eq72dn7&sort=-date_created
+Directus API fetch error for https://fe5c-185-5-70-249.ngrok-free.app/items/wishlist_items?filter[session_id][_eq]=session_1749323615987_zz0eq72dn7&sort=-date_created: Error: Directus request failed: 403 Forbidden
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:175:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getWishlistItems (/home/runner/workspace/server/directus-storage.ts:678:24)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:387:25)
