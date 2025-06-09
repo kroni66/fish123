@@ -90,7 +90,7 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
         <div className="container mx-auto px-4 relative">
           {/* Category Filter */}
           {onCategoryChange && (
-            <div className="mb-12 flex justify-center">
+            <div className="mb-12 flex justify-center bg-[#fcf4d5]">
               <CategoryFilter
                 selectedCategory={categoryId ?? null}
                 onCategoryChange={onCategoryChange}
