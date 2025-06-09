@@ -44,17 +44,17 @@ export default function About() {
                 </h2>
                 <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                   <p>
-                    Rig of Death vznikl z lásky k rybaření a touhy sdílet tu nejlepší výbavu 
+                    Rig of Death vznikl z lásky k rybaření a touhy sdílet to nejlepší oblečení 
                     s komunitou rybářů. Začínali jsme jako malý blog o rybářských technikách 
-                    a postupně jsme se rozrostli v plnohodnotný e-shop.
+                    a postupně jsme se rozrostli v specializovaný e-shop s oblečením.
                   </p>
                   <p>
-                    Každý produkt v naší nabídce prošel důkladným testováním na vodě. 
-                    Neverkujeme nic, co bychom sami nepoužívali při svých vlastních 
-                    rybářských výpravách.
+                    Každý kus oblečení v naší nabídce prošel důkladným testováním při různých 
+                    povětrnostních podmínkách. Neverkujeme nic, co bychom sami nenosili při 
+                    svých vlastních rybářských výpravách.
                   </p>
                   <p>
-                    Naše mise je jednoduchá: pomoct každému rybáři najít to pravé vybavení 
+                    Naše mise je jednoduchá: pomoct každému rybáři najít to pravé oblečení 
                     pro jeho styl rybolovu a sdílet vášeň pro tento úžasný sport.
                   </p>
                 </div>
