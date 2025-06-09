@@ -157,12 +157,12 @@ export default function Home() {
         {/* Features Section */}
         <section className="py-24 px-4 relative">
           {/* Background Image */}
-          <div className="absolute inset-0">
-            <img 
-              src="/attached_assets/4d86ed98-0732-48e8-9613-fbbd288d0c70_1749500961436.jpg" 
-              alt="Fishing equipment by the lake"
-              className="w-full h-full object-cover"
-            />
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url('/attached_assets/4d86ed98-0732-48e8-9613-fbbd288d0c70_1749500961436.jpg')`
+            }}
+          >
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
           </div>
           
@@ -201,10 +201,10 @@ export default function Home() {
                 </CardContent>
               </Card>
 
-              <Card className="p-6 text-center">
+              <Card className="p-6 text-center bg-white/90 backdrop-blur-sm border-white/20">
                 <CardContent className="space-y-4">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                    <Award className="w-8 h-8 text-primary" />
+                  <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto">
+                    <Award className="w-8 h-8 text-accent" />
                   </div>
                   <h3 className="text-xl font-semibold text-foreground">Rychlé dodání</h3>
                   <p className="text-muted-foreground">
