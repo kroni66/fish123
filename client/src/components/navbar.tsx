@@ -8,6 +8,7 @@ import { useWishlist } from "@/hooks/useWishlist";
 import { useAuth } from "@/hooks/use-auth";
 import { CartOverlay } from "@/components/cart-overlay";
 import { useQuery } from "@tanstack/react-query";
+import waterVideoPath from "@assets/1181911-uhd_4096_2160_24fps (1)_1749502748130.mp4";
 
 export function Navbar() {
   const [location] = useLocation();
@@ -84,10 +85,21 @@ export function Navbar() {
           ? 'e-shop-header backdrop-blur-md shadow-2xl' 
           : 'bg-background/95'
       }`}>
-        {/* Water Wave Shape Background */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Main water background with wave shape */}
-          <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/20 via-teal-500/15 to-blue-600/10"></div>
+        {/* Water Video Background */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Video Background */}
+          <video 
+            autoPlay 
+            muted 
+            loop 
+            className="absolute inset-0 w-full h-full object-cover opacity-30"
+            style={{ filter: 'blur(1px) hue-rotate(10deg)' }}
+          >
+            <source src={waterVideoPath} type="video/mp4" />
+          </video>
+          
+          {/* Overlay gradient to blend with content */}
+          <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/30 via-teal-500/20 to-blue-600/15"></div>
           
           {/* Animated wave shapes that form the navbar border */}
           <svg className="absolute bottom-0 left-0 w-full h-4 animate-wave-motion" viewBox="0 0 1200 40" preserveAspectRatio="none">
@@ -555,9 +567,6 @@ export function Navbar() {
 
       {/* Cart Overlay */}
       <CartOverlay />
-
-      {/* Spacer to prevent content from hiding behind fixed navbar */}
-      <div className="h-16"></div>
     </>
   );
 }
