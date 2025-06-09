@@ -64,7 +64,7 @@ export default function Contact() {
             </h1>
             
             <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed drop-shadow-lg">
-              Máte otázky? Rádi vám poradíme s výběrem vybavení
+              Máte otázky? Rádi vám poradíme s výběrem oblečení
             </p>
           </div>
         </div>

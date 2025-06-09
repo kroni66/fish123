@@ -84,7 +84,7 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_20%,_var(--tw-gradient-stops))] from-teal-800/15 via-transparent to-transparent bg-[#fcf4d5]"></div>
         
         {/* Atmospheric depth effects */}
-        <div className="absolute top-0 left-1/3 w-[400px] h-[400px] bg-cyan-400/6 rounded-full blur-[100px] animate-pulse delay-500"></div>
+        <div className="absolute top-0 left-1/3 w-[400px] h-[400px] rounded-full blur-[100px] animate-pulse delay-500 bg-[#fcf4d5]"></div>
         <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-blue-400/8 rounded-full blur-[80px] animate-pulse delay-1500"></div>
         
         <div className="container mx-auto px-4 relative">
