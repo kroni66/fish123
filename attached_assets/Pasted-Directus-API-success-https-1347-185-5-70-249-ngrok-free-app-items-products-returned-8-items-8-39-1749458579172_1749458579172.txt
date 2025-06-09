@@ -1,0 +1,24 @@
+Directus API success: https://1347-185-5-70-249.ngrok-free.app/items/products returned 8 items
+8:39:12 AM [express] GET /api/products 304 in 322ms :: [{"id":1,"name":"Experimentální produkt","slu…
+Directus API error: 401 Unauthorized for https://1347-185-5-70-249.ngrok-free.app/items/wishlist_items?filter[user_id][_eq]=f88fd440-041c-4981-9f01-de9a4329101f
+Directus API fetch error for https://1347-185-5-70-249.ngrok-free.app/items/wishlist_items?filter[user_id][_eq]=f88fd440-041c-4981-9f01-de9a4329101f: Error: Directus request failed: 401 Unauthorized
+    at DirectusStorage.request (/home/runner/workspace/server/directus-storage.ts:175:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DirectusStorage.getWishlistItemsByUser (/home/runner/workspace/server/directus-storage.ts:693:24)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:469:29)
+Directus wishlist collection not available for user f88fd440-041c-4981-9f01-de9a4329101f, using in-memory storage
+Fetching wishlist for authenticated user: f88fd440-041c-4981-9f01-de9a4329101f, Found 0 items
+Returning 0 wishlist items with product details
+8:39:12 AM [express] GET /api/wishlist/session_1749323615987_zz0eq72dn7 304 in 352ms :: []
+Directus API success: https://1347-185-5-70-249.ngrok-free.app/items/categories returned 2 items
+8:39:12 AM [express] GET /api/categories 304 in 342ms :: [{"id":1,"name":"Kategorie1","slug":"katego…
+Directus API success: https://1347-185-5-70-249.ngrok-free.app/items/products/1 returned 0 items
+8:39:12 AM [express] GET /api/cart/session_1749159880471_d5vtgng0n 304 in 320ms :: [{"id":1,"session…
+Get user error: Error: Získání uživatele se nezdařilo: Directus API error: 401 - {"errors":[{"message":"Token expired.","extensions":{"code":"TOKEN_EXPIRED"}}]}
+    at DirectusAuth.getCurrentUser (/home/runner/workspace/server/directus-auth.ts:141:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:241:28)
+8:39:12 AM [express] GET /api/auth/user 401 in 320ms :: {"message":"Získání uživatele se nezdařilo: …
+Directus login successful - User: f88fd440-041c-4981-9f01-de9a4329101f, Session ID: -G-fCoE8l1qaJA_IHng0uIORMqYoFBqB
+8:40:36 AM [express] POST /api/auth/login 200 in 1257ms :: {"user":{"id":"f88fd440-041c-4981-9f01-de…
+Auth check - Session ID: -

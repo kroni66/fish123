@@ -237,22 +237,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
 
-      // Get user data from Directus using the access token
-      const directusUser = await directusAuth.getCurrentUser(sessionUser.accessToken);
-      
-      console.log(`Successfully authenticated user: ${directusUser.id}`);
-      
-      // Return the user profile data
-      res.json({
-        id: directusUser.id,
-        email: directusUser.email,
-        firstName: directusUser.first_name || null,
-        lastName: directusUser.last_name || null,
-        directusId: directusUser.id,
-        status: directusUser.status,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      });
+      try {
+        // Get user data from Directus using the access token
+        const directusUser = await directusAuth.getCurrentUser(sessionUser.accessToken);
+        
+        console.log(`Successfully authenticated user: ${directusUser.id}`);
+        
+        // Return the user profile data
+        res.json({
+          id: directusUser.id,
+          email: directusUser.email,
+          firstName: directusUser.first_name || null,
+          lastName: directusUser.last_name || null,
+          directusId: directusUser.id,
+          status: directusUser.status,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        });
+      } catch (userError: any) {
+        // Handle token expiration with automatic refresh
+        if (userError.message.includes('TOKEN_EXPIRED') && sessionUser.refreshToken) {
+          try {
+            console.log(`Token expired for user ${sessionUser.id}, refreshing...`);
+            
+            // Refresh the token
+            const newTokens = await directusAuth.refreshToken(sessionUser.refreshToken);
+            
+            // Update session with new tokens
+            req.session.user.accessToken = newTokens.access_token;
+            req.session.user.refreshToken = newTokens.refresh_token;
+            
+            // Retry getting user data with new token
+            const directusUser = await directusAuth.getCurrentUser(newTokens.access_token);
+            
+            console.log(`Token refreshed successfully for user: ${directusUser.id}`);
+            
+            res.json({
+              id: directusUser.id,
+              email: directusUser.email,
+              firstName: directusUser.first_name || null,
+              lastName: directusUser.last_name || null,
+              directusId: directusUser.id,
+              status: directusUser.status,
+              createdAt: new Date(),
+              updatedAt: new Date()
+            });
+          } catch (refreshError) {
+            console.log('Token refresh failed, user needs to re-authenticate');
+            delete req.session.user;
+            res.status(401).json({ message: "Relace vypršela - přihlaste se znovu" });
+          }
+        } else {
+          throw userError;
+        }
+      }
     } catch (error) {
       console.error("Get user error:", error);
       res.status(401).json({ 
