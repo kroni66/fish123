@@ -78,8 +78,8 @@ export function Navbar() {
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-slate-900/95 backdrop-blur-md border-b border-slate-700/50 shadow-2xl' 
-          : 'bg-transparent'
+          ? 'e-shop-header backdrop-blur-md shadow-2xl' 
+          : 'bg-background/95 border-b border-border/20'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -235,10 +235,10 @@ export function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`px-3 py-2 text-sm font-medium transition-all duration-300 rounded-lg ${
+                  className={`px-4 py-2 text-sm font-medium transition-all duration-300 rounded-md ${
                     isActive(item.href)
-                      ? 'text-primary bg-primary/10 border border-primary/20'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                      ? 'text-primary bg-primary/10 border border-primary/30'
+                      : 'text-foreground/80 hover:text-foreground hover:bg-muted/50'
                   }`}
                 >
                   {item.name}
@@ -253,7 +253,7 @@ export function Navbar() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg transition-colors ${
+                  className={`text-foreground/80 hover:text-foreground hover:bg-muted/50 rounded-md transition-colors ${
                     isSearchOpen ? 'text-primary bg-primary/10' : ''
                   }`}
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -263,7 +263,7 @@ export function Navbar() {
 
                 {/* Search Box */}
                 {isSearchOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-80 bg-slate-800/95 backdrop-blur-md border border-slate-700/50 rounded-lg shadow-2xl z-50">
+                  <div className="absolute right-0 top-full mt-2 w-80 bg-card/95 backdrop-blur-md border border-border rounded-lg shadow-2xl z-50">
                     <form onSubmit={handleSearchSubmit} className="p-4">
                       <div className="relative">
                         <Input

@@ -3,50 +3,50 @@
 @tailwind utilities;
 
 :root {
-  --background: 28 25% 9%; /* #1A1611 - Dark earthy background */
-  --foreground: 43 51% 95%; /* #F4F1E8 - Warm white text */
-  --muted: 28 25% 15%; /* #252018 - Secondary dark */
-  --muted-foreground: 43 23% 70%; /* #B8B0A0 - Muted warm text */
-  --popover: 28 25% 11%; /* #1F1B16 - Slightly lighter */
-  --popover-foreground: 43 51% 95%;
-  --card: 28 25% 11%; /* #1F1B16 - Card background */
-  --card-foreground: 43 51% 95%;
-  --border: 28 25% 20%; /* #2C2419 - Subtle border */
-  --input: 28 25% 15%;
-  --primary: 25 95% 53%; /* #E67E22 - Warm orange accent */
-  --primary-foreground: 28 25% 9%;
-  --secondary: 28 25% 15%;
-  --secondary-foreground: 43 51% 95%;
-  --accent: 150 65% 45%; /* #22C55E - Fish green accent */
-  --accent-foreground: 28 25% 9%;
-  --destructive: 0 75% 60%;
+  --background: 220 26% 14%; /* #1E2A3A - Deep navy blue background */
+  --foreground: 0 0% 98%; /* #FAFAFA - Clean white text */
+  --muted: 220 20% 20%; /* #2A3441 - Muted navy */
+  --muted-foreground: 220 15% 65%; /* #93A3B3 - Light gray text */
+  --popover: 220 26% 16%; /* #212E3F - Slightly lighter navy */
+  --popover-foreground: 0 0% 98%;
+  --card: 220 26% 16%; /* #212E3F - Card navy background */
+  --card-foreground: 0 0% 98%;
+  --border: 220 20% 25%; /* #34404F - Subtle border */
+  --input: 220 20% 20%;
+  --primary: 195 100% 45%; /* #0EA5E9 - Ocean blue primary */
+  --primary-foreground: 0 0% 98%;
+  --secondary: 220 20% 20%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 160 84% 39%; /* #10B981 - Fishing green accent */
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
-  --ring: 25 95% 53%;
-  --success: 150 65% 45%;
-  --radius: 0.75rem;
+  --ring: 195 100% 45%;
+  --success: 160 84% 39%;
+  --radius: 0.5rem;
 }
 
 .dark {
-  --background: 140 30% 8%; /* #0A1A0F */
-  --foreground: 140 20% 95%; /* #F0F7F2 */
-  --muted: 140 25% 15%; /* #1A2B1F */
-  --muted-foreground: 140 15% 65%; /* #8FA895 */
-  --popover: 140 30% 8%; /* #0A1A0F */
-  --popover-foreground: 140 20% 95%; /* #F0F7F2 */
-  --card: 140 30% 8%; /* #0A1A0F */
-  --card-foreground: 140 20% 95%; /* #F0F7F2 */
-  --border: 140 25% 15%; /* #1A2B1F */
-  --input: 140 25% 15%; /* #1A2B1F */
-  --primary: 150 65% 50%; /* #22C55E */
-  --primary-foreground: 140 30% 8%; /* #0A1A0F */
-  --secondary: 140 25% 15%; /* #1A2B1F */
-  --secondary-foreground: 140 20% 95%; /* #F0F7F2 */
-  --accent: 165 75% 55%; /* #10D876 */
-  --accent-foreground: 140 30% 8%; /* #0A1A0F */
-  --destructive: 0 84% 60%; /* #EF4444 */
-  --destructive-foreground: 0 0% 98%; /* #FAFAFA */
-  --ring: 150 65% 50%; /* #22C55E */
-  --success: 150 65% 55%; /* #16A34A */
+  --background: 210 40% 6%; /* #0A0F1A - Deep ocean dark */
+  --foreground: 0 0% 98%; /* #FAFAFA - Pure white */
+  --muted: 210 30% 12%; /* #131B2B - Dark blue-gray */
+  --muted-foreground: 210 15% 70%; /* #A3B3C7 - Light blue-gray */
+  --popover: 210 40% 8%; /* #0D1421 - Slightly lighter */
+  --popover-foreground: 0 0% 98%;
+  --card: 210 40% 8%; /* #0D1421 - Card dark background */
+  --card-foreground: 0 0% 98%;
+  --border: 210 30% 18%; /* #202938 - Subtle border */
+  --input: 210 30% 12%;
+  --primary: 195 100% 50%; /* #00BFFF - Bright ocean blue */
+  --primary-foreground: 0 0% 98%;
+  --secondary: 210 30% 12%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 160 84% 45%; /* #0FA968 - Emerald fishing green */
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 195 100% 50%;
+  --success: 160 84% 45%;
 }
 
 @layer base {
@@ -74,13 +74,27 @@
 
   .fishing-gradient {
     background: linear-gradient(135deg, 
-      hsl(28, 25%, 9%) 0%, 
-      hsl(28, 25%, 12%) 50%, 
-      hsl(25, 40%, 15%) 100%);
+      hsl(220, 26%, 14%) 0%, 
+      hsl(210, 30%, 18%) 50%, 
+      hsl(195, 40%, 25%) 100%);
+  }
+  
+  .ocean-gradient {
+    background: linear-gradient(135deg, 
+      hsl(210, 40%, 6%) 0%, 
+      hsl(220, 26%, 14%) 30%, 
+      hsl(195, 100%, 15%) 100%);
   }
   
   .hero-overlay {
-    background: linear-gradient(rgba(26, 22, 17, 0.7), rgba(26, 22, 17, 0.4));
+    background: linear-gradient(rgba(30, 42, 58, 0.8), rgba(30, 42, 58, 0.4));
+  }
+
+  .e-shop-header {
+    background: linear-gradient(180deg, 
+      hsl(220, 26%, 14%) 0%, 
+      hsl(220, 20%, 20%) 100%);
+    border-bottom: 1px solid hsl(var(--border));
   }
 
   .product-card-hover {
