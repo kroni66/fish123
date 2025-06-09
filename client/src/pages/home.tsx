@@ -156,29 +156,19 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="py-24 px-4 relative">
-          {/* Background Image */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url('${fishingEquipmentImage}')`
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
-          </div>
-          
-          <div className="max-w-6xl mx-auto relative z-10">
+        <section className="py-24 px-4 bg-muted/30">
+          <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Proč si vybrat naše produkty?
               </h2>
-              <p className="text-lg text-white/90 max-w-2xl mx-auto drop-shadow-lg">
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Nabízíme pouze nejkvalitnější rybářské oblečení od renomovaných výrobců
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <Card className="p-6 text-center bg-white/90 backdrop-blur-sm border-white/20">
+              <Card className="p-6 text-center">
                 <CardContent className="space-y-4">
                   <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
                     <Package className="w-8 h-8 text-primary" />
@@ -190,7 +180,7 @@ export default function Home() {
                 </CardContent>
               </Card>
 
-              <Card className="p-6 text-center bg-white/90 backdrop-blur-sm border-white/20">
+              <Card className="p-6 text-center">
                 <CardContent className="space-y-4">
                   <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
                     <Star className="w-8 h-8 text-primary" />
@@ -202,7 +192,7 @@ export default function Home() {
                 </CardContent>
               </Card>
 
-              <Card className="p-6 text-center bg-white/90 backdrop-blur-sm border-white/20">
+              <Card className="p-6 text-center">
                 <CardContent className="space-y-4">
                   <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto">
                     <Award className="w-8 h-8 text-accent" />
@@ -220,8 +210,18 @@ export default function Home() {
         
 
         {/* Products Section */}
-        <section id="products" className="py-24 px-4">
-          <div className="max-w-7xl mx-auto">
+        <section id="products" className="py-24 px-4 relative">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url('${fishingEquipmentImage}')`
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto relative z-10">
 
             
             <ProductGrid 
