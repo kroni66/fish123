@@ -372,6 +372,104 @@
     }
   }
 
+  @keyframes water-flow {
+    0% {
+      transform: translateX(-100%) scaleX(0.8);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translateX(0%) scaleX(1.2);
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateX(100%) scaleX(0.8);
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes ripple {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.6;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.3;
+    }
+    100% {
+      transform: scale(0.8);
+      opacity: 0.6;
+    }
+  }
+
+  @keyframes water-particle {
+    0% {
+      transform: translateX(-20px) translateY(0px) scale(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(100vw) translateY(-10px) scale(0.5);
+      opacity: 0;
+    }
+  }
+
+  @keyframes shimmer-wave {
+    0% {
+      transform: translateX(-100%) skewX(-15deg);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateX(100%) skewX(-15deg);
+      opacity: 0;
+    }
+  }
+
+  .animate-water-flow {
+    animation: water-flow 4s ease-in-out infinite;
+  }
+
+  .animate-ripple {
+    animation: ripple 3s ease-in-out infinite;
+  }
+
+  .animate-water-particle {
+    animation: water-particle 8s linear infinite;
+  }
+
+  .animate-shimmer-wave {
+    animation: shimmer-wave 6s ease-in-out infinite;
+  }
+
+  .animation-delay-0 {
+    animation-delay: 0s;
+  }
+
+  .animation-delay-500 {
+    animation-delay: 0.5s;
+  }
+
+  .animation-delay-1000 {
+    animation-delay: 1s;
+  }
+
+  .animation-delay-1500 {
+    animation-delay: 1.5s;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
   @keyframes water-surface {
     0%, 100% {
       transform: translateY(0px) scaleY(1);

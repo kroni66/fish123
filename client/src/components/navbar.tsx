@@ -79,11 +79,30 @@ export function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 relative overflow-hidden ${
         isScrolled 
           ? 'e-shop-header backdrop-blur-md shadow-2xl' 
           : 'bg-background/95 border-b border-border/20'
       }`}>
+        {/* Animated Water Effect */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Water Waves */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/30 via-primary/50 to-primary/30 animate-water-flow"></div>
+          
+          {/* Water Ripples */}
+          <div className="absolute top-0 left-1/4 w-32 h-32 rounded-full bg-primary/5 animate-ripple animation-delay-0"></div>
+          <div className="absolute top-0 right-1/3 w-24 h-24 rounded-full bg-primary/8 animate-ripple animation-delay-1000"></div>
+          <div className="absolute top-0 left-2/3 w-20 h-20 rounded-full bg-primary/6 animate-ripple animation-delay-2000"></div>
+          
+          {/* Flowing Water Particles */}
+          <div className="absolute top-1/2 left-0 w-2 h-2 rounded-full bg-primary/20 animate-water-particle animation-delay-0"></div>
+          <div className="absolute top-1/3 left-1/4 w-1 h-1 rounded-full bg-primary/30 animate-water-particle animation-delay-500"></div>
+          <div className="absolute top-2/3 left-1/2 w-1.5 h-1.5 rounded-full bg-primary/25 animate-water-particle animation-delay-1000"></div>
+          <div className="absolute top-1/4 right-1/4 w-1 h-1 rounded-full bg-primary/35 animate-water-particle animation-delay-1500"></div>
+          
+          {/* Subtle Water Shimmer */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent animate-shimmer-wave"></div>
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
