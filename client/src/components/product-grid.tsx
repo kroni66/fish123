@@ -81,7 +81,7 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
         {/* Unified radial gradient background elements */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_30%,_var(--tw-gradient-stops))] from-cyan-900/25 via-cyan-950/15 to-transparent"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_70%,_var(--tw-gradient-stops))] from-blue-900/20 via-blue-950/10 to-transparent"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_20%,_var(--tw-gradient-stops))] from-teal-800/15 via-transparent to-transparent bg-[#fcf4d5]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_20%,_var(--tw-gradient-stops))] from-teal-800/15 via-transparent to-transparent bg-[#1e1e1f00]"></div>
         
         {/* Atmospheric depth effects */}
         <div className="absolute top-0 left-1/3 w-[400px] h-[400px] rounded-full blur-[100px] animate-pulse delay-500 bg-[#fcf4d5]"></div>
