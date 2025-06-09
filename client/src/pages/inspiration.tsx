@@ -150,7 +150,7 @@ export default function Inspiration() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/attached_assets/a709df9b-ef08-437a-9d37-fc888e437c5e_1749500116955.jpg"
+            src="/fishing-hero.jpg"
             alt="Fishing scene with underwater view"
             className="w-full h-full object-cover"
           />
