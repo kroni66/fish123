@@ -63,25 +63,35 @@ export default function Home() {
       {/* Main Content */}
       <div className="relative z-10">
         {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center px-4 relative">
+        <section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
+          {/* Hero Background Image */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="/attached_assets/a709df9b-ef08-437a-9d37-fc888e437c5e_1749500116955.jpg"
+              alt="Fishing scene with underwater view"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
+          </div>
+          
           <div className="max-w-5xl mx-auto text-center space-y-12 relative z-10">
             {/* Professional Badge */}
-            <div className="inline-flex items-center px-6 py-3 bg-card border border-border rounded-full shadow-sm">
+            <div className="inline-flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm border border-white/20 rounded-full shadow-lg">
               <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-primary rounded-full"></div>
-                <span className="text-sm font-medium text-foreground">Prémiové rybářské potřeby</span>
+                <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
+                <span className="text-sm font-medium text-gray-800">Prémiové rybářské potřeby</span>
               </div>
             </div>
 
             {/* Main Heading */}
             <div className="space-y-6">
-              <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
+              <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight drop-shadow-2xl">
                 Profesionální rybářské
                 <br />
-                <span className="text-primary">vybavení</span>
+                <span className="text-blue-400">vybavení</span>
               </h1>
               
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
                 Objevte naši širokou kolekci vysoce kvalitních rybářských potřeb. 
                 Od návnad až po prut - vše pro váš úspěšný lov.
               </p>
@@ -110,35 +120,35 @@ export default function Home() {
             {/* Trust Indicators */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
               <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Package className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Package className="w-6 h-6 text-blue-400" />
                 </div>
-                <div className="text-2xl font-bold text-foreground">500+</div>
-                <div className="text-sm text-muted-foreground">Produktů</div>
+                <div className="text-2xl font-bold text-white drop-shadow-lg">500+</div>
+                <div className="text-sm text-white/80">Produktů</div>
               </div>
               
               <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Users className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Users className="w-6 h-6 text-blue-400" />
                 </div>
-                <div className="text-2xl font-bold text-foreground">2000+</div>
-                <div className="text-sm text-muted-foreground">Spokojených zákazníků</div>
+                <div className="text-2xl font-bold text-white drop-shadow-lg">2000+</div>
+                <div className="text-sm text-white/80">Spokojených zákazníků</div>
               </div>
               
               <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Star className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Star className="w-6 h-6 text-blue-400" />
                 </div>
-                <div className="text-2xl font-bold text-foreground">4.8</div>
-                <div className="text-sm text-muted-foreground">Hodnocení</div>
+                <div className="text-2xl font-bold text-white drop-shadow-lg">4.8</div>
+                <div className="text-sm text-white/80">Hodnocení</div>
               </div>
               
               <div className="text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Award className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Award className="w-6 h-6 text-blue-400" />
                 </div>
-                <div className="text-2xl font-bold text-foreground">15+</div>
-                <div className="text-sm text-muted-foreground">Let zkušeností</div>
+                <div className="text-2xl font-bold text-white drop-shadow-lg">15+</div>
+                <div className="text-sm text-white/80">Let zkušeností</div>
               </div>
             </div>
           </div>
