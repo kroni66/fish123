@@ -3,50 +3,50 @@
 @tailwind utilities;
 
 :root {
-  --background: 220 26% 14%; /* #1E2A3A - Deep navy blue background */
-  --foreground: 0 0% 98%; /* #FAFAFA - Clean white text */
-  --muted: 220 20% 20%; /* #2A3441 - Muted navy */
-  --muted-foreground: 220 15% 65%; /* #93A3B3 - Light gray text */
-  --popover: 220 26% 16%; /* #212E3F - Slightly lighter navy */
-  --popover-foreground: 0 0% 98%;
-  --card: 220 26% 16%; /* #212E3F - Card navy background */
-  --card-foreground: 0 0% 98%;
-  --border: 220 20% 25%; /* #34404F - Subtle border */
-  --input: 220 20% 20%;
-  --primary: 195 100% 45%; /* #0EA5E9 - Ocean blue primary */
-  --primary-foreground: 0 0% 98%;
-  --secondary: 220 20% 20%;
-  --secondary-foreground: 0 0% 98%;
-  --accent: 160 84% 39%; /* #10B981 - Fishing green accent */
-  --accent-foreground: 0 0% 98%;
+  --background: 48 85% 91%; /* #F3F0DC - Warm cream background */
+  --foreground: 162 25% 25%; /* #3A5A4E - Dark sage for text */
+  --muted: 48 60% 85%; /* #E8E3C8 - Lighter cream for muted areas */
+  --muted-foreground: 162 25% 45%; /* #5C7A6B - Medium sage */
+  --popover: 0 0% 100%; /* #FFFFFF - Clean white for popovers */
+  --popover-foreground: 162 25% 25%;
+  --card: 0 0% 100%; /* #FFFFFF - Clean white for cards */
+  --card-foreground: 162 25% 25%;
+  --border: 177 30% 85%; /* #C5DDD8 - Light teal border */
+  --input: 177 40% 90%; /* #D9E9E6 - Very light teal for inputs */
+  --primary: 177 70% 41%; /* #1FB89A - Vibrant teal primary */
+  --primary-foreground: 0 0% 100%; /* #FFFFFF */
+  --secondary: 177 60% 75%; /* #9BDBD1 - Soft aqua secondary */
+  --secondary-foreground: 162 25% 25%;
+  --accent: 25 95% 63%; /* #FF9550 - Bright orange accent */
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --ring: 195 100% 45%;
-  --success: 160 84% 39%;
+  --destructive-foreground: 0 0% 100%;
+  --ring: 177 70% 41%;
+  --success: 162 40% 50%; /* #6B9C8B - Sage green for success */
   --radius: 0.5rem;
 }
 
 .dark {
-  --background: 210 40% 6%; /* #0A0F1A - Deep ocean dark */
-  --foreground: 0 0% 98%; /* #FAFAFA - Pure white */
-  --muted: 210 30% 12%; /* #131B2B - Dark blue-gray */
-  --muted-foreground: 210 15% 70%; /* #A3B3C7 - Light blue-gray */
-  --popover: 210 40% 8%; /* #0D1421 - Slightly lighter */
-  --popover-foreground: 0 0% 98%;
-  --card: 210 40% 8%; /* #0D1421 - Card dark background */
-  --card-foreground: 0 0% 98%;
-  --border: 210 30% 18%; /* #202938 - Subtle border */
-  --input: 210 30% 12%;
-  --primary: 195 100% 50%; /* #00BFFF - Bright ocean blue */
-  --primary-foreground: 0 0% 98%;
-  --secondary: 210 30% 12%;
-  --secondary-foreground: 0 0% 98%;
-  --accent: 160 84% 45%; /* #0FA968 - Emerald fishing green */
-  --accent-foreground: 0 0% 98%;
+  --background: 162 25% 15%; /* #1E2F27 - Dark sage background */
+  --foreground: 48 85% 91%; /* #F3F0DC - Warm cream text */
+  --muted: 162 25% 20%; /* #293C31 - Darker sage for muted areas */
+  --muted-foreground: 177 60% 75%; /* #9BDBD1 - Soft aqua text */
+  --popover: 162 25% 18%; /* #25342B - Slightly lighter sage */
+  --popover-foreground: 48 85% 91%;
+  --card: 162 25% 18%; /* #25342B - Card dark background */
+  --card-foreground: 48 85% 91%;
+  --border: 177 30% 35%; /* #5A8279 - Medium teal border */
+  --input: 162 25% 25%;
+  --primary: 177 70% 50%; /* #26C6A4 - Brighter teal for dark mode */
+  --primary-foreground: 162 25% 15%;
+  --secondary: 177 60% 35%; /* #5A9B8C - Darker aqua */
+  --secondary-foreground: 48 85% 91%;
+  --accent: 25 95% 70%; /* #FFB366 - Lighter orange for dark mode */
+  --accent-foreground: 162 25% 15%;
   --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --ring: 195 100% 50%;
-  --success: 160 84% 45%;
+  --destructive-foreground: 48 85% 91%;
+  --ring: 177 70% 50%;
+  --success: 162 40% 60%; /* #7DB39B - Lighter sage for success */
 }
 
 @layer base {

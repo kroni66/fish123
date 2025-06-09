@@ -78,8 +78,8 @@ export default function Home() {
             {/* Professional Badge */}
             <div className="inline-flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm border border-white/20 rounded-full shadow-lg">
               <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
-                <span className="text-sm font-medium text-gray-800">Prémiové rybářské potřeby</span>
+                <div className="w-4 h-4 bg-primary rounded-full"></div>
+                <span className="text-sm font-medium text-foreground">Prémiové rybářské potřeby</span>
               </div>
             </div>
 
@@ -88,7 +88,7 @@ export default function Home() {
               <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight drop-shadow-2xl">
                 Profesionální rybářské
                 <br />
-                <span className="text-blue-400">vybavení</span>
+                <span className="text-primary">vybavení</span>
               </h1>
               
               <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
@@ -121,7 +121,7 @@ export default function Home() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
               <div className="text-center">
                 <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Package className="w-6 h-6 text-blue-400" />
+                  <Package className="w-6 h-6 text-primary" />
                 </div>
                 <div className="text-2xl font-bold text-white drop-shadow-lg">500+</div>
                 <div className="text-sm text-white/80">Produktů</div>
@@ -129,7 +129,7 @@ export default function Home() {
               
               <div className="text-center">
                 <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Users className="w-6 h-6 text-blue-400" />
+                  <Users className="w-6 h-6 text-primary" />
                 </div>
                 <div className="text-2xl font-bold text-white drop-shadow-lg">2000+</div>
                 <div className="text-sm text-white/80">Spokojených zákazníků</div>
@@ -137,7 +137,7 @@ export default function Home() {
               
               <div className="text-center">
                 <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Star className="w-6 h-6 text-blue-400" />
+                  <Star className="w-6 h-6 text-accent" />
                 </div>
                 <div className="text-2xl font-bold text-white drop-shadow-lg">4.8</div>
                 <div className="text-sm text-white/80">Hodnocení</div>
@@ -145,7 +145,7 @@ export default function Home() {
               
               <div className="text-center">
                 <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Award className="w-6 h-6 text-blue-400" />
+                  <Award className="w-6 h-6 text-accent" />
                 </div>
                 <div className="text-2xl font-bold text-white drop-shadow-lg">15+</div>
                 <div className="text-sm text-white/80">Let zkušeností</div>

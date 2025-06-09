@@ -165,7 +165,7 @@ export default function Inspiration() {
               initial="hidden"
               animate="visible"
             >
-              <motion.span className="block text-blue-400 drop-shadow-lg">
+              <motion.span className="block text-primary drop-shadow-lg">
                 {splitTextForWave("INSPIRACE").map((letter, index) => (
                   <motion.span
                     key={index}

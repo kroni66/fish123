@@ -20,7 +20,7 @@ export default function About() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <h1 className="text-5xl md:text-7xl font-bold text-white font-poppins tracking-tight">
-              <span className="block text-blue-400 drop-shadow-lg">O NÁS</span>
+              <span className="block text-primary drop-shadow-lg">O NÁS</span>
               <span className="block text-2xl md:text-3xl text-white/80 font-light mt-4 tracking-wide">
                 PASSION FOR FISHING
               </span>
