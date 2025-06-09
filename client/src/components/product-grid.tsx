@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
 import { ProductCard } from "./product-card";
 import { ProductModal } from "./product-modal";
 import { CategoryFilter } from "./category-filter";
 import { Button } from "./ui/button";
-import { UnderwaterLoading, ProductCardSkeleton } from "./loading-animations";
-import { useMarineAnimations, marinePresets } from "@/hooks/use-marine-animations";
 import type { Product } from "@shared/schema";
 
 interface ProductGridProps {
@@ -18,9 +15,6 @@ interface ProductGridProps {
 export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: ProductGridProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [displayCount, setDisplayCount] = useState(8);
-  
-  // Marine-themed animations
-  const { containerVariants, itemVariants, cardVariants } = useMarineAnimations(marinePresets.productGrid);
 
   const { data: products = [], isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products', categoryId],
@@ -55,19 +49,17 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
 
   if (isLoading) {
     return (
-      <section className="py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+      <section className="py-20 relative">
         <div className="container mx-auto px-4">
-          <UnderwaterLoading 
-            isLoading={true} 
-            message="Načítám produkty z hlubin..." 
-            variant="default"
-            size="lg"
-          />
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <p className="mt-4 text-muted-foreground">Načítám produkty...</p>
+          </div>
           
-          {/* Skeleton placeholder grid */}
+          {/* Simple skeleton grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-16">
             {Array.from({ length: 8 }).map((_, i) => (
-              <ProductCardSkeleton key={i} />
+              <div key={i} className="bg-muted/50 h-80 rounded-lg"></div>
             ))}
           </div>
         </div>
@@ -78,14 +70,9 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
   return (
     <>
       <section id="products" className="py-20 relative">
-        {/* Unified radial gradient background elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_30%,_var(--tw-gradient-stops))] from-cyan-900/25 via-cyan-950/15 to-transparent"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_70%,_var(--tw-gradient-stops))] from-blue-900/20 via-blue-950/10 to-transparent"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_20%,_var(--tw-gradient-stops))] from-teal-800/15 via-transparent to-transparent bg-[#1e1e1f00]"></div>
+
         
-        {/* Atmospheric depth effects */}
-        <div className="absolute top-0 left-1/3 w-[400px] h-[400px] rounded-full blur-[100px] animate-pulse delay-500 bg-[#fcf4d5]"></div>
-        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-blue-400/8 rounded-full blur-[80px] animate-pulse delay-1500"></div>
+
         
         <div className="container mx-auto px-4 relative">
           {/* Category Filter */}
@@ -99,21 +86,16 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
           )}
 
           {/* Product Grid */}
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
             {displayedProducts.map((product) => (
-              <motion.div key={product.id} variants={cardVariants} whileHover="hover">
+              <div key={product.id}>
                 <ProductCard
                   product={product}
                   onProductClick={setSelectedProduct}
                 />
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
 
 
