@@ -82,26 +82,55 @@ export function Navbar() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 relative overflow-hidden ${
         isScrolled 
           ? 'e-shop-header backdrop-blur-md shadow-2xl' 
-          : 'bg-background/95 border-b border-border/20'
+          : 'bg-background/95'
       }`}>
-        {/* Animated Water Effect */}
+        {/* Water Wave Shape Background */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Water Waves */}
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/30 via-primary/50 to-primary/30 animate-water-flow"></div>
+          {/* Main water background with wave shape */}
+          <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/20 via-teal-500/15 to-blue-600/10"></div>
           
-          {/* Water Ripples */}
-          <div className="absolute top-0 left-1/4 w-32 h-32 rounded-full bg-primary/5 animate-ripple animation-delay-0"></div>
-          <div className="absolute top-0 right-1/3 w-24 h-24 rounded-full bg-primary/8 animate-ripple animation-delay-1000"></div>
-          <div className="absolute top-0 left-2/3 w-20 h-20 rounded-full bg-primary/6 animate-ripple animation-delay-2000"></div>
+          {/* Animated wave shapes that form the navbar border */}
+          <svg className="absolute bottom-0 left-0 w-full h-4 animate-wave-motion" viewBox="0 0 1200 40" preserveAspectRatio="none">
+            <path 
+              d="M0,20 C300,5 600,35 900,15 C1050,5 1150,25 1200,20 L1200,40 L0,40 Z" 
+              fill="url(#waveGradient1)"
+              className="animate-wave-flow-1"
+            />
+            <defs>
+              <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#0891b2" stopOpacity="0.6"/>
+                <stop offset="50%" stopColor="#1fb89a" stopOpacity="0.8"/>
+                <stop offset="100%" stopColor="#0891b2" stopOpacity="0.6"/>
+              </linearGradient>
+            </defs>
+          </svg>
           
-          {/* Flowing Water Particles */}
-          <div className="absolute top-1/2 left-0 w-2 h-2 rounded-full bg-primary/20 animate-water-particle animation-delay-0"></div>
-          <div className="absolute top-1/3 left-1/4 w-1 h-1 rounded-full bg-primary/30 animate-water-particle animation-delay-500"></div>
-          <div className="absolute top-2/3 left-1/2 w-1.5 h-1.5 rounded-full bg-primary/25 animate-water-particle animation-delay-1000"></div>
-          <div className="absolute top-1/4 right-1/4 w-1 h-1 rounded-full bg-primary/35 animate-water-particle animation-delay-1500"></div>
+          {/* Second wave layer for depth */}
+          <svg className="absolute bottom-0 left-0 w-full h-3 animate-wave-motion-delayed" viewBox="0 0 1200 30" preserveAspectRatio="none">
+            <path 
+              d="M0,15 C200,25 400,5 600,18 C800,30 1000,8 1200,15 L1200,30 L0,30 Z" 
+              fill="url(#waveGradient2)"
+              className="animate-wave-flow-2"
+            />
+            <defs>
+              <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#1fb89a" stopOpacity="0.4"/>
+                <stop offset="50%" stopColor="#0891b2" stopOpacity="0.6"/>
+                <stop offset="100%" stopColor="#1fb89a" stopOpacity="0.4"/>
+              </linearGradient>
+            </defs>
+          </svg>
           
-          {/* Subtle Water Shimmer */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent animate-shimmer-wave"></div>
+          {/* Flowing water bubbles */}
+          <div className="absolute top-2 left-1/4 w-1 h-1 rounded-full bg-cyan-300/60 animate-bubble-float animation-delay-0"></div>
+          <div className="absolute top-3 left-1/2 w-0.5 h-0.5 rounded-full bg-teal-200/70 animate-bubble-float animation-delay-800"></div>
+          <div className="absolute top-1 right-1/3 w-1.5 h-1.5 rounded-full bg-cyan-400/50 animate-bubble-float animation-delay-1600"></div>
+          <div className="absolute top-4 right-1/4 w-0.5 h-0.5 rounded-full bg-teal-300/60 animate-bubble-float animation-delay-2400"></div>
+          
+          {/* Water current lines */}
+          <div className="absolute top-1/2 left-0 w-8 h-0.5 bg-gradient-to-r from-transparent to-cyan-400/40 animate-current-flow animation-delay-0"></div>
+          <div className="absolute top-1/3 left-1/4 w-12 h-0.5 bg-gradient-to-r from-transparent to-teal-400/50 animate-current-flow animation-delay-1000"></div>
+          <div className="absolute top-2/3 right-1/3 w-10 h-0.5 bg-gradient-to-l from-transparent to-cyan-300/45 animate-current-flow-reverse animation-delay-2000"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
