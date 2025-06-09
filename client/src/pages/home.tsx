@@ -133,104 +133,20 @@ export default function Home() {
         <div className="absolute top-3/4 left-2/3 w-4 h-4 bg-cyan-400/30 rounded-full animate-[bubble-rise_18s_ease-out_infinite_2s] opacity-25"></div>
         <div className="absolute top-1/6 left-3/4 w-3.5 h-3.5 bg-blue-400/35 rounded-full animate-[bubble-rise_16s_ease-out_infinite_5s] opacity-30"></div>
         
-        {/* Large Hero Fish - Main Feature */}
-        <div className="absolute top-1/2 -left-32 opacity-30 animate-[swim-lr_60s_linear_infinite] z-5">
-          <svg width="200" height="120" viewBox="0 0 200 120" className="text-cyan-400 drop-shadow-2xl">
-            {/* Main body */}
-            <ellipse cx="80" cy="60" rx="45" ry="25" fill="currentColor" opacity="0.7"/>
-            {/* Body gradient overlay */}
-            <ellipse cx="80" cy="55" rx="35" ry="18" fill="rgb(34, 211, 238)" opacity="0.4"/>
-            {/* Tail fin */}
-            <path d="M25 60 Q5 40 15 30 Q10 50 5 60 Q10 70 15 90 Q5 80 25 60 Z" fill="currentColor" opacity="0.6" />
-            {/* Dorsal fin */}
-            <path d="M60 35 Q70 20 85 25 Q90 30 85 35 Q75 40 60 35 Z" fill="currentColor" opacity="0.5" />
-            {/* Ventral fin */}
-            <path d="M60 85 Q70 100 85 95 Q90 90 85 85 Q75 80 60 85 Z" fill="currentColor" opacity="0.5" />
-            {/* Pectoral fins */}
-            <ellipse cx="100" cy="50" rx="12" ry="8" fill="currentColor" opacity="0.4" transform="rotate(-30 100 50)"/>
-            <ellipse cx="100" cy="70" rx="12" ry="8" fill="currentColor" opacity="0.4" transform="rotate(30 100 70)"/>
-            {/* Eye */}
-            <circle cx="110" cy="60" r="8" fill="rgb(30, 64, 175)" opacity="0.9" />
-            <circle cx="113" cy="57" r="3" fill="white" opacity="0.8" />
-            {/* Gill */}
-            <path d="M125 55 Q130 60 125 65" stroke="currentColor" strokeWidth="2" opacity="0.3" fill="none"/>
-            {/* Body stripes */}
-            <path d="M90 45 Q95 60 90 75" stroke="currentColor" strokeWidth="1.5" opacity="0.2" fill="none"/>
-            <path d="M75 40 Q80 60 75 80" stroke="currentColor" strokeWidth="1.5" opacity="0.2" fill="none"/>
-          </svg>
-        </div>
-
-        {/* Medium Fish Swimming Opposite Direction */}
-        <div className="absolute top-1/3 -right-24 opacity-25 animate-[swim-rl_45s_linear_infinite_15s] scale-x-[-1] z-4">
-          <svg width="120" height="80" viewBox="0 0 120 80" className="text-blue-300 drop-shadow-lg">
-            {/* Main body */}
-            <ellipse cx="60" cy="40" rx="30" ry="18" fill="currentColor" opacity="0.6"/>
-            {/* Body highlight */}
-            <ellipse cx="60" cy="38" rx="22" ry="12" fill="rgb(147, 197, 253)" opacity="0.3"/>
-            {/* Tail */}
-            <path d="M30 40 Q15 30 20 25 Q12 35 8 40 Q12 45 20 55 Q15 50 30 40 Z" fill="currentColor" opacity="0.5" />
-            {/* Fins */}
-            <path d="M50 25 Q55 15 65 20 Q67 25 65 28 Q58 32 50 25 Z" fill="currentColor" opacity="0.4" />
-            <path d="M50 55 Q55 65 65 60 Q67 55 65 52 Q58 48 50 55 Z" fill="currentColor" opacity="0.4" />
-            {/* Eye */}
-            <circle cx="75" cy="40" r="5" fill="rgb(30, 64, 175)" opacity="0.8" />
-            <circle cx="77" cy="38" r="2" fill="white" opacity="0.7" />
-          </svg>
-        </div>
-
-        {/* Small Schooling Fish */}
-        <div className="absolute top-2/3 -left-16 opacity-20 animate-[swim-lr_35s_linear_infinite_5s]">
-          <svg width="80" height="50" viewBox="0 0 80 50" className="text-teal-300">
+        {/* Animated SVG Fish */}
+        <div className="absolute top-1/5 -left-20 opacity-20 animate-[swim-lr_45s_linear_infinite]">
+          <svg width="80" height="50" viewBox="0 0 80 50" className="text-cyan-300">
             <path d="M20 25 Q35 15 55 25 Q35 35 20 25 Z" fill="currentColor" opacity="0.6" />
             <circle cx="45" cy="25" r="2" fill="#1e40af" />
             <path d="M15 25 Q8 20 5 25 Q8 30 15 25 Z" fill="currentColor" opacity="0.4" />
           </svg>
         </div>
 
-        <div className="absolute bottom-1/4 -right-20 opacity-15 animate-[swim-rl_40s_linear_infinite_20s] scale-x-[-1]">
-          <svg width="60" height="40" viewBox="0 0 60 40" className="text-cyan-200">
+        <div className="absolute bottom-1/3 -right-20 opacity-15 animate-[swim-rl_35s_linear_infinite_8s] scale-x-[-1]">
+          <svg width="60" height="40" viewBox="0 0 60 40" className="text-blue-200">
             <path d="M15 20 Q25 12 40 20 Q25 28 15 20 Z" fill="currentColor" opacity="0.5" />
             <circle cx="32" cy="20" r="1.5" fill="#1e40af" />
             <path d="M10 20 Q5 17 3 20 Q5 23 10 20 Z" fill="currentColor" opacity="0.3" />
-          </svg>
-        </div>
-
-        {/* School of Small Fish */}
-        <div className="absolute top-1/4 -left-20 opacity-18 animate-[swim-school_55s_linear_infinite_10s]">
-          <div className="relative">
-            <svg width="40" height="25" viewBox="0 0 40 25" className="text-teal-400 absolute">
-              <path d="M10 12 Q18 8 28 12 Q18 16 10 12 Z" fill="currentColor" opacity="0.6" />
-              <circle cx="22" cy="12" r="1" fill="#1e40af" />
-            </svg>
-            <svg width="35" height="20" viewBox="0 0 35 20" className="text-cyan-300 absolute top-2 left-3">
-              <path d="M8 10 Q15 7 24 10 Q15 13 8 10 Z" fill="currentColor" opacity="0.5" />
-              <circle cx="18" cy="10" r="0.8" fill="#1e40af" />
-            </svg>
-            <svg width="38" height="22" viewBox="0 0 38 22" className="text-blue-300 absolute top-1 left-6">
-              <path d="M9 11 Q16 8 26 11 Q16 14 9 11 Z" fill="currentColor" opacity="0.4" />
-              <circle cx="20" cy="11" r="0.9" fill="#1e40af" />
-            </svg>
-          </div>
-        </div>
-
-        {/* Deep Sea Fish - Larger and More Mysterious */}
-        <div className="absolute top-3/4 -right-28 opacity-20 animate-[swim-wave_70s_linear_infinite_25s] scale-x-[-1]">
-          <svg width="160" height="100" viewBox="0 0 160 100" className="text-blue-400 drop-shadow-xl">
-            {/* Main body - more elongated */}
-            <ellipse cx="70" cy="50" rx="40" ry="20" fill="currentColor" opacity="0.5"/>
-            {/* Body highlight */}
-            <ellipse cx="70" cy="47" rx="30" ry="14" fill="rgb(59, 130, 246)" opacity="0.3"/>
-            {/* Large tail */}
-            <path d="M30 50 Q10 35 18 25 Q8 40 3 50 Q8 60 18 75 Q10 65 30 50 Z" fill="currentColor" opacity="0.4" />
-            {/* Dorsal fin */}
-            <path d="M55 30 Q65 18 80 22 Q85 28 80 32 Q70 38 55 30 Z" fill="currentColor" opacity="0.3" />
-            {/* Large eye */}
-            <circle cx="90" cy="50" r="6" fill="rgb(30, 64, 175)" opacity="0.7" />
-            <circle cx="92" cy="48" r="2.5" fill="white" opacity="0.6" />
-            {/* Bioluminescent spots */}
-            <circle cx="65" cy="45" r="1.5" fill="rgb(34, 211, 238)" opacity="0.8" className="animate-pulse" />
-            <circle cx="75" cy="52" r="1" fill="rgb(34, 211, 238)" opacity="0.6" className="animate-pulse delay-500" />
-            <circle cx="80" cy="46" r="1.2" fill="rgb(34, 211, 238)" opacity="0.7" className="animate-pulse delay-1000" />
           </svg>
         </div>
 

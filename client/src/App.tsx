@@ -10,8 +10,6 @@ import { PageTransition } from "@/components/page-transition";
 import { UnderwaterPageTransition } from "@/components/loading-animations";
 import { usePageTransitions } from "@/hooks/use-page-transitions";
 import { AnimatePresence } from "framer-motion";
-import { AmbientOceanAudio } from "@/components/ambient-ocean-audio";
-import { MarineCreatures } from "@/components/marine-creatures";
 import Home from "@/pages/home";
 import Landing from "@/pages/landing";
 import About from "@/pages/about";
@@ -63,8 +61,6 @@ function App() {
       <AuthProvider>
         <TooltipProvider>
           <CartProvider>
-            <MarineCreatures />
-            <AmbientOceanAudio />
             <Navbar />
             <Router />
             <Toaster />
