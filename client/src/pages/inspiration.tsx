@@ -146,16 +146,26 @@ export default function Inspiration() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="py-24 fishing-gradient">
-        <div className="container mx-auto px-4">
+      <section className="py-24 relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/attached_assets/a709df9b-ef08-437a-9d37-fc888e437c5e_1749500116955.jpg"
+            alt="Fishing scene with underwater view"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <motion.h1 
-              className="text-5xl md:text-7xl font-bold text-foreground font-poppins tracking-tight"
+              className="text-5xl md:text-7xl font-bold text-white font-poppins tracking-tight"
               variants={waveTextVariants}
               initial="hidden"
               animate="visible"
             >
-              <motion.span className="block text-primary drop-shadow-lg">
+              <motion.span className="block text-blue-400 drop-shadow-lg">
                 {splitTextForWave("INSPIRACE").map((letter, index) => (
                   <motion.span
                     key={index}
@@ -167,14 +177,14 @@ export default function Inspiration() {
                 ))}
               </motion.span>
               <motion.span 
-                className="block text-2xl md:text-3xl text-muted-foreground font-light mt-4 tracking-wide"
+                className="block text-2xl md:text-3xl text-white/80 font-light mt-4 tracking-wide"
                 variants={itemVariants}
               >
                 FISHING STORIES
               </motion.span>
             </motion.h1>
             
-            <p className="text-xl md:text-2xl text-foreground/90 font-light leading-relaxed">
+            <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed drop-shadow-lg">
               Články, tipy a příběhy od zkušených rybářů
             </p>
           </div>
