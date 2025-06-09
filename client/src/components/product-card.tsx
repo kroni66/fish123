@@ -6,6 +6,7 @@ import { WishlistButton } from "@/components/wishlist-button";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
 import { formatPrice } from "@/lib/utils";
+import { HoverWave, BubbleTrail, UnderwaterGlow, RippleEffect } from "@/components/interactive-elements";
 import type { Product } from "@shared/schema";
 
 interface ProductCardProps {
