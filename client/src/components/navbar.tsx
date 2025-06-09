@@ -79,7 +79,7 @@ export function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 relative overflow-hidden ${
         isScrolled 
           ? 'e-shop-header backdrop-blur-md shadow-2xl' 
           : 'bg-background/95 border-b border-border/20'
@@ -502,6 +502,74 @@ export function Navbar() {
               </div>
             </div>
           )}
+        </div>
+        
+        {/* Animated Water Level Effect */}
+        <div className="absolute bottom-0 left-0 right-0 h-2 overflow-hidden">
+          <svg 
+            width="100%" 
+            height="100%" 
+            viewBox="0 0 1200 20" 
+            preserveAspectRatio="none"
+            className="absolute bottom-0"
+          >
+            <defs>
+              <linearGradient id="navWaterGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#0891b2" stopOpacity="0.8" />
+                <stop offset="25%" stopColor="#06b6d4" stopOpacity="0.9" />
+                <stop offset="50%" stopColor="#22d3ee" stopOpacity="1" />
+                <stop offset="75%" stopColor="#67e8f9" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#0891b2" stopOpacity="0.8" />
+              </linearGradient>
+            </defs>
+            
+            {/* Primary water wave */}
+            <path
+              d="M0,15 Q300,5 600,15 T1200,15 L1200,20 L0,20 Z"
+              fill="url(#navWaterGradient)"
+            >
+              <animate
+                attributeName="d"
+                values="M0,15 Q300,5 600,15 T1200,15 L1200,20 L0,20 Z;
+                        M0,10 Q300,20 600,10 T1200,10 L1200,20 L0,20 Z;
+                        M0,15 Q300,5 600,15 T1200,15 L1200,20 L0,20 Z"
+                dur="6s"
+                repeatCount="indefinite"
+              />
+            </path>
+            
+            {/* Secondary wave layer */}
+            <path
+              d="M0,18 Q400,8 800,18 T1600,18 L1600,20 L0,20 Z"
+              fill="url(#navWaterGradient)"
+              opacity="0.6"
+            >
+              <animate
+                attributeName="d"
+                values="M0,18 Q400,8 800,18 T1600,18 L1600,20 L0,20 Z;
+                        M0,12 Q400,22 800,12 T1600,12 L1600,20 L0,20 Z;
+                        M0,18 Q400,8 800,18 T1600,18 L1600,20 L0,20 Z"
+                dur="8s"
+                repeatCount="indefinite"
+              />
+            </path>
+            
+            {/* Shimmer effect layer */}
+            <path
+              d="M0,16 Q600,6 1200,16 L1200,20 L0,20 Z"
+              fill="url(#navWaterGradient)"
+              opacity="0.4"
+            >
+              <animate
+                attributeName="d"
+                values="M0,16 Q600,6 1200,16 L1200,20 L0,20 Z;
+                        M0,14 Q600,24 1200,14 L1200,20 L0,20 Z;
+                        M0,16 Q600,6 1200,16 L1200,20 L0,20 Z"
+                dur="10s"
+                repeatCount="indefinite"
+              />
+            </path>
+          </svg>
         </div>
       </nav>
 
