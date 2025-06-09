@@ -155,21 +155,31 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="py-24 px-4 bg-muted/30">
-          <div className="max-w-6xl mx-auto">
+        <section className="py-24 px-4 relative">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img 
+              src="/attached_assets/4d86ed98-0732-48e8-9613-fbbd288d0c70_1749500961436.jpg" 
+              alt="Fishing equipment by the lake"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
+          </div>
+          
+          <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg">
                 Proč si vybrat naše produkty?
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-white/90 max-w-2xl mx-auto drop-shadow-lg">
                 Nabízíme pouze nejkvalitnější rybářské oblečení od renomovaných výrobců
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <Card className="p-6 text-center">
+              <Card className="p-6 text-center bg-white/90 backdrop-blur-sm border-white/20">
                 <CardContent className="space-y-4">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                  <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
                     <Package className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-xl font-semibold text-foreground">Kvalitní produkty</h3>
@@ -179,9 +189,9 @@ export default function Home() {
                 </CardContent>
               </Card>
 
-              <Card className="p-6 text-center">
+              <Card className="p-6 text-center bg-white/90 backdrop-blur-sm border-white/20">
                 <CardContent className="space-y-4">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                  <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
                     <Star className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-xl font-semibold text-foreground">Zkušené poradenství</h3>
