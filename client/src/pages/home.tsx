@@ -207,7 +207,12 @@ export default function Home() {
                 Použijte naše pokročilé vyhledávání pro rychlé nalezení produktů
               </p>
             </div>
-            <EnhancedSearch />
+            <EnhancedSearch 
+              searchQuery={searchQuery}
+              categoryId={selectedCategory}
+              onSearchChange={setSearchQuery}
+              onCategoryChange={setSelectedCategory}
+            />
           </div>
         </section>
 
@@ -224,8 +229,9 @@ export default function Home() {
             </div>
             
             <ProductGrid 
-              selectedCategory={selectedCategory} 
+              categoryId={selectedCategory} 
               searchQuery={searchQuery}
+              onCategoryChange={setSelectedCategory}
             />
           </div>
         </section>

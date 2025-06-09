@@ -27,6 +27,9 @@ export function Navbar() {
     enabled: searchQuery.length > 2,
   });
 
+  // Type the search results
+  const typedSearchResults = (searchResults as any[]) || [];
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -285,9 +288,9 @@ export function Navbar() {
                     </form>
 
                     {/* Search Results */}
-                    {searchQuery.length > 2 && searchResults.length > 0 && (
+                    {searchQuery.length > 2 && typedSearchResults.length > 0 && (
                       <div className="border-t border-slate-700/50 max-h-64 overflow-y-auto">
-                        {searchResults.slice(0, 5).map((product: any) => (
+                        {typedSearchResults.slice(0, 5).map((product: any) => (
                           <Link
                             key={product.id}
                             href={`/product/${product.slug}`}
@@ -308,7 +311,7 @@ export function Navbar() {
                             </div>
                           </Link>
                         ))}
-                        {searchResults.length > 5 && (
+                        {typedSearchResults.length > 5 && (
                           <div className="p-3 text-center">
                             <Button
                               variant="ghost"
@@ -320,7 +323,7 @@ export function Navbar() {
                                 setSearchQuery("");
                               }}
                             >
-                              Zobrazit všechny výsledky ({searchResults.length})
+                              Zobrazit všechny výsledky ({typedSearchResults.length})
                             </Button>
                           </div>
                         )}
@@ -328,7 +331,7 @@ export function Navbar() {
                     )}
 
                     {/* No Results */}
-                    {searchQuery.length > 2 && searchResults.length === 0 && (
+                    {searchQuery.length > 2 && typedSearchResults.length === 0 && (
                       <div className="border-t border-slate-700/50 p-4 text-center text-slate-400 text-sm">
                         Žádné produkty nenalezeny
                       </div>
