@@ -7,6 +7,7 @@ import { ArrowRight, Star, Users, Package, Award } from "lucide-react";
 import { ProductGrid } from "@/components/product-grid";
 import { EnhancedSearch } from "@/components/enhanced-search";
 import { Footer } from "@/components/footer";
+import fishingEquipmentImage from "@assets/4d86ed98-0732-48e8-9613-fbbd288d0c70_1749500961436.jpg";
 
 export default function Home() {
   const [location] = useLocation();
@@ -160,7 +161,7 @@ export default function Home() {
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url('/attached_assets/4d86ed98-0732-48e8-9613-fbbd288d0c70_1749500961436.jpg')`
+              backgroundImage: `url('${fishingEquipmentImage}')`
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
