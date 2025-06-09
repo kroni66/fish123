@@ -79,7 +79,7 @@ export default function Home() {
             <div className="inline-flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm border border-white/20 rounded-full shadow-lg">
               <div className="flex items-center space-x-2">
                 <div className="w-4 h-4 bg-primary rounded-full"></div>
-                <span className="text-sm font-medium text-foreground">Prémiové rybářské potřeby</span>
+                <span className="text-sm font-medium text-foreground">Prémiové rybářské oblečení</span>
               </div>
             </div>
 
@@ -88,12 +88,12 @@ export default function Home() {
               <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight drop-shadow-2xl">
                 Profesionální rybářské
                 <br />
-                <span className="text-primary">vybavení</span>
+                <span className="text-primary">oblečení</span>
               </h1>
               
               <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
-                Objevte naši širokou kolekci vysoce kvalitních rybářských potřeb. 
-                Od návnad až po prut - vše pro váš úspěšný lov.
+                Objevte naši širokou kolekci vysoce kvalitního rybářského oblečení. 
+                Od funkčního prádla až po nepromokavé bundy - vše pro pohodlný rybolov.
               </p>
             </div>
 
@@ -162,7 +162,7 @@ export default function Home() {
                 Proč si vybrat naše produkty?
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Nabízíme pouze nejkvalitnější rybářské vybavení od renomovaných výrobců
+                Nabízíme pouze nejkvalitnější rybářské oblečení od renomovaných výrobců
               </p>
             </div>
 
@@ -174,7 +174,7 @@ export default function Home() {
                   </div>
                   <h3 className="text-xl font-semibold text-foreground">Kvalitní produkty</h3>
                   <p className="text-muted-foreground">
-                    Pečlivě vybíráme pouze nejlepší rybářské vybavení od ověřených značek
+                    Pečlivě vybíráme pouze nejlepší rybářské oblečení od ověřených značek
                   </p>
                 </CardContent>
               </Card>
@@ -206,37 +206,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Enhanced Search Section */}
-        <section className="py-16 px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Najděte přesně to, co hledáte
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Použijte naše pokročilé vyhledávání pro rychlé nalezení produktů
-              </p>
-            </div>
-            <EnhancedSearch 
-              searchQuery={searchQuery}
-              categoryId={selectedCategory}
-              onSearchChange={setSearchQuery}
-              onCategoryChange={setSelectedCategory}
-            />
-          </div>
-        </section>
+        
 
         {/* Products Section */}
         <section id="products" className="py-24 px-4">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Naše produkty
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Prohlédněte si naši širokou nabídku rybářského vybavení
-              </p>
-            </div>
+
             
             <ProductGrid 
               categoryId={selectedCategory} 

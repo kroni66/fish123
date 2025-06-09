@@ -27,7 +27,7 @@ export default function About() {
             </h1>
             
             <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed drop-shadow-lg">
-              Více než jen obchod s rybářským vybavením
+              Více než jen obchod s rybářským oblečením
             </p>
           </div>
         </div>
