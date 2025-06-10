@@ -8,6 +8,7 @@ import { ProductGrid } from "@/components/product-grid";
 import { EnhancedSearch } from "@/components/enhanced-search";
 import { Footer } from "@/components/footer";
 import fishingEquipmentImage from "@assets/4d86ed98-0732-48e8-9613-fbbd288d0c70_1749500961436.jpg";
+import greyLogoPath from "@assets/Grevy logo_1749525153995.png";
 
 export default function Home() {
   const [location] = useLocation();
@@ -82,6 +83,15 @@ export default function Home() {
                 <div className="w-4 h-4 bg-primary rounded-full"></div>
                 <span className="text-sm font-medium text-foreground">Prémiové rybářské oblečení</span>
               </div>
+            </div>
+
+            {/* Logo */}
+            <div className="flex justify-center mb-8">
+              <img 
+                src={greyLogoPath}
+                alt="Grevy Logo"
+                className="h-32 w-auto drop-shadow-2xl"
+              />
             </div>
 
             {/* Main Heading */}
