@@ -363,7 +363,7 @@ export function Navbar() {
 
           {/* Mobile Navigation */}
           {isMobileMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 right-0 bg-slate-900/95 backdrop-blur-md border-b border-slate-700/50 shadow-2xl">
+            <div className="md:hidden absolute top-full left-0 right-0 bg-black/90 backdrop-blur-md border-b border-primary/30 shadow-2xl z-50">
               <div className="px-4 py-6 space-y-4">
                 {navigation.map((item) => (
                   <Link
@@ -371,8 +371,8 @@ export function Navbar() {
                     href={item.href}
                     className={`block px-4 py-3 text-base font-medium transition-all duration-300 rounded-lg ${
                       isActive(item.href)
-                        ? 'text-primary bg-primary/10 border border-primary/20'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                        ? 'text-white bg-primary/20 border border-primary/50'
+                        : 'text-white/90 hover:text-white hover:bg-white/10'
                     }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
@@ -386,12 +386,12 @@ export function Navbar() {
                     <>
                       {isAuthenticated ? (
                         <div className="space-y-3">
-                          <div className="px-4 py-2 text-slate-300 text-sm">
+                          <div className="px-4 py-2 text-white/90 text-sm">
                             Přihlášen jako: {user?.firstName || user?.email}
                           </div>
                           <Button
                             variant="ghost"
-                            className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                            className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
                             onClick={() => {
                               logout();
                               setIsMobileMenuOpen(false);
@@ -406,7 +406,7 @@ export function Navbar() {
                           <Link href="/login">
                             <Button
                               variant="ghost"
-                              className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                              className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               <User className="w-4 h-4 mr-2" />
@@ -416,7 +416,7 @@ export function Navbar() {
                           <Link href="/register">
                             <Button
                               variant="ghost"
-                              className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                              className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               <User className="w-4 h-4 mr-2" />
