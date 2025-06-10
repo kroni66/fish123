@@ -81,25 +81,25 @@ export function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 relative overflow-hidden ${
+      <nav className={`fixed top-4 left-4 right-4 z-50 transition-all duration-300 rounded-2xl overflow-hidden shadow-2xl ${
         isScrolled 
-          ? 'e-shop-header backdrop-blur-md shadow-2xl' 
-          : 'bg-background/95 backdrop-blur-sm'
+          ? 'backdrop-blur-lg bg-black/70' 
+          : 'backdrop-blur-md bg-black/60'
       }`}>
         {/* Video Background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl">
           <video 
             autoPlay 
             muted 
             loop 
-            className="absolute inset-0 w-full h-full object-cover opacity-20"
+            className="absolute inset-0 w-full h-full object-cover opacity-15 rounded-2xl"
             style={{ filter: 'blur(1px)' }}
           >
             <source src={waterVideoPath} type="video/mp4" />
           </video>
           
           {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="absolute inset-0 bg-black/40 rounded-2xl"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex items-center justify-between h-16">
@@ -316,7 +316,7 @@ export function Navbar() {
 
           {/* Mobile Navigation */}
           {isMobileMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-sm border-b border-white/20 shadow-2xl z-50">
+            <div className="md:hidden absolute top-full left-0 right-0 mt-2 bg-black/95 backdrop-blur-lg border border-white/20 shadow-2xl z-50 rounded-2xl">
               <div className="px-4 py-6 space-y-4">
                 {navigation.map((item) => (
                   <Link
