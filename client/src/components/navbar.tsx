@@ -137,25 +137,26 @@ export function Navbar() {
               <div className="relative flex items-center" id="navbar-search">
                 {/* Search Box */}
                 <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                  isSearchOpen ? 'w-72 opacity-100 mr-2' : 'w-0 opacity-0'
+                  isSearchOpen ? 'w-80 opacity-100 mr-3' : 'w-0 opacity-0'
                 }`}>
-                  <div className="bg-card/95 backdrop-blur-md border border-border rounded-lg shadow-2xl">
-                    <form onSubmit={handleSearchSubmit} className="p-3">
-                      <div className="relative">
+                  <div className="bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl border border-primary/20 rounded-xl shadow-2xl shadow-primary/10">
+                    <form onSubmit={handleSearchSubmit} className="p-4">
+                      <div className="relative group">
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <Input
                           type="text"
-                          placeholder="Vyhledat produkty..."
+                          placeholder="Vyhledat rybářské oblečení..."
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="w-full bg-slate-900/50 border-slate-600 text-white placeholder-slate-400 focus:ring-primary focus:border-primary pr-10"
+                          className="relative w-full bg-slate-800/60 border-slate-600/50 text-white placeholder-slate-300 focus:ring-2 focus:ring-primary/50 focus:border-primary/70 rounded-lg h-11 pl-4 pr-12 font-medium transition-all duration-300"
                           autoFocus
                         />
                         <Button
                           type="submit"
                           size="sm"
-                          className="absolute right-1 top-1 h-7 w-7 p-0"
+                          className="absolute right-2 top-2 h-7 w-7 p-0 bg-primary/80 hover:bg-primary text-white rounded-md transition-all duration-200 hover:scale-105"
                         >
-                          <Search className="w-3 h-3" />
+                          <Search className="w-3.5 h-3.5" />
                         </Button>
                       </div>
                     </form>
@@ -176,38 +177,43 @@ export function Navbar() {
 
                 {/* Search Results Dropdown */}
                 {isSearchOpen && searchQuery.length > 0 && (
-                  <div className="absolute right-0 top-full mt-2 w-72 bg-card/95 backdrop-blur-md border border-border rounded-lg shadow-2xl z-50">
+                  <div className="absolute right-0 top-full mt-3 w-80 bg-gradient-to-b from-slate-900/98 via-slate-800/98 to-slate-900/98 backdrop-blur-xl border border-primary/20 rounded-xl shadow-2xl shadow-primary/10 z-50">
 
                     {/* Search Results */}
                     {searchQuery.length > 2 && typedSearchResults.length > 0 && (
-                      <div className="border-t border-slate-700/50 max-h-64 overflow-y-auto">
-                        {typedSearchResults.slice(0, 5).map((product: any) => (
-                          <Link
-                            key={product.id}
-                            href={`/product/${product.slug}`}
-                            className="flex items-center p-3 hover:bg-slate-700/50 transition-colors"
-                            onClick={() => {
-                              setIsSearchOpen(false);
-                              setSearchQuery("");
-                            }}
-                          >
-                            <img
-                              src={product.imageUrl}
-                              alt={product.name}
-                              className="w-10 h-10 object-cover rounded mr-3"
-                            />
-                            <div className="flex-1">
-                              <h4 className="text-white text-sm font-medium">{product.name}</h4>
-                              <p className="text-slate-400 text-xs">{product.price} Kč</p>
-                            </div>
-                          </Link>
-                        ))}
+                      <div className="p-2 max-h-72 overflow-y-auto">
+                        <div className="space-y-1">
+                          {typedSearchResults.slice(0, 5).map((product: any) => (
+                            <Link
+                              key={product.id}
+                              href={`/product/${product.slug}`}
+                              className="flex items-center p-3 rounded-lg hover:bg-primary/10 hover:border-primary/20 border border-transparent transition-all duration-200 group"
+                              onClick={() => {
+                                setIsSearchOpen(false);
+                                setSearchQuery("");
+                              }}
+                            >
+                              <div className="relative">
+                                <img
+                                  src={product.imageUrl}
+                                  alt={product.name}
+                                  className="w-12 h-12 object-cover rounded-lg mr-4 group-hover:scale-105 transition-transform duration-200"
+                                />
+                                <div className="absolute inset-0 bg-primary/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                              </div>
+                              <div className="flex-1">
+                                <h4 className="text-white text-sm font-semibold group-hover:text-primary transition-colors">{product.name}</h4>
+                                <p className="text-slate-300 text-xs font-medium">{product.price} Kč</p>
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
                         {typedSearchResults.length > 5 && (
-                          <div className="p-3 text-center">
+                          <div className="mt-3 pt-3 border-t border-slate-700/30">
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="text-primary hover:text-primary/80"
+                              className="w-full text-primary hover:text-white hover:bg-primary/90 font-medium transition-all duration-200"
                               onClick={() => {
                                 window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
                                 setIsSearchOpen(false);
@@ -223,8 +229,12 @@ export function Navbar() {
 
                     {/* No Results */}
                     {searchQuery.length > 2 && typedSearchResults.length === 0 && (
-                      <div className="border-t border-slate-700/50 p-4 text-center text-slate-400 text-sm">
-                        Žádné produkty nenalezeny
+                      <div className="p-6 text-center">
+                        <div className="w-12 h-12 bg-slate-700/50 rounded-full flex items-center justify-center mx-auto mb-3">
+                          <Search className="w-5 h-5 text-slate-400" />
+                        </div>
+                        <p className="text-slate-300 text-sm font-medium">Žádné produkty nenalezeny</p>
+                        <p className="text-slate-400 text-xs mt-1">Zkuste jiné klíčové slovo</p>
                       </div>
                     )}
                   </div>
