@@ -81,10 +81,10 @@ export function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-4 left-4 right-4 z-50 transition-all duration-300 rounded-2xl overflow-hidden shadow-2xl ${
+      <nav className={`fixed left-4 right-4 z-50 transition-all duration-300 rounded-2xl overflow-hidden shadow-2xl ${
         isScrolled 
-          ? 'backdrop-blur-lg bg-black/70' 
-          : 'backdrop-blur-md bg-black/60'
+          ? 'top-2 backdrop-blur-lg bg-black/80' 
+          : 'top-4 backdrop-blur-md bg-black/60'
       }`}>
         {/* Video Background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl">
