@@ -334,7 +334,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                className="relative text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
                 onClick={openCart}
               >
                 <ShoppingCart className="w-5 h-5" />
@@ -349,7 +349,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                className="md:hidden text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
                 {isMobileMenuOpen ? (
