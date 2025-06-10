@@ -65,7 +65,7 @@ export default function Home() {
       {/* Main Content */}
       <div className="relative z-10">
         {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
+        <section className="min-h-screen flex items-center justify-center px-4 pt-24 relative overflow-hidden">
           {/* Hero Background Image */}
           <div className="absolute inset-0 z-0">
             <img 
