@@ -84,7 +84,7 @@ export function Navbar() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 relative overflow-hidden ${
         isScrolled 
           ? 'e-shop-header backdrop-blur-md shadow-2xl' 
-          : 'bg-background/95'
+          : 'bg-background/95 backdrop-blur-sm'
       }`}>
         {/* Water Video Background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -101,6 +101,9 @@ export function Navbar() {
           
           {/* Overlay gradient to blend with content */}
           <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/30 via-teal-500/20 to-blue-600/15"></div>
+          
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/40"></div>
           
           {/* Animated wave shapes that form the navbar border */}
           <svg className="absolute bottom-0 left-0 w-full h-4 animate-wave-motion" viewBox="0 0 1200 40" preserveAspectRatio="none">
@@ -166,8 +169,8 @@ export function Navbar() {
                   href={item.href}
                   className={`px-4 py-2 text-sm font-medium transition-all duration-300 rounded-md ${
                     isActive(item.href)
-                      ? 'text-primary bg-primary/10 border border-primary/30'
-                      : 'text-foreground/80 hover:text-foreground hover:bg-muted/50'
+                      ? 'text-white bg-primary/20 border border-primary/50'
+                      : 'text-white/90 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   {item.name}
@@ -182,8 +185,8 @@ export function Navbar() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`text-foreground/80 hover:text-foreground hover:bg-muted/50 rounded-md transition-colors ${
-                    isSearchOpen ? 'text-primary bg-primary/10' : ''
+                  className={`text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors ${
+                    isSearchOpen ? 'text-white bg-primary/20' : ''
                   }`}
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
                 >
@@ -271,7 +274,7 @@ export function Navbar() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg relative"
+                  className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg relative"
                 >
                   <Heart className="w-5 h-5" />
                   {wishlistCount > 0 && (
@@ -291,19 +294,19 @@ export function Navbar() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                          className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
                           title="Můj účet"
                         >
                           <User className="w-5 h-5" />
                         </Button>
                       </Link>
-                      <span className="text-slate-300 text-sm">
+                      <span className="text-white/90 text-sm">
                         {user?.firstName || user?.email}
                       </span>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                        className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
                         onClick={logout}
                         title="Odhlásit se"
                       >
@@ -316,7 +319,7 @@ export function Navbar() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-lg"
+                          className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
                         >
                           <User className="w-4 h-4 mr-2" />
                           Přihlásit se
