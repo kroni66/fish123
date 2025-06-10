@@ -403,8 +403,79 @@ export function Navbar() {
               </div>
             </div>
           )}
+
+          {/* Mobile Navigation */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 right-0 mt-2 bg-black/95 backdrop-blur-lg border border-white/20 shadow-2xl z-50 rounded-2xl">
+              <div className="px-4 py-6 space-y-4">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`block px-4 py-3 text-base font-medium transition-all duration-300 rounded-lg ${
+                      isActive(item.href)
+                        ? 'text-white bg-primary/20 border border-primary/50'
+                        : 'text-white/90 hover:text-white hover:bg-white/10'
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                
+                {/* Mobile Authentication */}
+                <div className="border-t border-slate-700/50 pt-4 mt-4">
+                  {!isLoading && (
+                    <>
+                      {isAuthenticated ? (
+                        <div className="space-y-3">
+                          <div className="px-4 py-2 text-white/90 text-sm">
+                            Přihlášen jako: {user?.firstName || user?.email}
+                          </div>
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
+                            onClick={() => {
+                              logout();
+                              setIsMobileMenuOpen(false);
+                            }}
+                          >
+                            <LogOut className="w-4 h-4 mr-2" />
+                            Odhlásit se
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          <Link href="/login">
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              <User className="w-4 h-4 mr-2" />
+                              Přihlásit se
+                            </Button>
+                          </Link>
+                          <Link href="/register">
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              <User className="w-4 h-4 mr-2" />
+                              Registrovat se
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+          </div>
         </div>
-      </div>
       </nav>
 
       {/* Cart Overlay */}
