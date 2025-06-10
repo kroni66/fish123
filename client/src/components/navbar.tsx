@@ -33,7 +33,7 @@ export function Navbar() {
 
   const navigation = [
     { name: "Domů", href: "/" },
-    { name: "Produkty", href: "/products", scrollTo: "products-section" },
+    { name: "Produkty", href: "/products", scrollTo: "products" },
     { name: "Inspirace", href: "/inspiration" },
     { name: "O nás", href: "/about" },
     { name: "Kontakt", href: "/contact" },
@@ -344,7 +344,10 @@ export function Navbar() {
                         ? 'text-white bg-primary/20 border border-primary/50'
                         : 'text-white/90 hover:text-white hover:bg-white/10'
                     }`}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={(e) => {
+                      handleNavClick(item, e);
+                      setIsMobileMenuOpen(false);
+                    }}
                   >
                     {item.name}
                   </Link>
