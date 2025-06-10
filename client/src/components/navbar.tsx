@@ -133,8 +133,36 @@ export function Navbar() {
 
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
-              {/* Search Button */}
-              <div className="relative" id="navbar-search">
+              {/* Search Button and Box */}
+              <div className="relative flex items-center" id="navbar-search">
+                {/* Search Box */}
+                <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                  isSearchOpen ? 'w-72 opacity-100 mr-2' : 'w-0 opacity-0'
+                }`}>
+                  <div className="bg-card/95 backdrop-blur-md border border-border rounded-lg shadow-2xl">
+                    <form onSubmit={handleSearchSubmit} className="p-3">
+                      <div className="relative">
+                        <Input
+                          type="text"
+                          placeholder="Vyhledat produkty..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="w-full bg-slate-900/50 border-slate-600 text-white placeholder-slate-400 focus:ring-primary focus:border-primary pr-10"
+                          autoFocus
+                        />
+                        <Button
+                          type="submit"
+                          size="sm"
+                          className="absolute right-1 top-1 h-7 w-7 p-0"
+                        >
+                          <Search className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                {/* Search Button */}
                 <Button
                   variant="ghost"
                   size="icon"
@@ -146,28 +174,9 @@ export function Navbar() {
                   <Search className="w-5 h-5" />
                 </Button>
 
-                {/* Search Box */}
-                {isSearchOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-80 bg-card/95 backdrop-blur-md border border-border rounded-lg shadow-2xl z-50">
-                    <form onSubmit={handleSearchSubmit} className="p-4">
-                      <div className="relative">
-                        <Input
-                          type="text"
-                          placeholder="Vyhledat produkty..."
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="w-full bg-slate-900/50 border-slate-600 text-white placeholder-slate-400 focus:ring-primary focus:border-primary"
-                          autoFocus
-                        />
-                        <Button
-                          type="submit"
-                          size="sm"
-                          className="absolute right-1 top-1 h-8 w-8 p-0"
-                        >
-                          <Search className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </form>
+                {/* Search Results Dropdown */}
+                {isSearchOpen && searchQuery.length > 0 && (
+                  <div className="absolute right-0 top-full mt-2 w-72 bg-card/95 backdrop-blur-md border border-border rounded-lg shadow-2xl z-50">
 
                     {/* Search Results */}
                     {searchQuery.length > 2 && typedSearchResults.length > 0 && (
