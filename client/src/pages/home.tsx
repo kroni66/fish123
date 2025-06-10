@@ -78,14 +78,13 @@ export default function Home() {
           
           <div className="max-w-5xl mx-auto text-center space-y-12 relative z-10">
             {/* Professional Badge */}
-            <div className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary/90 via-primary to-primary/90 backdrop-blur-md border border-primary/30 rounded-full shadow-2xl hover:shadow-primary/20 transition-all duration-300 group">
-              <div className="flex items-center space-x-3">
+            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary/90 via-primary to-primary/90 backdrop-blur-md border border-primary/30 rounded-full shadow-xl hover:shadow-primary/20 transition-all duration-300 group">
+              <div className="flex items-center space-x-2">
                 <div className="relative">
-                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                  <div className="absolute inset-0 w-2 h-2 bg-white rounded-full animate-ping opacity-30"></div>
+                  <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
+                  <div className="absolute inset-0 w-1.5 h-1.5 bg-white rounded-full animate-ping opacity-30"></div>
                 </div>
-                <span className="text-base font-semibold text-white tracking-wide uppercase">Prémiové rybářské oblečení</span>
-                <div className="w-6 h-0.5 bg-white/60 rounded-full group-hover:bg-white transition-colors duration-300"></div>
+                <span className="text-sm font-medium text-white tracking-wide">Prémiové rybářské oblečení</span>
               </div>
             </div>
 
