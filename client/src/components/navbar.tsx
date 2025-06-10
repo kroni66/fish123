@@ -33,7 +33,7 @@ export function Navbar() {
 
   const navigation = [
     { name: "Domů", href: "/" },
-    { name: "Produkty", href: "/products" },
+    { name: "Produkty", href: "/products", scrollTo: "products-section" },
     { name: "Inspirace", href: "/inspiration" },
     { name: "O nás", href: "/about" },
     { name: "Kontakt", href: "/contact" },
@@ -62,6 +62,21 @@ export function Navbar() {
       setIsSearchOpen(false);
       setSearchQuery("");
     }
+  };
+
+  const handleNavClick = (item: any, e: React.MouseEvent) => {
+    // If we're on the homepage and clicking "Produkty", scroll to products section
+    if (location === "/" && item.scrollTo) {
+      e.preventDefault();
+      const element = document.getElementById(item.scrollTo);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }
+    // Otherwise, let the normal navigation happen
   };
 
   return (
@@ -106,6 +121,7 @@ export function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
+                  onClick={(e) => handleNavClick(item, e)}
                   className={`text-base font-medium transition-all duration-300 ${
                     isActive(item.href)
                       ? 'text-white border-b-2 border-primary'

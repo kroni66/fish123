@@ -215,10 +215,10 @@ export default function Contact() {
                         </h3>
                         <div className="space-y-1">
                           <p className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                            <a href="mailto:info@rigofdeath.cz">info@rigofdeath.cz</a>
+                            <a href="mailto:info@grevy.cz">info@grevy.cz</a>
                           </p>
                           <p className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                            <a href="mailto:obchod@rigofdeath.cz">obchod@rigofdeath.cz</a>
+                            <a href="mailto:obchod@grevy.cz">obchod@grevy.cz</a>
                           </p>
                           <p className="text-xs text-muted-foreground/70 mt-2">
                             Odpovídáme do 2 hodin v pracovní době

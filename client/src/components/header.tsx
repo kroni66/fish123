@@ -47,21 +47,13 @@ export function Header() {
                   <h1 className="text-3xl font-bold tracking-tight leading-none relative group-hover:scale-105 transition-transform duration-300">
                     {/* Main title with gradient and shadow effects */}
                     <span className="bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent font-black tracking-wider">
-                      RIG
-                    </span>
-                    <span className="mx-2 text-slate-400 font-thin">OF</span>
-                    <span className="bg-gradient-to-r from-red-400 via-orange-300 to-yellow-200 bg-clip-text text-transparent font-black tracking-wider">
-                      DEATH
+                      GREVY
                     </span>
                     
                     {/* Subtle text shadow effect */}
                     <div className="absolute inset-0 text-3xl font-bold tracking-tight leading-none">
                       <span className="text-white/5 font-black tracking-wider" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
-                        RIG
-                      </span>
-                      <span className="mx-2 text-slate-600/20 font-thin">OF</span>
-                      <span className="text-red-900/10 font-black tracking-wider" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
-                        DEATH
+                        GREVY
                       </span>
                     </div>
                   </h1>
