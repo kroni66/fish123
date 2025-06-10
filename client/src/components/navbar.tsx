@@ -86,69 +86,22 @@ export function Navbar() {
           ? 'e-shop-header backdrop-blur-md shadow-2xl' 
           : 'bg-background/95 backdrop-blur-sm'
       }`}>
-        {/* Water Video Background */}
+        {/* Video Background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* Video Background */}
           <video 
             autoPlay 
             muted 
             loop 
-            className="absolute inset-0 w-full h-full object-cover opacity-30"
-            style={{ filter: 'blur(1px) hue-rotate(10deg)' }}
+            className="absolute inset-0 w-full h-full object-cover opacity-20"
+            style={{ filter: 'blur(1px)' }}
           >
             <source src={waterVideoPath} type="video/mp4" />
           </video>
           
-          {/* Overlay gradient to blend with content */}
-          <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/30 via-teal-500/20 to-blue-600/15"></div>
-          
           {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-black/40"></div>
-          
-          {/* Animated wave shapes that form the navbar border */}
-          <svg className="absolute bottom-0 left-0 w-full h-4 animate-wave-motion" viewBox="0 0 1200 40" preserveAspectRatio="none">
-            <path 
-              d="M0,20 C300,5 600,35 900,15 C1050,5 1150,25 1200,20 L1200,40 L0,40 Z" 
-              fill="url(#waveGradient1)"
-              className="animate-wave-flow-1"
-            />
-            <defs>
-              <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#0891b2" stopOpacity="0.6"/>
-                <stop offset="50%" stopColor="#1fb89a" stopOpacity="0.8"/>
-                <stop offset="100%" stopColor="#0891b2" stopOpacity="0.6"/>
-              </linearGradient>
-            </defs>
-          </svg>
-          
-          {/* Second wave layer for depth */}
-          <svg className="absolute bottom-0 left-0 w-full h-3 animate-wave-motion-delayed" viewBox="0 0 1200 30" preserveAspectRatio="none">
-            <path 
-              d="M0,15 C200,25 400,5 600,18 C800,30 1000,8 1200,15 L1200,30 L0,30 Z" 
-              fill="url(#waveGradient2)"
-              className="animate-wave-flow-2"
-            />
-            <defs>
-              <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#1fb89a" stopOpacity="0.4"/>
-                <stop offset="50%" stopColor="#0891b2" stopOpacity="0.6"/>
-                <stop offset="100%" stopColor="#1fb89a" stopOpacity="0.4"/>
-              </linearGradient>
-            </defs>
-          </svg>
-          
-          {/* Flowing water bubbles */}
-          <div className="absolute top-2 left-1/4 w-1 h-1 rounded-full bg-cyan-300/60 animate-bubble-float animation-delay-0"></div>
-          <div className="absolute top-3 left-1/2 w-0.5 h-0.5 rounded-full bg-teal-200/70 animate-bubble-float animation-delay-800"></div>
-          <div className="absolute top-1 right-1/3 w-1.5 h-1.5 rounded-full bg-cyan-400/50 animate-bubble-float animation-delay-1600"></div>
-          <div className="absolute top-4 right-1/4 w-0.5 h-0.5 rounded-full bg-teal-300/60 animate-bubble-float animation-delay-2400"></div>
-          
-          {/* Water current lines */}
-          <div className="absolute top-1/2 left-0 w-8 h-0.5 bg-gradient-to-r from-transparent to-cyan-400/40 animate-current-flow animation-delay-0"></div>
-          <div className="absolute top-1/3 left-1/4 w-12 h-0.5 bg-gradient-to-r from-transparent to-teal-400/50 animate-current-flow animation-delay-1000"></div>
-          <div className="absolute top-2/3 right-1/3 w-10 h-0.5 bg-gradient-to-l from-transparent to-cyan-300/45 animate-current-flow-reverse animation-delay-2000"></div>
+          <div className="absolute inset-0 bg-black/60"></div>
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center group">
@@ -363,7 +316,7 @@ export function Navbar() {
 
           {/* Mobile Navigation */}
           {isMobileMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 right-0 bg-black/90 backdrop-blur-md border-b border-primary/30 shadow-2xl z-50">
+            <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-sm border-b border-white/20 shadow-2xl z-50">
               <div className="px-4 py-6 space-y-4">
                 {navigation.map((item) => (
                   <Link
