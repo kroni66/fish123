@@ -464,18 +464,12 @@ export function Hero() {
                 
                 {/* Main gradient text */}
                 <span className="relative z-10 bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent font-black tracking-wider">
-                  RIG
-                </span>
-                <span className="relative z-10 mx-3 md:mx-6 text-slate-400/80 font-thin tracking-normal">
-                  OF
-                </span>
-                <span className="relative z-10 bg-gradient-to-r from-red-400 via-orange-300 to-yellow-200 bg-clip-text text-transparent font-black tracking-wider">
-                  DEATH
+                  GREVY
                 </span>
                 
                 {/* Subtle shadow layer */}
                 <span className="absolute inset-0 text-7xl md:text-9xl font-black leading-none tracking-tighter text-black/20 blur-sm transform translate-x-1 translate-y-1">
-                  RIG OF DEATH
+                  GREVY
                 </span>
                 
                 {/* Animated accent lines */}

@@ -44,7 +44,7 @@ export default function About() {
                 </h2>
                 <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                   <p>
-                    Rig of Death vznikl z lásky k rybaření a touhy sdílet to nejlepší oblečení 
+                    Grevy vznikl z lásky k rybaření a touhy sdílet to nejlepší oblečení 
                     s komunitou rybářů. Začínali jsme jako malý blog o rybářských technikách 
                     a postupně jsme se rozrostli v specializovaný e-shop s oblečením.
                   </p>

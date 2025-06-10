@@ -160,7 +160,7 @@ export default function Landing() {
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tighter">
                 <span className="block bg-gradient-to-r from-cyan-300 via-blue-400 to-cyan-500 bg-clip-text text-transparent relative">
                   <span className="animate-gradient-x bg-gradient-to-r from-cyan-200 via-blue-300 to-teal-300 bg-clip-text text-transparent">
-                    RIG OF DEATH
+                    GREVY
                   </span>
                 </span>
                 <span className="block bg-gradient-to-r from-slate-200 via-white to-slate-300 bg-clip-text text-transparent mt-2">
