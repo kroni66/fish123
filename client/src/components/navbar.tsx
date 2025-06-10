@@ -135,8 +135,8 @@ export function Navbar() {
             <div className="flex items-center space-x-4">
               {/* Search Button and Box */}
               <div className="relative flex items-center" id="navbar-search">
-                {/* Search Box */}
-                <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                {/* Search Box Container */}
+                <div className={`relative transition-all duration-300 ease-in-out overflow-visible ${
                   isSearchOpen ? 'w-80 opacity-100 mr-3' : 'w-0 opacity-0'
                 }`}>
                   <div className="bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl border border-primary/20 rounded-xl shadow-2xl shadow-primary/10">
@@ -161,23 +161,10 @@ export function Navbar() {
                       </div>
                     </form>
                   </div>
-                </div>
 
-                {/* Search Button */}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={`text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors ${
-                    isSearchOpen ? 'text-white bg-primary/20' : ''
-                  }`}
-                  onClick={() => setIsSearchOpen(!isSearchOpen)}
-                >
-                  <Search className="w-5 h-5" />
-                </Button>
-
-                {/* Search Results Dropdown */}
-                {isSearchOpen && searchQuery.length > 0 && (
-                  <div className="absolute right-0 top-full mt-3 w-80 bg-gradient-to-b from-slate-900/98 via-slate-800/98 to-slate-900/98 backdrop-blur-xl border border-primary/20 rounded-xl shadow-2xl shadow-primary/10 z-50">
+                  {/* Search Results Dropdown - Positioned below search box */}
+                  {isSearchOpen && searchQuery.length > 0 && (
+                    <div className="absolute top-full mt-2 w-full bg-gradient-to-b from-slate-900/98 via-slate-800/98 to-slate-900/98 backdrop-blur-xl border border-primary/20 rounded-xl shadow-2xl shadow-primary/10 z-50">
 
                     {/* Search Results */}
                     {searchQuery.length > 2 && typedSearchResults.length > 0 && (
@@ -237,8 +224,21 @@ export function Navbar() {
                         <p className="text-slate-400 text-xs mt-1">Zkuste jiné klíčové slovo</p>
                       </div>
                     )}
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Search Button */}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={`text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors ${
+                    isSearchOpen ? 'text-white bg-primary/20' : ''
+                  }`}
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                >
+                  <Search className="w-5 h-5" />
+                </Button>
               </div>
 
               {/* Wishlist Button */}
@@ -404,6 +404,7 @@ export function Navbar() {
             </div>
           )}
         </div>
+      </div>
       </nav>
 
       {/* Cart Overlay */}
