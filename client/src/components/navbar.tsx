@@ -54,6 +54,23 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close search when clicking outside
+  useEffect(() => {
+    if (!isSearchOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      const searchContainer = document.querySelector('#navbar-search');
+      
+      if (searchContainer && !searchContainer.contains(target)) {
+        setIsSearchOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isSearchOpen]);
+
   const isActive = (path: string) => {
     if (path === "/" && location === "/") return true;
     if (path !== "/" && location.startsWith(path)) return true;
@@ -110,20 +127,20 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="flex items-center group">
-              <div className="relative">
-                <img 
-                  src={greyLogoPath}
-                  alt="Grevy Logo"
-                  className="h-10 w-auto group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
-                />
-              </div>
-            </Link>
+            <div className="flex items-center">
+              <Link href="/" className="flex items-center group">
+                <div className="relative">
+                  <img 
+                    src={greyLogoPath}
+                    alt="Grevy Logo"
+                    className="h-10 w-auto group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+                  />
+                </div>
+              </Link>
+            </div>
 
-            {/* Desktop Navigation */}
-            <div className={`hidden md:flex items-center space-x-8 transition-all duration-300 ${
-              isSearchOpen ? 'opacity-100' : 'opacity-100'
-            }`}>
+            {/* Desktop Navigation - Always visible */}
+            <div className="hidden md:flex items-center space-x-8">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
@@ -143,7 +160,7 @@ export function Navbar() {
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
               {/* Search */}
-              <div className="relative">
+              <div className="relative" id="navbar-search">
                 {/* Search Button */}
                 <Button
                   variant="ghost"
@@ -156,10 +173,10 @@ export function Navbar() {
                   <Search className="w-5 h-5" />
                 </Button>
 
-                {/* Search Box - Fixed positioning to prevent navbar issues */}
+                {/* Search Box - Dropdown below search button */}
                 {isSearchOpen && (
-                  <div className="fixed top-20 right-4 w-96 z-[100] animate-in slide-in-from-top-5 duration-300">
-                    <div className="bg-gradient-to-r from-slate-900/98 via-slate-800/98 to-slate-900/98 backdrop-blur-xl border border-primary/20 rounded-xl shadow-2xl shadow-primary/10">
+                  <div className="absolute top-full right-0 mt-2 w-96 z-[1000] animate-in slide-in-from-top-3 duration-200">
+                    <div className="bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl border border-primary/20 rounded-xl shadow-2xl shadow-primary/10">
                       <form onSubmit={handleSearchSubmit} className="p-4">
                         <div className="relative group">
                           <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -286,13 +303,7 @@ export function Navbar() {
                   </div>
                 )}
 
-                {/* Search overlay to close search when clicking outside */}
-                {isSearchOpen && (
-                  <div 
-                    className="fixed inset-0 z-[90] bg-black/20 backdrop-blur-sm"
-                    onClick={() => setIsSearchOpen(false)}
-                  />
-                )}
+
               </div>
 
               {/* Wishlist Button */}
