@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Twitter } from "lucide-react";
+import greyLogoPath from "@assets/Grevy logo_1749525153995.png";
 
 export function Footer() {
   return (
@@ -12,140 +13,18 @@ export function Footer() {
           {/* Brand Section */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center group mb-6">
-              <div className="relative mr-3">
-                <svg 
-                  width="44" 
-                  height="32" 
-                  viewBox="0 0 44 32" 
-                  className="group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
-                >
-                  <defs>
-                    <linearGradient id="footerFishBodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#0891b2" />
-                      <stop offset="40%" stopColor="#06b6d4" />
-                      <stop offset="80%" stopColor="#22d3ee" />
-                      <stop offset="100%" stopColor="#67e8f9" />
-                    </linearGradient>
-                    <linearGradient id="footerFishFinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#0e7490" />
-                      <stop offset="50%" stopColor="#0891b2" />
-                      <stop offset="100%" stopColor="#06b6d4" />
-                    </linearGradient>
-                    <radialGradient id="footerEyeGradient" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#ffffff" />
-                      <stop offset="60%" stopColor="#e0f2fe" />
-                      <stop offset="100%" stopColor="#bae6fd" />
-                    </radialGradient>
-                    <filter id="footerSoftGlow">
-                      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
-                      <feMerge>
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
-                  </defs>
-                  
-                  {/* Main fish body */}
-                  <ellipse 
-                    cx="24" 
-                    cy="16" 
-                    rx="15" 
-                    ry="9" 
-                    fill="url(#footerFishBodyGradient)" 
-                    filter="url(#footerSoftGlow)"
-                    className="group-hover:brightness-110 transition-all duration-300"
-                  />
-                  
-                  {/* Fish tail */}
-                  <path 
-                    d="M 9 16 Q 4 8 2 12 Q 4 16 2 20 Q 4 24 9 16" 
-                    fill="url(#footerFishFinGradient)"
-                    className="group-hover:translate-x-1 transition-transform duration-300"
-                    opacity="0.9"
-                  />
-                  
-                  {/* Dorsal fin */}
-                  <path 
-                    d="M 22 7 Q 26 3 32 7 Q 28 9 26 11 Q 24 9 22 7" 
-                    fill="url(#footerFishFinGradient)"
-                    opacity="0.8"
-                  />
-                  
-                  {/* Ventral fin */}
-                  <path 
-                    d="M 22 25 Q 26 29 32 25 Q 28 23 26 21 Q 24 23 22 25" 
-                    fill="url(#footerFishFinGradient)"
-                    opacity="0.8"
-                  />
-                  
-                  {/* Pectoral fin */}
-                  <ellipse 
-                    cx="18" 
-                    cy="20" 
-                    rx="3" 
-                    ry="6" 
-                    fill="url(#footerFishFinGradient)" 
-                    opacity="0.6"
-                    transform="rotate(25 18 20)"
-                  />
-                  
-                  {/* Eye */}
-                  <circle 
-                    cx="30" 
-                    cy="14" 
-                    r="3" 
-                    fill="url(#footerEyeGradient)"
-                    stroke="#0891b2"
-                    strokeWidth="0.5"
-                  />
-                  <circle 
-                    cx="31" 
-                    cy="14" 
-                    r="2" 
-                    fill="#1e40af"
-                  />
-                  <circle 
-                    cx="31.5" 
-                    cy="13.5" 
-                    r="0.8" 
-                    fill="white"
-                  />
-                  <circle 
-                    cx="31.2" 
-                    cy="13.8" 
-                    r="0.3" 
-                    fill="white"
-                    opacity="0.7"
-                  />
-                  
-                  {/* Scale pattern */}
-                  <g opacity="0.25">
-                    <circle cx="16" cy="13" r="1.2" fill="white" />
-                    <circle cx="20" cy="11" r="1" fill="white" />
-                    <circle cx="20" cy="19" r="1" fill="white" />
-                    <circle cx="24" cy="16" r="1.2" fill="white" />
-                    <circle cx="27" cy="18" r="0.8" fill="white" />
-                  </g>
-                  
-                  {/* Mouth detail */}
-                  <ellipse 
-                    cx="36.5" 
-                    cy="16" 
-                    rx="1.5" 
-                    ry="0.8" 
-                    fill="#0e7490"
-                    opacity="0.6"
-                  />
-                </svg>
+              <div className="relative">
+                <img 
+                  src={greyLogoPath}
+                  alt="Grevy Logo"
+                  className="h-10 w-auto group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+                />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                AquaStore.cz
-              </span>
             </Link>
             
             <p className="text-slate-300 text-sm leading-relaxed mb-6 max-w-sm">
-              Specializujeme se na kvalitní rybářské vybavení a doplňky. 
-              Váš spolehlivý partner pro úspěšné rybaření s více než 10letou tradicí.
+              Specializujeme se na prémiové rybářské oblečení a funkční textil. 
+              Kvalitní materiály a moderní technologie pro pohodlné rybaření za každého počasí.
             </p>
             
             {/* Social Media */}
@@ -255,8 +134,8 @@ export function Footer() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white">Email</p>
-                  <a href="mailto:info@aquastore.cz" className="text-sm hover:text-cyan-400 transition-colors">
-                    info@aquastore.cz
+                  <a href="mailto:info@grevy.cz" className="text-sm hover:text-cyan-400 transition-colors">
+                    info@grevy.cz
                   </a>
                 </div>
               </div>
@@ -301,7 +180,7 @@ export function Footer() {
         <div className="border-t border-slate-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-slate-400 text-sm">
-              &copy; 2024 AquaStore.cz - Kvalitní rybářské vybavení a doplňky. Všechna práva vyhrazena.
+              &copy; 2024 Grevy - Prémiové rybářské oblečení a funkční textil. Všechna práva vyhrazena.
             </p>
             <div className="flex items-center space-x-6 text-slate-400 text-xs">
               <Link href="/privacy" className="hover:text-cyan-400 transition-colors">
