@@ -75,15 +75,7 @@ export function ProductGrid({ categoryId, searchQuery, onCategoryChange }: Produ
 
         
         <div className="container mx-auto px-4 relative">
-          {/* Category Filter */}
-          {onCategoryChange && (
-            <div className="mb-12 flex justify-center bg-[#fcf4d5]">
-              <CategoryFilter
-                selectedCategory={categoryId ?? null}
-                onCategoryChange={onCategoryChange}
-              />
-            </div>
-          )}
+          
 
           {/* Product Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
