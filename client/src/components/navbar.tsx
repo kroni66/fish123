@@ -161,7 +161,14 @@ export function Navbar() {
             <div className="flex items-center space-x-4">
               {/* Search */}
               <div className="relative" id="navbar-search">
-                
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                >
+                  <Search className="w-5 h-5" />
+                </Button>
 
                 {/* Search Box - Dropdown below search button */}
                 {isSearchOpen && (
@@ -321,9 +328,37 @@ export function Navbar() {
                         <LogOut className="w-5 h-5" />
                       </Button>
                     </div>
+                  ) : (
+                    <div className="hidden md:flex items-center space-x-2">
+                      <Link href="/login">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
+                        >
+                          <User className="w-5 h-5" />
+                        </Button>
+                      </Link>
+                    </div>
                   )}
                 </>
               )}
+
+              {/* Wishlist Button */}
+              <Link href="/wishlist">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
+                >
+                  <Heart className="w-5 h-5" />
+                  {wishlistCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-gradient-to-r from-primary to-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                      {wishlistCount}
+                    </span>
+                  )}
+                </Button>
+              </Link>
 
               {/* Cart Button */}
               <Button
