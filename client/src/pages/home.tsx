@@ -155,7 +155,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
           </div>
           
-          <div className="max-w-7xl mx-auto relative z-10">
+          <div className="max-w-7xl mx-auto relative z-1">
 
             
             <ProductGrid 

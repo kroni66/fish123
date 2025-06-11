@@ -199,7 +199,10 @@ export function AdvancedProductSearch({
 
       {/* Search Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl shadow-primary/10 z-[99999] max-h-96 overflow-hidden">
+        <div className="fixed top-auto left-auto right-auto mt-2 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl shadow-primary/10 z-[99999] max-h-96 overflow-hidden w-full max-w-2xl" style={{
+          top: searchRef.current ? `${searchRef.current.getBoundingClientRect().bottom + window.scrollY + 8}px` : 'auto',
+          left: searchRef.current ? `${searchRef.current.getBoundingClientRect().left + window.scrollX}px` : 'auto'
+        }}>
           
           {/* Loading State */}
           {isLoading && searchQuery.length > 0 && (
