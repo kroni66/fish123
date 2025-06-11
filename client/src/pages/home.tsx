@@ -8,7 +8,7 @@ import { ProductGrid } from "@/components/product-grid";
 import { AdvancedProductSearch } from "@/components/advanced-product-search";
 import { Footer } from "@/components/footer";
 import fishingEquipmentImage from "@assets/4d86ed98-0732-48e8-9613-fbbd288d0c70_1749500961436.jpg";
-import greyLogoPath from "@assets/Grevy logo_1749525153995.png";
+import greyLogoPath from "@assets/Grevy logo.svg";
 
 export default function Home() {
   const [location] = useLocation();
@@ -93,7 +93,7 @@ export default function Home() {
               <img 
                 src={greyLogoPath}
                 alt="Grevy Logo"
-                className="h-32 w-auto drop-shadow-2xl"
+                className="h-48 w-auto drop-shadow-2xl"
               />
             </div>
 
