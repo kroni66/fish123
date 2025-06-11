@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { ShoppingCart, Menu, X, Fish, Search, User, LogOut, Heart } from "lucide-react";
+import { ShoppingCart, Menu, X, Fish, Search, User, LogOut, Heart, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/hooks/use-cart";
@@ -23,10 +23,15 @@ export function Navbar() {
   
   const wishlistCount = Array.isArray(wishlistItems) ? wishlistItems.length : 0;
 
-  // Search products query
+  // Search products query - trigger from first character
   const { data: searchResults = [] } = useQuery({
     queryKey: ['/api/products/search', searchQuery],
-    enabled: searchQuery.length > 2,
+    queryFn: async () => {
+      const response = await fetch(`/api/products/search?q=${encodeURIComponent(searchQuery)}`);
+      if (!response.ok) throw new Error('Failed to search products');
+      return response.json();
+    },
+    enabled: searchQuery.length >= 1,
   });
 
   const typedSearchResults = Array.isArray(searchResults) ? searchResults : [];
@@ -116,7 +121,9 @@ export function Navbar() {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className={`hidden md:flex items-center space-x-8 transition-all duration-300 ${
+              isSearchOpen ? 'opacity-100' : 'opacity-100'
+            }`}>
               {navigation.map((item) => (
                 <Link
                   key={item.name}
@@ -149,16 +156,16 @@ export function Navbar() {
                   <Search className="w-5 h-5" />
                 </Button>
 
-                {/* Search Box - Positioned absolutely */}
+                {/* Search Box - Fixed positioning to prevent navbar issues */}
                 {isSearchOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-80 z-50">
-                    <div className="bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl border border-primary/20 rounded-xl shadow-2xl shadow-primary/10">
+                  <div className="fixed top-20 right-4 w-96 z-[100] animate-in slide-in-from-top-5 duration-300">
+                    <div className="bg-gradient-to-r from-slate-900/98 via-slate-800/98 to-slate-900/98 backdrop-blur-xl border border-primary/20 rounded-xl shadow-2xl shadow-primary/10">
                       <form onSubmit={handleSearchSubmit} className="p-4">
                         <div className="relative group">
                           <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                           <Input
                             type="text"
-                            placeholder="Vyhledat rybářské oblečení..."
+                            placeholder="Začněte psát název produktu..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="relative w-full bg-slate-800/60 border-slate-600/50 text-white placeholder-slate-300 focus:ring-2 focus:ring-primary/50 focus:border-primary/70 rounded-lg h-11 pl-4 pr-12 font-medium transition-all duration-300"
@@ -174,38 +181,70 @@ export function Navbar() {
                         </div>
                       </form>
 
-                      {/* Search Results */}
+                      {/* Live Search Suggestions */}
                       {searchQuery.length > 0 && (
                         <div className="border-t border-slate-700/50 bg-gradient-to-b from-slate-900/98 via-slate-800/98 to-slate-900/98 rounded-b-xl">
-                          {searchQuery.length > 2 && typedSearchResults.length > 0 && (
-                            <div className="p-2 max-h-72 overflow-y-auto">
+                          {/* Product Name Suggestions */}
+                          {searchQuery.length >= 1 && typedSearchResults.length > 0 && (
+                            <div className="p-2 max-h-80 overflow-y-auto">
+                              <div className="mb-2 px-3 py-2">
+                                <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">
+                                  Návrhy produktů
+                                </p>
+                              </div>
                               <div className="space-y-1">
-                                {typedSearchResults.slice(0, 5).map((product: any) => (
-                                  <Link
-                                    key={product.id}
-                                    href={`/product/${product.slug}`}
-                                    className="flex items-center p-3 rounded-lg hover:bg-primary/10 hover:border-primary/20 border border-transparent transition-all duration-200 group"
-                                    onClick={() => {
-                                      setIsSearchOpen(false);
-                                      setSearchQuery("");
-                                    }}
-                                  >
-                                    <div className="relative">
-                                      <img
-                                        src={product.imageUrl}
-                                        alt={product.name}
-                                        className="w-12 h-12 object-cover rounded-lg mr-4 group-hover:scale-105 transition-transform duration-200"
-                                      />
-                                      <div className="absolute inset-0 bg-primary/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-                                    </div>
-                                    <div className="flex-1">
-                                      <h4 className="text-white text-sm font-semibold group-hover:text-primary transition-colors">{product.name}</h4>
-                                      <p className="text-slate-300 text-xs font-medium">{product.price} Kč</p>
-                                    </div>
-                                  </Link>
+                                {typedSearchResults.slice(0, 6).map((product: any) => (
+                                  <div key={product.id} className="space-y-1">
+                                    {/* Product name suggestion as clickable item */}
+                                    <button
+                                      type="button"
+                                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-primary/10 transition-all duration-200 group border border-transparent hover:border-primary/20"
+                                      onClick={() => {
+                                        setSearchQuery(product.name);
+                                      }}
+                                    >
+                                      <div className="flex items-center">
+                                        <Search className="w-4 h-4 text-slate-400 mr-3 group-hover:text-primary transition-colors" />
+                                        <span className="text-white text-sm font-medium group-hover:text-primary transition-colors">
+                                          {product.name}
+                                        </span>
+                                      </div>
+                                    </button>
+                                    
+                                    {/* Full product card as sub-item */}
+                                    <Link
+                                      href={`/product/${product.slug}`}
+                                      className="flex items-center p-3 ml-4 rounded-lg hover:bg-primary/10 hover:border-primary/20 border border-transparent transition-all duration-200 group"
+                                      onClick={() => {
+                                        setIsSearchOpen(false);
+                                        setSearchQuery("");
+                                      }}
+                                    >
+                                      <div className="relative">
+                                        <img
+                                          src={product.imageUrl}
+                                          alt={product.name}
+                                          className="w-10 h-10 object-cover rounded-lg mr-3 group-hover:scale-105 transition-transform duration-200"
+                                        />
+                                        <div className="absolute inset-0 bg-primary/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                                      </div>
+                                      <div className="flex-1">
+                                        <h4 className="text-white text-sm font-medium group-hover:text-primary transition-colors line-clamp-1">
+                                          {product.name}
+                                        </h4>
+                                        <p className="text-slate-300 text-xs font-medium">
+                                          {product.price} Kč
+                                        </p>
+                                      </div>
+                                      <div className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <ArrowRight className="w-4 h-4 text-primary" />
+                                      </div>
+                                    </Link>
+                                  </div>
                                 ))}
                               </div>
-                              {typedSearchResults.length > 5 && (
+                              
+                              {typedSearchResults.length > 6 && (
                                 <div className="mt-3 pt-3 border-t border-slate-700/30">
                                   <Button
                                     variant="ghost"
@@ -224,7 +263,8 @@ export function Navbar() {
                             </div>
                           )}
 
-                          {searchQuery.length > 2 && typedSearchResults.length === 0 && (
+                          {/* No Results */}
+                          {searchQuery.length >= 1 && typedSearchResults.length === 0 && (
                             <div className="p-6 text-center">
                               <div className="w-12 h-12 bg-slate-700/50 rounded-full flex items-center justify-center mx-auto mb-3">
                                 <Search className="w-5 h-5 text-slate-400" />
@@ -234,15 +274,24 @@ export function Navbar() {
                             </div>
                           )}
 
-                          {searchQuery.length > 0 && searchQuery.length <= 2 && (
+                          {/* Loading/Start typing hint */}
+                          {searchQuery.length === 0 && (
                             <div className="p-4 text-center">
-                              <p className="text-slate-400 text-sm">Pokračujte v psaní pro vyhledávání...</p>
+                              <p className="text-slate-400 text-sm">Začněte psát pro vyhledávání produktů...</p>
                             </div>
                           )}
                         </div>
                       )}
                     </div>
                   </div>
+                )}
+
+                {/* Search overlay to close search when clicking outside */}
+                {isSearchOpen && (
+                  <div 
+                    className="fixed inset-0 z-[90] bg-black/20 backdrop-blur-sm"
+                    onClick={() => setIsSearchOpen(false)}
+                  />
                 )}
               </div>
 
