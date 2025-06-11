@@ -135,23 +135,11 @@ export function Navbar() {
 
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
-              {/* Search */}
-              <div className="relative">
-                {/* Search Button */}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={`text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors ${
-                    isSearchOpen ? 'text-white bg-primary/20' : ''
-                  }`}
-                  onClick={() => setIsSearchOpen(!isSearchOpen)}
-                >
-                  <Search className="w-5 h-5" />
-                </Button>
-
-                {/* Search Box - Positioned absolutely */}
+              {/* Search Button and Box */}
+              <div className="relative flex items-center" id="navbar-search">
+                {/* Search Box Container */}
                 {isSearchOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-80 z-50">
+                  <div className="absolute right-12 top-0 w-80 z-50 animate-in slide-in-from-right-5 duration-300">
                     <div className="bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl border border-primary/20 rounded-xl shadow-2xl shadow-primary/10">
                       <form onSubmit={handleSearchSubmit} className="p-4">
                         <div className="relative group">
@@ -174,9 +162,10 @@ export function Navbar() {
                         </div>
                       </form>
 
-                      {/* Search Results */}
+                      {/* Search Results Dropdown */}
                       {searchQuery.length > 0 && (
                         <div className="border-t border-slate-700/50 bg-gradient-to-b from-slate-900/98 via-slate-800/98 to-slate-900/98 rounded-b-xl">
+                          {/* Search Results */}
                           {searchQuery.length > 2 && typedSearchResults.length > 0 && (
                             <div className="p-2 max-h-72 overflow-y-auto">
                               <div className="space-y-1">
@@ -224,6 +213,7 @@ export function Navbar() {
                             </div>
                           )}
 
+                          {/* No Results */}
                           {searchQuery.length > 2 && typedSearchResults.length === 0 && (
                             <div className="p-6 text-center">
                               <div className="w-12 h-12 bg-slate-700/50 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -234,6 +224,7 @@ export function Navbar() {
                             </div>
                           )}
 
+                          {/* Loading state */}
                           {searchQuery.length > 0 && searchQuery.length <= 2 && (
                             <div className="p-4 text-center">
                               <p className="text-slate-400 text-sm">Pokračujte v psaní pro vyhledávání...</p>
@@ -244,6 +235,18 @@ export function Navbar() {
                     </div>
                   </div>
                 )}
+
+                {/* Search Button */}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={`text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors ${
+                    isSearchOpen ? 'text-white bg-primary/20' : ''
+                  }`}
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                >
+                  <Search className="w-5 h-5" />
+                </Button>
               </div>
 
               {/* Wishlist Button */}
@@ -272,6 +275,7 @@ export function Navbar() {
                           variant="ghost"
                           size="icon"
                           className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
+                          title="Můj účet"
                         >
                           <User className="w-5 h-5" />
                         </Button>
@@ -281,6 +285,7 @@ export function Navbar() {
                         size="icon"
                         className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
                         onClick={logout}
+                        title="Odhlásit se"
                       >
                         <LogOut className="w-5 h-5" />
                       </Button>
@@ -291,8 +296,9 @@ export function Navbar() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg font-medium"
+                          className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
                         >
+                          <User className="w-4 h-4 mr-2" />
                           Přihlásit se
                         </Button>
                       </Link>
@@ -387,6 +393,16 @@ export function Navbar() {
                               Přihlásit se
                             </Button>
                           </Link>
+                          <Link href="/register">
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              <User className="w-4 h-4 mr-2" />
+                              Registrovat se
+                            </Button>
+                          </Link>
                         </div>
                       )}
                     </>
@@ -398,6 +414,7 @@ export function Navbar() {
         </div>
       </nav>
 
+      {/* Cart Overlay */}
       <CartOverlay />
     </>
   );
