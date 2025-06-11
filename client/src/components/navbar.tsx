@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { ShoppingCart, Menu, X, Fish, Search, User, LogOut, Heart, ArrowRight } from "lucide-react";
+import { ShoppingCart, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useCart } from "@/hooks/use-cart";
-import { useWishlist } from "@/hooks/useWishlist";
-import { useAuth } from "@/hooks/use-auth";
 import { CartOverlay } from "@/components/cart-overlay";
-import { useQuery } from "@tanstack/react-query";
 import waterVideoPath from "@assets/1181911-uhd_4096_2160_24fps (1)_1749502748130.mp4";
 import greyLogoPath from "@assets/Grevy logo_1749525153995.png";
 
@@ -15,26 +11,7 @@ export function Navbar() {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const { itemCount, openCart } = useCart();
-  const { wishlistItems } = useWishlist();
-  const { user, isAuthenticated, logout, isLoading } = useAuth();
-  
-  const wishlistCount = Array.isArray(wishlistItems) ? wishlistItems.length : 0;
-
-  // Search products query - trigger from first character
-  const { data: searchResults = [] } = useQuery({
-    queryKey: ['/api/products/search', searchQuery],
-    queryFn: async () => {
-      const response = await fetch(`/api/products/search?q=${encodeURIComponent(searchQuery)}`);
-      if (!response.ok) throw new Error('Failed to search products');
-      return response.json();
-    },
-    enabled: searchQuery.length >= 1,
-  });
-
-  const typedSearchResults = Array.isArray(searchResults) ? searchResults : [];
 
   const navigation = [
     { name: "Domů", href: "/" },
@@ -54,36 +31,10 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close search when clicking outside
-  useEffect(() => {
-    if (!isSearchOpen) return;
-
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element;
-      const searchContainer = document.querySelector('#navbar-search');
-      
-      if (searchContainer && !searchContainer.contains(target)) {
-        setIsSearchOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isSearchOpen]);
-
   const isActive = (path: string) => {
     if (path === "/" && location === "/") return true;
     if (path !== "/" && location.startsWith(path)) return true;
     return false;
-  };
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
-      setIsSearchOpen(false);
-      setSearchQuery("");
-    }
   };
 
   const handleNavClick = (item: any, e: React.MouseEvent) => {
@@ -159,206 +110,6 @@ export function Navbar() {
 
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
-              {/* Search */}
-              <div className="relative" id="navbar-search">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
-                  onClick={() => setIsSearchOpen(!isSearchOpen)}
-                >
-                  <Search className="w-5 h-5" />
-                </Button>
-
-                {/* Search Box - Dropdown below search button */}
-                {isSearchOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-96 z-[1000] animate-in slide-in-from-top-3 duration-200">
-                    <div className="bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl border border-primary/20 rounded-xl shadow-2xl shadow-primary/10">
-                      <form onSubmit={handleSearchSubmit} className="p-4">
-                        <div className="relative group">
-                          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          <Input
-                            type="text"
-                            placeholder="Začněte psát název produktu..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="relative w-full bg-slate-800/60 border-slate-600/50 text-white placeholder-slate-300 focus:ring-2 focus:ring-primary/50 focus:border-primary/70 rounded-lg h-11 pl-4 pr-12 font-medium transition-all duration-300"
-                            autoFocus
-                          />
-                          <Button
-                            type="submit"
-                            size="sm"
-                            className="absolute right-2 top-2 h-7 w-7 p-0 bg-primary/80 hover:bg-primary text-white rounded-md transition-all duration-200 hover:scale-105"
-                          >
-                            <Search className="w-3.5 h-3.5" />
-                          </Button>
-                        </div>
-                      </form>
-
-                      {/* Live Search Suggestions */}
-                      {searchQuery.length > 0 && (
-                        <div className="border-t border-slate-700/50 bg-gradient-to-b from-slate-900/98 via-slate-800/98 to-slate-900/98 rounded-b-xl">
-                          {/* Product Name Suggestions */}
-                          {searchQuery.length >= 1 && typedSearchResults.length > 0 && (
-                            <div className="p-2 max-h-80 overflow-y-auto">
-                              <div className="mb-2 px-3 py-2">
-                                <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">
-                                  Návrhy produktů
-                                </p>
-                              </div>
-                              <div className="space-y-1">
-                                {typedSearchResults.slice(0, 6).map((product: any) => (
-                                  <div key={product.id} className="space-y-1">
-                                    {/* Product name suggestion as clickable item */}
-                                    <button
-                                      type="button"
-                                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-primary/10 transition-all duration-200 group border border-transparent hover:border-primary/20"
-                                      onClick={() => {
-                                        setSearchQuery(product.name);
-                                      }}
-                                    >
-                                      <div className="flex items-center">
-                                        <Search className="w-4 h-4 text-slate-400 mr-3 group-hover:text-primary transition-colors" />
-                                        <span className="text-white text-sm font-medium group-hover:text-primary transition-colors">
-                                          {product.name}
-                                        </span>
-                                      </div>
-                                    </button>
-                                    
-                                    {/* Full product card as sub-item */}
-                                    <Link
-                                      href={`/product/${product.slug}`}
-                                      className="flex items-center p-3 ml-4 rounded-lg hover:bg-primary/10 hover:border-primary/20 border border-transparent transition-all duration-200 group"
-                                      onClick={() => {
-                                        setIsSearchOpen(false);
-                                        setSearchQuery("");
-                                      }}
-                                    >
-                                      <div className="relative">
-                                        <img
-                                          src={product.imageUrl}
-                                          alt={product.name}
-                                          className="w-10 h-10 object-cover rounded-lg mr-3 group-hover:scale-105 transition-transform duration-200"
-                                        />
-                                        <div className="absolute inset-0 bg-primary/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-                                      </div>
-                                      <div className="flex-1">
-                                        <h4 className="text-white text-sm font-medium group-hover:text-primary transition-colors line-clamp-1">
-                                          {product.name}
-                                        </h4>
-                                        <p className="text-slate-300 text-xs font-medium">
-                                          {product.price} Kč
-                                        </p>
-                                      </div>
-                                      <div className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <ArrowRight className="w-4 h-4 text-primary" />
-                                      </div>
-                                    </Link>
-                                  </div>
-                                ))}
-                              </div>
-                              
-                              {typedSearchResults.length > 6 && (
-                                <div className="mt-3 pt-3 border-t border-slate-700/30">
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    className="w-full text-primary hover:text-white hover:bg-primary/90 font-medium transition-all duration-200"
-                                    onClick={() => {
-                                      window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
-                                      setIsSearchOpen(false);
-                                      setSearchQuery("");
-                                    }}
-                                  >
-                                    Zobrazit všechny výsledky ({typedSearchResults.length})
-                                  </Button>
-                                </div>
-                              )}
-                            </div>
-                          )}
-
-                          {/* No Results */}
-                          {searchQuery.length >= 1 && typedSearchResults.length === 0 && (
-                            <div className="p-6 text-center">
-                              <div className="w-12 h-12 bg-slate-700/50 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <Search className="w-5 h-5 text-slate-400" />
-                              </div>
-                              <p className="text-slate-300 text-sm font-medium">Žádné produkty nenalezeny</p>
-                              <p className="text-slate-400 text-xs mt-1">Zkuste jiné klíčové slovo</p>
-                            </div>
-                          )}
-
-                          {/* Loading/Start typing hint */}
-                          {searchQuery.length === 0 && (
-                            <div className="p-4 text-center">
-                              <p className="text-slate-400 text-sm">Začněte psát pro vyhledávání produktů...</p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-
-              </div>
-
-              
-
-              {/* Authentication Buttons */}
-              {!isLoading && (
-                <>
-                  {isAuthenticated ? (
-                    <div className="hidden md:flex items-center space-x-2">
-                      <Link href="/dashboard">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
-                        >
-                          <User className="w-5 h-5" />
-                        </Button>
-                      </Link>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
-                        onClick={logout}
-                      >
-                        <LogOut className="w-5 h-5" />
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="hidden md:flex items-center space-x-2">
-                      <Link href="/login">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
-                        >
-                          <User className="w-5 h-5" />
-                        </Button>
-                      </Link>
-                    </div>
-                  )}
-                </>
-              )}
-
-              {/* Wishlist Button */}
-              <Link href="/wishlist">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="relative text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
-                >
-                  <Heart className="w-5 h-5" />
-                  {wishlistCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-gradient-to-r from-primary to-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
-                      {wishlistCount}
-                    </span>
-                  )}
-                </Button>
-              </Link>
 
               {/* Cart Button */}
               <Button
@@ -412,45 +163,6 @@ export function Navbar() {
                     {item.name}
                   </Link>
                 ))}
-                
-                {/* Mobile Authentication */}
-                <div className="border-t border-slate-700/50 pt-4 mt-4">
-                  {!isLoading && (
-                    <>
-                      {isAuthenticated ? (
-                        <div className="space-y-3">
-                          <div className="px-4 py-2 text-white/90 text-sm">
-                            Přihlášen jako: {user?.firstName || user?.email}
-                          </div>
-                          <Button
-                            variant="ghost"
-                            className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
-                            onClick={() => {
-                              logout();
-                              setIsMobileMenuOpen(false);
-                            }}
-                          >
-                            <LogOut className="w-4 h-4 mr-2" />
-                            Odhlásit se
-                          </Button>
-                        </div>
-                      ) : (
-                        <div className="space-y-2">
-                          <Link href="/login">
-                            <Button
-                              variant="ghost"
-                              className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              <User className="w-4 h-4 mr-2" />
-                              Přihlásit se
-                            </Button>
-                          </Link>
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
               </div>
             </div>
           )}
