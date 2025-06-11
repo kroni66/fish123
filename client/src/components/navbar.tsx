@@ -161,17 +161,7 @@ export function Navbar() {
             <div className="flex items-center space-x-4">
               {/* Search */}
               <div className="relative" id="navbar-search">
-                {/* Search Button */}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={`text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors ${
-                    isSearchOpen ? 'text-white bg-primary/20' : ''
-                  }`}
-                  onClick={() => setIsSearchOpen(!isSearchOpen)}
-                >
-                  <Search className="w-5 h-5" />
-                </Button>
+                
 
                 {/* Search Box - Dropdown below search button */}
                 {isSearchOpen && (
@@ -306,21 +296,7 @@ export function Navbar() {
 
               </div>
 
-              {/* Wishlist Button */}
-              <Link href="/wishlist">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg relative"
-                >
-                  <Heart className="w-5 h-5" />
-                  {wishlistCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                      {wishlistCount}
-                    </span>
-                  )}
-                </Button>
-              </Link>
+              
 
               {/* Authentication Buttons */}
               {!isLoading && (
@@ -344,18 +320,6 @@ export function Navbar() {
                       >
                         <LogOut className="w-5 h-5" />
                       </Button>
-                    </div>
-                  ) : (
-                    <div className="hidden md:flex items-center space-x-2">
-                      <Link href="/login">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-white/90 hover:text-white hover:bg-white/10 rounded-lg font-medium"
-                        >
-                          Přihlásit se
-                        </Button>
-                      </Link>
                     </div>
                   )}
                 </>
