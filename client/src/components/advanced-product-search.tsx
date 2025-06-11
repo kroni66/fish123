@@ -234,7 +234,7 @@ export function AdvancedProductSearch({
                   >
                     <div className="relative mr-3">
                       <img
-                        src={product.imageUrl || '/placeholder-product.jpg'}
+                        src={product.imageUrl ?? ''}
                         alt={product.name}
                         className="w-12 h-12 object-cover rounded-lg group-hover:scale-105 transition-transform duration-200"
                       />
@@ -372,7 +372,7 @@ export function AdvancedProductSearch({
                         }}
                       >
                         <img
-                          src={product.imageUrl || '/placeholder-product.jpg'}
+                          src={product.imageUrl ?? ''}
                           alt={product.name}
                           className="w-8 h-8 object-cover rounded-lg mr-3"
                         />

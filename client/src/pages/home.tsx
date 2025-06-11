@@ -168,6 +168,52 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Advanced Search Section */}
+        <section className="py-20 px-4 relative overflow-hidden">
+          {/* Background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-800/60 to-slate-900/80 backdrop-blur-sm"></div>
+          
+          <div className="max-w-7xl mx-auto relative z-10">
+            {/* Section Header */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
+                <Search className="w-4 h-4 text-primary" />
+                <span className="text-sm font-medium text-primary">Inteligentní vyhledávání</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Najděte přesně to, co hledáte
+              </h2>
+              <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+                Použijte naše pokročilé vyhledávání s automatickým doplňováním pro rychlé nalezení produktů
+              </p>
+            </div>
+
+            {/* Advanced Search Component */}
+            <AdvancedProductSearch 
+              onSearchChange={setSearchQuery}
+              className="mb-8"
+            />
+
+            {/* Quick Search Suggestions */}
+            <div className="text-center">
+              <p className="text-slate-500 text-sm mb-4">Oblíbená vyhledávání:</p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {['Bunda', 'Kalhoty', 'Kabát', 'Nepromokavé', 'Zimní'].map((term) => (
+                  <Button
+                    key={term}
+                    variant="outline"
+                    size="sm"
+                    className="bg-slate-800/40 border-slate-600/30 text-slate-300 hover:bg-slate-700/60 hover:text-white rounded-full"
+                    onClick={() => setSearchQuery(term)}
+                  >
+                    {term}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Features Section */}
         <section className="relative py-32 px-4 overflow-hidden">
           {/* Underwater Background Effects */}
