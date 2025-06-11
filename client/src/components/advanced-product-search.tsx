@@ -164,38 +164,7 @@ export function AdvancedProductSearch({
 
   return (
     <div ref={searchRef} className={`relative w-full max-w-2xl mx-auto z-[10000] ${className}`}>
-      {/* Search Input */}
-      <form onSubmit={handleSubmit} className="relative">
-        <div className="relative group">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative flex items-center">
-            <div className="absolute left-4 z-10">
-              <Search className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors duration-300" />
-            </div>
-            <Input
-              ref={inputRef}
-              type="text"
-              placeholder="Začněte psát název produktu nebo kategorie..."
-              value={searchQuery}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              onFocus={() => setIsOpen(true)}
-              className="w-full pl-12 pr-12 py-4 text-lg bg-slate-800/60 border-slate-600/50 text-white placeholder-slate-400 focus:ring-2 focus:ring-primary/50 focus:border-primary/70 rounded-2xl transition-all duration-300"
-            />
-            {searchQuery && (
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={clearSearch}
-                className="absolute right-2 h-8 w-8 p-0 text-slate-400 hover:text-white rounded-lg"
-              >
-                <X className="w-4 h-4" />
-              </Button>
-            )}
-          </div>
-        </div>
-      </form>
+      
 
       {/* Search Dropdown */}
       {isOpen && (
