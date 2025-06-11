@@ -131,40 +131,7 @@ export default function Home() {
               </Button>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Package className="w-6 h-6 text-primary" />
-                </div>
-                <div className="text-2xl font-bold text-white drop-shadow-lg">500+</div>
-                <div className="text-sm text-white/80">Produktů</div>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Users className="w-6 h-6 text-primary" />
-                </div>
-                <div className="text-2xl font-bold text-white drop-shadow-lg">2000+</div>
-                <div className="text-sm text-white/80">Spokojených zákazníků</div>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Star className="w-6 h-6 text-accent" />
-                </div>
-                <div className="text-2xl font-bold text-white drop-shadow-lg">4.8</div>
-                <div className="text-sm text-white/80">Hodnocení</div>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Award className="w-6 h-6 text-accent" />
-                </div>
-                <div className="text-2xl font-bold text-white drop-shadow-lg">15+</div>
-                <div className="text-sm text-white/80">Let zkušeností</div>
-              </div>
-            </div>
+
           </div>
         </section>
 
