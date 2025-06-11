@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/use-cart";
 import { CartOverlay } from "@/components/cart-overlay";
 import waterVideoPath from "@assets/1181911-uhd_4096_2160_24fps (1)_1749502748130.mp4";
-import greyLogoPath from "@assets/Grevy logo_1749525153995.png";
+import greyLogoPath from "@assets/Grevy logo.svg";
 
 export function Navbar() {
   const [location] = useLocation();

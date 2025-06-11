@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Twitter } from "lucide-react";
-import greyLogoPath from "@assets/Grevy logo_1749525153995.png";
+import greyLogoPath from "@assets/Grevy logo.svg";
 
 export function Footer() {
   return (
