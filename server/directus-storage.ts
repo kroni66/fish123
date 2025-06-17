@@ -23,9 +23,9 @@ import { db } from "./db";
 import { users } from "@shared/schema";
 import { eq } from "drizzle-orm";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: './shared/.env' });
 
-const DIRECTUS_URL = process.env.DIRECTUS_URL;
+const DIRECTUS_URL = "https://589582ce4a19.ngrok.app";
 const DIRECTUS_API_KEY = process.env.DIRECTUS_API_KEY;
 
 interface DirectusProduct {
@@ -98,6 +98,7 @@ export class DirectusStorage implements IStorage {
   private apiKey: string;
 
   constructor() {
+    console.log(`Environment DIRECTUS_URL: ${DIRECTUS_URL}`);
     if (!DIRECTUS_URL || !DIRECTUS_API_KEY) {
       throw new Error(
         "DIRECTUS_URL and DIRECTUS_API_KEY environment variables are required",
