@@ -27,9 +27,36 @@ export function Navbar() {
       setIsScrolled(scrolled);
     };
 
+    const handleResize = () => {
+      // Close mobile menu on window resize or orientation change
+      if (window.innerWidth >= 1024) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
   }, []);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
 
   const isActive = (path: string) => {
     if (path === "/" && location === "/") return true;
@@ -54,10 +81,18 @@ export function Navbar() {
 
   return (
     <>
-      <nav className={`fixed left-4 right-4 z-50 transition-all duration-300 rounded-2xl overflow-hidden shadow-2xl ${
+      {/* Mobile Menu Backdrop */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+      
+      <nav className={`fixed left-2 right-2 sm:left-4 sm:right-4 z-50 transition-all duration-300 rounded-2xl overflow-hidden shadow-2xl ${
         isScrolled 
-          ? 'top-2 backdrop-blur-lg bg-black/80' 
-          : 'top-4 backdrop-blur-md bg-black/60'
+          ? 'top-1 sm:top-2 backdrop-blur-lg bg-black/80' 
+          : 'top-2 sm:top-4 backdrop-blur-md bg-black/60'
       }`}>
         {/* Video Background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl">
@@ -75,8 +110,8 @@ export function Navbar() {
           <div className="absolute inset-0 bg-black/40 rounded-2xl"></div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center group">
@@ -84,14 +119,14 @@ export function Navbar() {
                   <img 
                     src={greyLogoPath}
                     alt="Grevy Logo"
-                    className="h-10 w-auto group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+                    className="h-8 sm:h-10 w-auto group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
                   />
                 </div>
               </Link>
             </div>
 
             {/* Desktop Navigation - Always visible */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden lg:flex items-center space-x-8">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
@@ -109,16 +144,16 @@ export function Navbar() {
             </div>
 
             {/* Right Side Actions */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
 
               {/* Cart Button */}
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
+                className="relative text-white/90 hover:text-white hover:bg-white/10 rounded-lg w-10 h-10 sm:w-11 sm:h-11"
                 onClick={openCart}
               >
-                <ShoppingCart className="w-5 h-5" />
+                <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
                 {itemCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-gradient-to-r from-primary to-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
                     {itemCount}
@@ -130,31 +165,41 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden text-white/90 hover:text-white hover:bg-white/10 rounded-lg"
+                className="lg:hidden text-white/90 hover:text-white hover:bg-white/10 rounded-lg w-10 h-10 sm:w-11 sm:h-11 touch-manipulation"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
                 {isMobileMenuOpen ? (
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
                 ) : (
-                  <Menu className="w-5 h-5" />
+                  <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
                 )}
               </Button>
             </div>
           </div>
 
           {/* Mobile Navigation */}
-          {isMobileMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 right-0 mt-2 bg-black/95 backdrop-blur-lg border border-white/20 shadow-2xl z-50 rounded-2xl">
-              <div className="px-4 py-6 space-y-4">
-                {navigation.map((item) => (
+          <div className={`lg:hidden absolute top-full left-0 right-0 mt-2 transition-all duration-300 ease-in-out transform z-50 ${
+            isMobileMenuOpen 
+              ? 'opacity-100 translate-y-0 scale-100' 
+              : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'
+          }`}>
+            <div className="bg-black/95 backdrop-blur-lg border border-white/20 shadow-2xl rounded-2xl overflow-hidden">
+              <div className="px-4 py-6 space-y-2">
+                {navigation.map((item, index) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`block px-4 py-3 text-base font-medium transition-all duration-300 rounded-lg ${
+                    className={`block px-6 py-4 text-lg font-medium transition-all duration-300 rounded-xl touch-manipulation ${
                       isActive(item.href)
-                        ? 'text-white bg-primary/20 border border-primary/50'
-                        : 'text-white/90 hover:text-white hover:bg-white/10'
+                        ? 'text-white bg-gradient-to-r from-primary/30 to-accent/30 border border-primary/50 shadow-lg'
+                        : 'text-white/90 hover:text-white hover:bg-white/10 active:bg-white/20'
                     }`}
+                    style={{ 
+                      animationDelay: `${index * 50}ms`,
+                      minHeight: '56px',
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
                     onClick={(e) => {
                       handleNavClick(item, e);
                       setIsMobileMenuOpen(false);
@@ -165,7 +210,7 @@ export function Navbar() {
                 ))}
               </div>
             </div>
-          )}
+          </div>
         </div>
       </nav>
 
