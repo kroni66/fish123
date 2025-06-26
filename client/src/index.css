@@ -49,6 +49,20 @@
   --success: 162 40% 60%; /* #7DB39B - Lighter sage for success */
 }
 
+/* Mobile-optimized wave animation for navbar background */
+@keyframes wave {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+  }
+}
+
+.animate-wave {
+  animation: wave 4s ease-in-out infinite;
+}
+
 /* Custom animations for enhanced features section */
 @keyframes float {
   0%, 100% {
