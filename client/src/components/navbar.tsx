@@ -4,20 +4,12 @@ import { ShoppingCart, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/use-cart";
 import { CartOverlay } from "@/components/cart-overlay";
-import waterVideoPath from "@assets/1181911-uhd_4096_2160_24fps (1)_1749502748130.mp4";
 import greyLogoPath from "@assets/Grevy logo.svg";
 
 export function Navbar() {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-  const [videoLoadError, setVideoLoadError] = useState(false);
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  const [userVideoPreference, setUserVideoPreference] = useState(() => {
-    return localStorage.getItem('videoBackground') !== 'disabled';
-  });
   const { itemCount, openCart } = useCart();
 
   const navigation = [
@@ -41,49 +33,14 @@ export function Navbar() {
       }
     };
 
-    // Check if device is mobile and set video loading accordingly
-    const checkMobile = () => {
-      const mobile = window.innerWidth < 768; // md breakpoint
-      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      const isLowEnd = navigator.hardwareConcurrency <= 4; // Basic performance check
-      const hasLimitedMemory = (navigator as any).deviceMemory && (navigator as any).deviceMemory < 4;
-      
-      // Check for reduced motion preference
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      
-      // Check network connection with proper typing
-      const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
-      const isSlowConnection = connection && 
-        (connection.effectiveType === 'slow-2g' || 
-         connection.effectiveType === '2g' ||
-         connection.effectiveType === '3g' ||
-         connection.saveData === true);
-
-      setIsMobile(mobile);
-      // Only load video on desktop with good specs and connection AND user preference
-      const shouldLoad = userVideoPreference && !mobile && !isTouch && !isLowEnd && !hasLimitedMemory && !isSlowConnection && !prefersReducedMotion;
-      
-      if (shouldLoad) {
-        // Delay video loading to prioritize critical page content
-        setTimeout(() => {
-          setShouldLoadVideo(true);
-        }, 1000);
-      } else {
-        setShouldLoadVideo(false);
-      }
-    };
-
-    checkMobile();
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", handleResize);
-    window.addEventListener("resize", checkMobile);
     
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("orientationchange", handleResize);
-      window.removeEventListener("resize", checkMobile);
     };
   }, []);
 
@@ -136,55 +93,24 @@ export function Navbar() {
           ? 'top-1 sm:top-2 backdrop-blur-lg bg-black/80' 
           : 'top-2 sm:top-4 backdrop-blur-md bg-black/60'
       }`}>
-        {/* Background - Video for desktop, static gradient for mobile */}
+        {/* Animated Ocean Background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl">
-          {shouldLoadVideo && !videoLoadError ? (
-            <>
-              {/* Video Background for Desktop/High-Performance Devices */}
-              <video 
-                autoPlay 
-                muted 
-                loop 
-                playsInline
-                preload="metadata"
-                className="absolute inset-0 w-full h-full object-cover opacity-15 rounded-2xl"
-                style={{ filter: 'blur(1px)' }}
-                onError={() => {
-                  console.warn('Video background failed to load, falling back to animated background');
-                  setVideoLoadError(true);
-                }}
-                onCanPlay={() => {
-                  setIsVideoReady(true);
-                }}
-                onLoadStart={() => {
-                  // Ensure video doesn't block page load
-                  const video = document.querySelector('video');
-                  if (video) {
-                    video.setAttribute('loading', 'lazy');
-                  }
-                }}
-              >
-                <source src={waterVideoPath} type="video/mp4" />
-              </video>
-            </>
-          ) : (
-            <>
-              {/* Static Ocean Gradient Background for Mobile */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-teal-800/30 to-cyan-900/35 rounded-2xl"></div>
-              {/* Multiple animated water waves for mobile */}
-              <div className="absolute inset-0 opacity-15 rounded-2xl overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/25 to-transparent transform -skew-x-12 animate-wave"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-teal-300/20 to-transparent transform -skew-x-12 animate-wave" style={{ animationDelay: '1s', animationDuration: '5s' }}></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-300/15 to-transparent transform -skew-x-12 animate-wave" style={{ animationDelay: '2s', animationDuration: '6s' }}></div>
-              </div>
-              {/* Subtle bubbles effect */}
-              <div className="absolute inset-0 opacity-5 rounded-2xl">
-                <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full animate-ping"></div>
-                <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-blue-200 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
-                <div className="absolute bottom-1/4 left-2/3 w-1 h-1 bg-teal-200 rounded-full animate-ping" style={{ animationDelay: '3s' }}></div>
-              </div>
-            </>
-          )}
+          {/* Ocean Gradient Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-teal-800/30 to-cyan-900/35 rounded-2xl"></div>
+          
+          {/* Multiple animated water waves */}
+          <div className="absolute inset-0 opacity-15 rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/25 to-transparent transform -skew-x-12 animate-wave"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-teal-300/20 to-transparent transform -skew-x-12 animate-wave" style={{ animationDelay: '1s', animationDuration: '5s' }}></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-300/15 to-transparent transform -skew-x-12 animate-wave" style={{ animationDelay: '2s', animationDuration: '6s' }}></div>
+          </div>
+          
+          {/* Subtle bubbles effect */}
+          <div className="absolute inset-0 opacity-5 rounded-2xl">
+            <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full animate-ping"></div>
+            <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-blue-200 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
+            <div className="absolute bottom-1/4 left-2/3 w-1 h-1 bg-teal-200 rounded-full animate-ping" style={{ animationDelay: '3s' }}></div>
+          </div>
           
           {/* Dark overlay for text readability */}
           <div className="absolute inset-0 bg-black/40 rounded-2xl"></div>
