@@ -36,28 +36,29 @@ export const products = pgTable("products", {
 export const cartItems = pgTable("cart_items", {
   id: serial("id").primaryKey(),
   sessionId: text("session_id").notNull(),
-  productId: integer("product_id").references(() => products.id),
+  productId: integer("product_id").references(() => products.id).notNull(), // Made notNull
   quantity: integer("quantity").notNull().default(1),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
-  sessionId: text("session_id").notNull(),
+  userId: text("user_id"), // Changed to text to store Directus ID (string)
+  sessionId: text("session_id").notNull(), // Can still be used for guest context or linking pre-login cart
   total: decimal("total", { precision: 10, scale: 2 }).notNull(),
   items: json("items").$type<Array<{
     productId: number;
     name: string;
     price: string;
     quantity: number;
-  }>>(),
+  }>>().notNull(), // Made notNull
   customerInfo: json("customer_info").$type<{
     name: string;
     email: string;
     address: string;
     city: string;
     postalCode: string;
-  }>(),
+  }>>().notNull(), // Made notNull
   status: text("status").default("pending"),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -72,6 +73,7 @@ export const reviews = pgTable("reviews", {
   comment: text("comment").notNull(),
   verified: boolean("verified").default(false), // verified purchase
   helpful: integer("helpful").default(0), // helpful votes
+  userId: text("user_id"), // Added userId to link review to a user
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -119,7 +121,9 @@ export const insertCartItemSchema = createInsertSchema(cartItems).omit({
   createdAt: true,
 });
 
-export const insertOrderSchema = createInsertSchema(orders).omit({
+export const insertOrderSchema = createInsertSchema(orders, {
+  userId: z.string({ required_error: "User ID is required for orders." }), // UserId is now a string
+}).omit({
   id: true,
   createdAt: true,
 });
@@ -134,7 +138,13 @@ export const insertReviewSchema = createInsertSchema(reviews).omit({
   id: true,
   createdAt: true,
   helpful: true,
+  // customerName and customerEmail will be populated from session, so make them optional here
+  // or expect them to be explicitly passed if that's the design.
+  // For now, let's assume they are optional in the direct input and will be overridden by session data.
 }).extend({
+  userId: z.string({ required_error: "User ID is required for reviews." }),
+  customerName: z.string().optional(),
+  customerEmail: z.string().email().optional(),
   rating: z.number().min(1).max(5),
   title: z.string().min(3, "Nadpis musí mít alespoň 3 znaky"),
   comment: z.string().min(5, "Komentář musí mít alespoň 5 znaků"),

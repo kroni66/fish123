@@ -20,8 +20,11 @@ export class DirectusClient {
 
   constructor(url: string = DIRECTUS_URL) {
     this.baseUrl = url;
-    this.apiKey =
-      import.meta.env.VITE_DIRECTUS_API_KEY || process.env.DIRECTUS_API_KEY;
+    // API key should not be used directly in client-side code if it has elevated privileges.
+    // For public data, Directus can be configured to allow access without a key,
+    // or a restricted, read-only key can be used if absolutely necessary and safe.
+    // Removing direct API key usage here.
+    // this.apiKey = import.meta.env.VITE_DIRECTUS_API_KEY; // Removed
   }
 
   private async request(endpoint: string, options: RequestInit = {}) {
@@ -29,9 +32,11 @@ export class DirectusClient {
       "Content-Type": "application/json",
     };
 
-    if (this.apiKey) {
-      headers["Authorization"] = `Bearer ${this.apiKey}`;
-    }
+    // Authorization header should be added based on user session/token for authenticated requests,
+    // or not at all for public requests. Direct API key usage removed from client.
+    // if (this.apiKey) {
+    //   headers["Authorization"] = `Bearer ${this.apiKey}`;
+    // }
 
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       ...options,

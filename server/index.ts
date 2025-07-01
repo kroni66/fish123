@@ -27,7 +27,7 @@ app.use(session({
   saveUninitialized: false,
   name: 'connect.sid',
   cookie: {
-    secure: false, // Set to true in production with HTTPS
+    secure: process.env.NODE_ENV === 'production', // Use true in production (HTTPS), false in dev (HTTP)
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
     sameSite: 'lax'
@@ -68,11 +68,27 @@ app.use((req, res, next) => {
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    console.error("Unhandled error:", err); // Log the full error on the server
+
     const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+    let message = err.message || "Internal Server Error";
+
+    // For 500 errors in production, send a generic message to the client
+    if (status === 500 && process.env.NODE_ENV === 'production') {
+      message = "Internal Server Error";
+    }
+
+    // If it's a ZodError and hasn't been handled by a route, it might end up here.
+    // We generally want ZodErrors to be handled by routes to return 400.
+    // If it reaches here as a 500, it's an unexpected ZodError propagation.
+    if (err instanceof require('zod').ZodError) {
+        // This case should ideally be caught earlier and result in a 400.
+        // If it gets here, it implies a programming error.
+        return res.status(400).json({ message: "Invalid input data", errors: err.errors });
+    }
 
     res.status(status).json({ message });
-    throw err;
+    // Do NOT re-throw the error, as Express has handled it by sending a response.
   });
 
   // importantly only setup vite in development and after

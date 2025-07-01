@@ -38,13 +38,12 @@ if (DIRECTUS_URL && DIRECTUS_API_KEY && DIRECTUS_URL !== "undefined") {
     console.log("✓ Using Directus backend for data storage");
   } catch (error) {
     console.error("Directus configuration failed:", error);
-    storage = localStorage;
-    console.log("⚠ Fallback: Using local storage");
+    // If Directus setup fails, throw an error to prevent fallback to local storage
+    throw new Error(`Failed to initialize DirectusStorage: ${error}`);
   }
 } else {
-  storage = localStorage;
-  console.log("⚠ No Directus credentials provided - using local storage");
-  console.log("  To use Directus backend, provide DIRECTUS_URL and DIRECTUS_API_KEY environment variables");
+  // If Directus credentials are not provided, throw an error
+  throw new Error("DIRECTUS_URL and DIRECTUS_API_KEY environment variables must be set to use the Directus backend.");
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -53,79 +52,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const loginData = loginSchema.parse(req.body);
       
-      // Try Directus authentication first
-      try {
-        const { user, tokens } = await directusAuth.login(loginData);
-        
-        // Store user session with access token for profile fetching
-        req.session.user = {
+      const { user, tokens } = await directusAuth.login(loginData);
+
+      // Store user session with access token for profile fetching
+      req.session.user = {
+        id: user.id,
+        email: user.email,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        accessToken: tokens.access_token,
+        refreshToken: tokens.refresh_token,
+      };
+
+      console.log(`Directus login successful - User: ${user.id}, Session ID: ${req.sessionID}`);
+
+      // Return user data from Directus directly
+      res.json({
+        user: {
           id: user.id,
           email: user.email,
           firstName: user.first_name,
           lastName: user.last_name,
-          accessToken: tokens.access_token,
-          refreshToken: tokens.refresh_token,
-        };
-        
-        console.log(`Directus login successful - User: ${user.id}, Session ID: ${req.sessionID}`);
-        
-        // Return user data from Directus directly
-        res.json({
-          user: {
-            id: user.id,
-            email: user.email,
-            firstName: user.first_name,
-            lastName: user.last_name,
-            directusId: user.id,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          },
-          tokens,
-        });
-      } catch (directusError) {
-        console.log("Directus authentication failed, using demo authentication for testing");
-        
-        // Demo authentication for testing purposes when Directus credentials are incorrect
-        if (loginData.email === "demo@example.com" && loginData.password === "demo123") {
-          const demoUser = {
-            id: "demo-user-123",
-            email: "demo@example.com",
-            firstName: "Demo",
-            lastName: "User"
-          };
-          
-          // Store demo user session
-          req.session.user = {
-            id: demoUser.id,
-            email: demoUser.email,
-            firstName: demoUser.firstName,
-            lastName: demoUser.lastName,
-            accessToken: "demo-access-token",
-            refreshToken: "demo-refresh-token",
-          };
-          
-          console.log(`Demo login successful - User: ${demoUser.id}, Session ID: ${req.sessionID}`);
-          
-          res.json({
-            user: {
-              id: demoUser.id,
-              email: demoUser.email,
-              firstName: demoUser.firstName,
-              lastName: demoUser.lastName,
-              directusId: demoUser.id,
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            },
-            tokens: {
-              access_token: "demo-access-token",
-              refresh_token: "demo-refresh-token"
-            },
-          });
-        } else {
-          throw directusError;
-        }
-      }
-      
+          directusId: user.id,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        tokens,
+      });
     } catch (error) {
       console.error("Login error:", error);
       res.status(401).json({ 
@@ -220,22 +173,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ message: "Nepřihlášen" });
       }
 
-      // If demo user, return demo data directly
-      if (sessionUser.accessToken === "demo-access-token") {
-        console.log(`Demo user authenticated: ${sessionUser.id}`);
-        
-        res.json({
-          id: sessionUser.id,
-          email: sessionUser.email,
-          firstName: sessionUser.firstName,
-          lastName: sessionUser.lastName,
-          directusId: sessionUser.id,
-          status: "active",
-          createdAt: new Date(),
-          updatedAt: new Date()
-        });
-        return;
-      }
+      // Removed demo user logic, proceed directly to Directus authentication
 
       try {
         // Get user data from Directus using the access token
@@ -405,6 +343,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Cart
   app.get("/api/cart/:sessionId", async (req, res) => {
+    // This route can remain public or be tied to a session if carts are user-specific
+    // For now, assuming carts can be temporary for guests, or fetched by session ID for logged-in users.
+    // If carts are strictly user-bound, add session check here.
     try {
       const cartItems = await storage.getCartItems(req.params.sessionId);
       
@@ -424,6 +365,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/cart", async (req, res) => {
     try {
+      // ALL CART MODIFICATIONS SHOULD IDEALLY BE USER-SPECIFIC
+      // For now, we use sessionId for guest carts, but real user carts should be tied to user ID
+      // If req.session.user exists, we could augment cartItemData with userId.
+      // This is a simplified example; a real app might handle guest vs user carts differently.
       const cartItemData = insertCartItemSchema.parse(req.body);
       const cartItem = await storage.addToCart(cartItemData);
       res.json(cartItem);
@@ -602,11 +547,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Orders
   app.post("/api/orders", async (req, res) => {
     try {
-      const orderData = insertOrderSchema.parse(req.body);
+      if (!req.session.user) {
+        return res.status(401).json({ message: "Musíte se přihlásit pro vytvoření objednávky" });
+      }
+      // Potentially enrich orderData with userId from session
+      const orderData = insertOrderSchema.parse({
+        ...req.body,
+        userId: req.session.user.id, // Assuming schema supports userId
+      });
       const order = await storage.createOrder(orderData);
       
       // Clear cart after successful order
-      await storage.clearCart(orderData.sessionId);
+      // Ensure clearCart can handle session ID or user ID based on how orders are linked to carts
+      await storage.clearCart(orderData.sessionId); // Or use a user-specific cart clearing method
       
       res.json(order);
     } catch (error) {
@@ -643,7 +596,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/reviews", async (req, res) => {
     try {
-      const reviewData = insertReviewSchema.parse(req.body);
+      if (!req.session.user) {
+        return res.status(401).json({ message: "Musíte se přihlásit pro přidání recenze" });
+      }
+
+      const { id: userId, email, firstName, lastName } = req.session.user;
+      const customerName = `${firstName || ''} ${lastName || ''}`.trim() || email; // Fallback to email if name parts are missing
+
+      const reviewData = insertReviewSchema.parse({
+        ...req.body,
+        userId: userId,
+        customerName: customerName,
+        customerEmail: email,
+      });
       const review = await storage.createReview(reviewData);
       res.json(review);
     } catch (error) {
@@ -669,6 +634,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.patch("/api/reviews/:id/helpful", async (req, res) => {
     try {
+      if (!req.session.user) {
+        return res.status(401).json({ message: "Musíte se přihlásit pro označení recenze jako užitečné" });
+      }
       const id = parseInt(req.params.id);
       const review = await storage.markReviewHelpful(id);
       res.json(review);
