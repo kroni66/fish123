@@ -64,6 +64,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// Initialize routes and setup error handling
 (async () => {
   const server = await registerRoutes(app);
 
@@ -91,24 +92,32 @@ app.use((req, res, next) => {
     // Do NOT re-throw the error, as Express has handled it by sending a response.
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
+  // For Vercel deployment, we don't start the server - we export the app
+  // For local development, we still start the server
+  if (process.env.VERCEL) {
+    // Export the app for Vercel serverless function
+    module.exports = app;
   } else {
-    serveStatic(app);
-  }
+    // Local development setup
+    if (app.get("env") === "development") {
+      await setupVite(app, server);
+    } else {
+      serveStatic(app);
+    }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
+    // ALWAYS serve the app on port 5000
+    // this serves both the API and the client.
+    // It is the only port that is not firewalled.
+    const port = 5000;
+    server.listen({
+      port,
+      host: "0.0.0.0",
+      reusePort: true,
+    }, () => {
+      log(`serving on port ${port}`);
+    });
+  }
 })();
+
+// For Vercel, also export the app as default export
+export default app;
