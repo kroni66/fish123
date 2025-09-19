@@ -19,12 +19,14 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { formatPrice } from "@/lib/utils";
 
-// Make sure to call `loadStripe` outside of a component's render to avoid
-// recreating the `Stripe` object on every render.
-if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
-  throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY');
-}
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+// Initialize Stripe promise when component mounts
+const getStripePromise = () => {
+  const stripeKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
+  if (!stripeKey) {
+    throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY');
+  }
+  return loadStripe(stripeKey);
+};
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Jméno musí mít alespoň 2 znaky"),
@@ -449,7 +451,7 @@ export default function Checkout() {
 
   // Make SURE to wrap the form in <Elements> which provides the stripe context.
   return (
-    <Elements stripe={stripePromise} options={stripeOptions}>
+    <Elements stripe={getStripePromise()} options={stripeOptions}>
       <CheckoutForm />
     </Elements>
   );
