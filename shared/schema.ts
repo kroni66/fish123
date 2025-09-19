@@ -2,6 +2,22 @@ import { pgTable, text, serial, integer, boolean, decimal, timestamp, json, varc
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// Type definitions for JSON fields
+type CustomerInfo = {
+  name: string;
+  email: string;
+  address: string;
+  city: string;
+  postalCode: string;
+};
+
+type OrderItem = {
+  productId: number;
+  name: string;
+  price: string;
+  quantity: number;
+};
+
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   email: varchar("email", { length: 255 }).notNull().unique(),
@@ -46,19 +62,8 @@ export const orders = pgTable("orders", {
   userId: text("user_id"), // Changed to text to store Directus ID (string)
   sessionId: text("session_id").notNull(), // Can still be used for guest context or linking pre-login cart
   total: decimal("total", { precision: 10, scale: 2 }).notNull(),
-  items: json("items").$type<Array<{
-    productId: number;
-    name: string;
-    price: string;
-    quantity: number;
-  }>>().notNull(), // Made notNull
-  customerInfo: json("customer_info").$type<{
-    name: string;
-    email: string;
-    address: string;
-    city: string;
-    postalCode: string;
-  }>>().notNull(), // Made notNull
+  items: json("items").$type<OrderItem[]>().notNull(), // Made notNull
+  customerInfo: json("customer_info").$type<CustomerInfo>().notNull(), // Made notNull
   status: text("status").default("pending"),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -199,3 +204,6 @@ export type InsertArticleCategory = z.infer<typeof insertArticleCategorySchema>;
 export type InsertWishlistItem = z.infer<typeof insertWishlistItemSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
 export type RegisterData = z.infer<typeof registerSchema>;
+
+// Export the JSON field types
+export type { CustomerInfo, OrderItem };
