@@ -126,7 +126,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                   {formatPrice(product.price)} Kč
                 </span>
                 {product.inStock && (
-                  <Badge className="bg-success text-white hover:bg-success">
+                  <Badge className="bg-success text-black hover:bg-success">
                     Skladem
                   </Badge>
                 )}

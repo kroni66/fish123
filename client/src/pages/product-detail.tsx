@@ -170,7 +170,7 @@ export default function ProductDetail() {
                 {formatPrice(product.price)} Kč
               </span>
               {product.inStock && (
-                <Badge className="bg-success text-white">
+                <Badge className="bg-success text-black">
                   Skladem
                 </Badge>
               )}
