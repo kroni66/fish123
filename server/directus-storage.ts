@@ -20,11 +20,9 @@ import {
   InsertWishlistItem,
 } from "@shared/schema";
 // Database usage removed - using Directus as backend only
-import dotenv from "dotenv";
-dotenv.config({ path: './shared/.env' });
 
-const DIRECTUS_URL = "https://589582ce4a19.ngrok.app";
-const DIRECTUS_API_KEY = process.env.DIRECTUS_API_KEY;
+const DIRECTUS_URL = process.env.DIRECTUS_URL || "https://directus-production-08d0.up.railway.app";
+const DIRECTUS_API_KEY = process.env.DIRECTUS_API_KEY || "";
 
 interface DirectusProduct {
   id: number;

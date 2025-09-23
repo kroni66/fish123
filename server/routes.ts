@@ -22,6 +22,12 @@ declare module 'express-serve-static-core' {
   }
 }
 
+// Allow running without Stripe in development/demo mode
+if (!process.env.STRIPE_SECRET_KEY && process.env.NODE_ENV !== 'production') {
+  console.warn('Warning: STRIPE_SECRET_KEY not set. Using dummy value for development.');
+  process.env.STRIPE_SECRET_KEY = 'sk_test_dummy_key_for_development';
+}
+
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
 }
