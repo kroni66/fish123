@@ -4,6 +4,28 @@ const ADMIN_EMAIL = 'xaranex@gmail.com';
 const ADMIN_PASSWORD = '4yx4w7wlaieniq4saoovl592ld1ysu28';
 const API_KEY = process.env.DIRECTUS_API_KEY || 'qIp9z5ciY-QJBMDvpdBFczidkY7TDTTZ';
 
+// Test with API key (like the server does)
+async function testWithAPIKey() {
+  console.log('\n=== Testing with API Key ===');
+
+  const response = await fetch(`${DIRECTUS_URL}/items/products?fields=*,image.id,image.filename_download,image.type,image.width,image.height`, {
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log('✅ Products with images accessible!');
+    console.log('Response:', JSON.stringify(data, null, 2));
+  } else {
+    console.log('❌ Products not accessible:', response.status, response.statusText);
+    const error = await response.text();
+    console.log('Error details:', error);
+  }
+}
+
 async function testDirectus() {
   try {
     console.log('Testing Directus connection...');
@@ -108,3 +130,4 @@ async function testDirectus() {
 }
 
 testDirectus();
+testWithAPIKey();

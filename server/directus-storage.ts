@@ -272,9 +272,9 @@ export class DirectusStorage implements IStorage {
     try {
       // Try different possible collection names with correct Directus API format
       let response;
-      let endpoint = "/items/products";
+      let endpoint = "/items/products?fields=*,image.id,image.filename_download,image.type,image.width,image.height";
       if (categoryId) {
-        endpoint += `?filter[category][_eq]=${categoryId}`;
+        endpoint += `&filter[category][_eq]=${categoryId}`;
       }
 
       try {
@@ -310,7 +310,7 @@ export class DirectusStorage implements IStorage {
 
   async getProductById(id: number): Promise<Product | undefined> {
     try {
-      const response = await this.request(`/items/products/${id}`);
+      const response = await this.request(`/items/products/${id}?fields=*,image.id,image.filename_download,image.type,image.width,image.height`);
       return this.transformProduct(response.data);
     } catch (error) {
       console.error("Failed to fetch product from Directus:", error);
@@ -321,7 +321,7 @@ export class DirectusStorage implements IStorage {
   async getProductBySlug(slug: string): Promise<Product | undefined> {
     try {
       const response = await this.request(
-        `/items/products?filter[slug][_eq]=${slug}`,
+        `/items/products?filter[slug][_eq]=${slug}&fields=*,image.id,image.filename_download,image.type,image.width,image.height`,
       );
       const product = response.data[0];
       return product ? this.transformProduct(product) : undefined;
@@ -353,7 +353,7 @@ export class DirectusStorage implements IStorage {
   async searchProducts(query: string): Promise<Product[]> {
     try {
       const response = await this.request(
-        `/items/products?search=${encodeURIComponent(query)}`,
+        `/items/products?search=${encodeURIComponent(query)}&fields=*,image.id,image.filename_download,image.type,image.width,image.height`,
       );
       return response.data.map((product: DirectusProduct) =>
         this.transformProduct(product),
@@ -565,7 +565,7 @@ export class DirectusStorage implements IStorage {
       console.log("Directus API call: " + this.baseUrl + "/items/articles");
 
       let url =
-        "/items/articles?filter[published][_eq]=true&sort=-date_created";
+        "/items/articles?filter[published][_eq]=true&sort=-date_created&fields=*,image.id,image.filename_download,image.type,image.width,image.height";
       if (categorySlug) {
         url += `&filter[category][_eq]=${categorySlug}`;
       }
@@ -586,7 +586,7 @@ export class DirectusStorage implements IStorage {
 
   async getArticleById(id: number): Promise<Article | undefined> {
     try {
-      const response = await this.request(`/items/articles/${id}`);
+      const response = await this.request(`/items/articles/${id}?fields=*,image.id,image.filename_download,image.type,image.width,image.height`);
       return response.data ? this.transformArticle(response.data) : undefined;
     } catch (error) {
       console.error(`Failed to fetch article ${id} from Directus:`, error);
