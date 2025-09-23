@@ -1,7 +1,8 @@
 // Test Directus connection using admin credentials
-const DIRECTUS_URL = 'https://directus-production-08d0.up.railway.app';
+const DIRECTUS_URL = process.env.DIRECTUS_URL || 'https://directus-production-08d0.up.railway.app';
 const ADMIN_EMAIL = 'xaranex@gmail.com';
 const ADMIN_PASSWORD = '4yx4w7wlaieniq4saoovl592ld1ysu28';
+const API_KEY = process.env.DIRECTUS_API_KEY || 'qIp9z5ciY-QJBMDvpdBFczidkY7TDTTZ';
 
 async function testDirectus() {
   try {
@@ -10,6 +11,7 @@ async function testDirectus() {
     console.log('Admin Email:', ADMIN_EMAIL);
 
     // Test basic API access
+    console.log('\n=== Testing Server Info ===');
     const infoResponse = await fetch(`${DIRECTUS_URL}/server/info`);
     if (infoResponse.ok) {
       const data = await infoResponse.json();
@@ -17,6 +19,20 @@ async function testDirectus() {
       console.log('Directus version:', data.data?.version);
     } else {
       console.log('❌ Server info not accessible:', infoResponse.status, infoResponse.statusText);
+      const errorText = await infoResponse.text();
+      console.log('Error details:', errorText);
+    }
+
+    // Test available endpoints
+    console.log('\n=== Testing Available Endpoints ===');
+    const endpoints = ['/server/specs/oas', '/auth', '/collections', '/fields'];
+    for (const endpoint of endpoints) {
+      try {
+        const response = await fetch(`${DIRECTUS_URL}${endpoint}`);
+        console.log(`${endpoint}: ${response.status} ${response.statusText}`);
+      } catch (error) {
+        console.log(`${endpoint}: Error - ${error.message}`);
+      }
     }
 
     // Test admin login

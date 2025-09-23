@@ -27,7 +27,7 @@ export class DirectusAuth {
 
   private async request(endpoint: string, options: RequestInit = {}) {
     const url = `${this.baseUrl.replace(/\/$/, '')}${endpoint}`;
-    
+
     const response = await fetch(url, {
       ...options,
       headers: {
@@ -39,6 +39,7 @@ export class DirectusAuth {
 
     if (!response.ok) {
       const error = await response.text();
+      console.error(`Directus API error for ${url}:`, response.status, error);
       throw new Error(`Directus API error: ${response.status} - ${error}`);
     }
 
@@ -47,6 +48,7 @@ export class DirectusAuth {
 
   async login(loginData: LoginData): Promise<{ user: DirectusUser; tokens: DirectusAuthResponse }> {
     try {
+      console.log(`Attempting login for user: ${loginData.email}`);
       const response = await this.request('/auth/login', {
         method: 'POST',
         body: JSON.stringify({
@@ -54,6 +56,8 @@ export class DirectusAuth {
           password: loginData.password,
         }),
       });
+
+      console.log('Login response received successfully');
 
       // Get user info
       const userResponse = await this.request('/users/me', {
