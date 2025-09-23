@@ -19,9 +19,7 @@ import {
   InsertArticleCategory,
   InsertWishlistItem,
 } from "@shared/schema";
-import { db } from "./db";
-import { users } from "@shared/schema";
-import { eq } from "drizzle-orm";
+// Database usage removed - using Directus as backend only
 import dotenv from "dotenv";
 dotenv.config({ path: './shared/.env' });
 
@@ -109,47 +107,7 @@ export class DirectusStorage implements IStorage {
     console.log(`Directus configured: ${this.baseUrl}`);
   }
 
-  // User authentication methods
-  async getUserByEmail(email: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.email, email));
-    return user || undefined;
-  }
-
-  async getUserByDirectusId(directusId: string): Promise<User | undefined> {
-    const [user] = await db
-      .select()
-      .from(users)
-      .where(eq(users.directusId, directusId));
-    return user || undefined;
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db
-      .insert(users)
-      .values({
-        ...insertUser,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      })
-      .returning();
-    return user;
-  }
-
-  async updateUser(id: number, userData: Partial<User>): Promise<User> {
-    const [user] = await db
-      .update(users)
-      .set({
-        ...userData,
-        updatedAt: new Date(),
-      })
-      .where(eq(users.id, id))
-      .returning();
-
-    if (!user) {
-      throw new Error("User not found");
-    }
-    return user;
-  }
+  // User methods removed - using Directus authentication directly
 
   private async request(endpoint: string, options: RequestInit = {}, accessToken?: string) {
     const headers: Record<string, string> = {

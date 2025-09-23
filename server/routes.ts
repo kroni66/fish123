@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { DirectusStorage } from "./directus-storage";
 import { storage as localStorage, MemStorage, type IStorage } from "./storage";
 import { directusAuth } from "./directus-auth";
-import { insertProductSchema, insertCartItemSchema, insertOrderSchema, insertReviewSchema, insertWishlistItemSchema, loginSchema, registerSchema } from "@shared/schema";
+import { insertCartItemSchema, insertOrderSchema, insertReviewSchema, insertWishlistItemSchema, loginSchema, registerSchema } from "@shared/schema";
 import { z } from "zod";
 import Stripe from "stripe";
 
@@ -237,30 +237,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/auth/me", async (req, res) => {
-    try {
-      const authHeader = req.headers.authorization;
-      if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ message: "Token není poskytnut" });
-      }
-      
-      const token = authHeader.substring(7);
-      const directusUser = await directusAuth.getCurrentUser(token);
-      
-      // Get local user data
-      const localUser = await storage.getUserByDirectusId(directusUser.id);
-      if (!localUser) {
-        return res.status(404).json({ message: "Uživatel nenalezen" });
-      }
-      
-      res.json(localUser);
-    } catch (error) {
-      console.error("Get user error:", error);
-      res.status(401).json({ 
-        message: error instanceof Error ? error.message : "Nepodařilo se získat uživatele" 
-      });
-    }
-  });
+  // Removed /api/auth/me route - using Directus authentication directly
 
   // Categories
   app.get("/api/categories", async (req, res) => {
