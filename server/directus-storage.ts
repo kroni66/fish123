@@ -24,13 +24,23 @@ import {
 const DIRECTUS_URL = process.env.DIRECTUS_URL || "https://directus-production-08d0.up.railway.app";
 const DIRECTUS_API_KEY = process.env.DIRECTUS_API_KEY || "";
 
+interface DirectusFile {
+  id: string;
+  filename_disk: string;
+  filename_download: string;
+  title?: string;
+  type: string;
+  width?: number;
+  height?: number;
+}
+
 interface DirectusProduct {
   id: number;
   name: string;
   description: string;
   price: number;
   category: number;
-  image_url: string;
+  image: DirectusFile | null;
   images: string[];
   in_stock: boolean;
   slug: string;
@@ -66,7 +76,7 @@ interface DirectusArticle {
   content: string;
   author: string;
   category: string;
-  image_url: string;
+  image: DirectusFile | null;
   read_time: number;
   published: boolean;
   date_created: string;
@@ -103,6 +113,25 @@ export class DirectusStorage implements IStorage {
     this.baseUrl = DIRECTUS_URL.replace(/\/$/, ""); // Remove trailing slash
     this.apiKey = DIRECTUS_API_KEY;
     console.log(`Directus configured: ${this.baseUrl}`);
+  }
+
+  // User methods - since we use Directus authentication, these are stub implementations
+  async getUserByDirectusId(directusId: string): Promise<User | undefined> {
+    // Users are managed by Directus authentication, not stored locally
+    console.log(`getUserByDirectusId called with ${directusId} - not implemented for Directus auth`);
+    return undefined;
+  }
+
+  async createUser(user: InsertUser): Promise<User> {
+    // Users are created through Directus authentication
+    console.log(`createUser called - not implemented for Directus auth`);
+    throw new Error("User creation is handled by Directus authentication");
+  }
+
+  async updateUser(id: number, user: Partial<User>): Promise<User> {
+    // Users are updated through Directus authentication
+    console.log(`updateUser called with id ${id} - not implemented for Directus auth`);
+    throw new Error("User updates are handled by Directus authentication");
   }
 
   // User methods removed - using Directus authentication directly
@@ -146,14 +175,18 @@ export class DirectusStorage implements IStorage {
   }
 
   private transformProduct(directusProduct: DirectusProduct): Product {
+    const imageUrl = directusProduct.image
+      ? `${DIRECTUS_URL}/assets/${directusProduct.image.id}`
+      : undefined;
+
     return {
       id: directusProduct.id,
       name: directusProduct.name,
       slug: directusProduct.slug,
       description: directusProduct.description,
-      price: directusProduct.price.toString(),
+      price: directusProduct.price,
       categoryId: directusProduct.category,
-      imageUrl: directusProduct.image_url,
+      imageUrl: imageUrl,
       images: directusProduct.images || [],
       inStock: directusProduct.in_stock,
       features: directusProduct.features || [],
@@ -305,9 +338,9 @@ export class DirectusStorage implements IStorage {
         name: product.name,
         slug: product.slug,
         description: product.description,
-        price: parseFloat(product.price),
+        price: product.price,
         category: product.categoryId,
-        image_url: product.imageUrl,
+        image: product.imageUrl ? product.imageUrl : null, // For now, assume imageUrl contains file ID
         images: product.images,
         in_stock: product.inStock,
         features: product.features,
@@ -346,7 +379,7 @@ export class DirectusStorage implements IStorage {
     const cartItem: CartItem = {
       id,
       sessionId: insertCartItem.sessionId,
-      productId: insertCartItem.productId || null,
+      productId: insertCartItem.productId || 0,
       quantity: insertCartItem.quantity || 1,
       createdAt: new Date(),
     };
@@ -390,7 +423,7 @@ export class DirectusStorage implements IStorage {
       sessionId: insertOrder.sessionId,
       createdAt: new Date(),
       total: insertOrder.total,
-      items: Array.isArray(insertOrder.items) ? insertOrder.items : null,
+      items: Array.isArray(insertOrder.items) ? insertOrder.items : [],
       customerInfo: insertOrder.customerInfo || null,
     };
     this.orders.set(id, order);
@@ -484,6 +517,10 @@ export class DirectusStorage implements IStorage {
 
   // Transform methods for articles
   private transformArticle(directusArticle: DirectusArticle): Article {
+    const imageUrl = directusArticle.image
+      ? `${DIRECTUS_URL}/assets/${directusArticle.image.id}`
+      : undefined;
+
     return {
       id: directusArticle.id,
       title: directusArticle.title,
@@ -492,7 +529,7 @@ export class DirectusStorage implements IStorage {
       content: directusArticle.content,
       author: directusArticle.author,
       category: directusArticle.category,
-      imageUrl: directusArticle.image_url || null,
+      imageUrl: imageUrl,
       readTime: directusArticle.read_time,
       published: directusArticle.published,
       createdAt: new Date(directusArticle.date_created),
@@ -507,7 +544,7 @@ export class DirectusStorage implements IStorage {
       id: directusCategory.id,
       name: directusCategory.name,
       slug: directusCategory.slug,
-      description: directusCategory.description || null,
+      description: directusCategory.description || undefined,
       createdAt: new Date(directusCategory.date_created),
     };
   }
@@ -515,8 +552,8 @@ export class DirectusStorage implements IStorage {
   private transformWishlistItem(directusWishlistItem: DirectusWishlistItem): WishlistItem {
     return {
       id: directusWishlistItem.id,
-      userId: directusWishlistItem.user_id || null,
-      sessionId: directusWishlistItem.session_id || null,
+      userId: directusWishlistItem.user_id || undefined,
+      sessionId: directusWishlistItem.session_id || undefined,
       productId: directusWishlistItem.product_id,
       createdAt: new Date(directusWishlistItem.date_created),
     };
@@ -584,7 +621,7 @@ export class DirectusStorage implements IStorage {
         content: article.content,
         author: article.author,
         category: article.category,
-        image_url: article.imageUrl,
+        image: article.imageUrl ? parseInt(article.imageUrl) : null, // For now, assume imageUrl contains file ID
         read_time: article.readTime,
         published: article.published ?? true,
       };
@@ -681,10 +718,10 @@ export class DirectusStorage implements IStorage {
         console.log(`Directus wishlist collection not available for user ${insertWishlistItem.userId}, using in-memory storage`);
         
         const id = this.currentWishlistItemId++;
-        const wishlistItem: WishlistItem = { 
+        const wishlistItem: WishlistItem = {
           id,
           userId: insertWishlistItem.userId,
-          sessionId: null,
+          sessionId: undefined,
           productId: insertWishlistItem.productId,
           createdAt: new Date()
         };
@@ -715,10 +752,10 @@ export class DirectusStorage implements IStorage {
       console.log(`Directus wishlist collection not available, using in-memory storage for session ${insertWishlistItem.sessionId}`);
       
       const id = this.currentWishlistItemId++;
-      const wishlistItem: WishlistItem = { 
+      const wishlistItem: WishlistItem = {
         id,
-        userId: null,
-        sessionId: insertWishlistItem.sessionId || null,
+        userId: undefined,
+        sessionId: insertWishlistItem.sessionId || undefined,
         productId: insertWishlistItem.productId,
         createdAt: new Date()
       };
