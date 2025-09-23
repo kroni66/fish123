@@ -32,7 +32,7 @@ let storage: IStorage;
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const DIRECTUS_API_KEY = process.env.DIRECTUS_API_KEY;
 
-if (DIRECTUS_URL && DIRECTUS_API_KEY && DIRECTUS_URL !== "undefined") {
+if (DIRECTUS_URL && DIRECTUS_URL !== "undefined") {
   try {
     storage = new DirectusStorage();
     console.log("✓ Using Directus backend for data storage");
@@ -42,8 +42,8 @@ if (DIRECTUS_URL && DIRECTUS_API_KEY && DIRECTUS_URL !== "undefined") {
     throw new Error(`Failed to initialize DirectusStorage: ${error}`);
   }
 } else {
-  // If Directus credentials are not provided, throw an error
-  throw new Error("DIRECTUS_URL and DIRECTUS_API_KEY environment variables must be set to use the Directus backend.");
+  // If Directus URL is not provided, throw an error
+  throw new Error("DIRECTUS_URL environment variable must be set to use the Directus backend.");
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
