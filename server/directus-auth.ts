@@ -17,6 +17,8 @@ interface DirectusAuthResponse {
 export class DirectusAuth {
   private baseUrl: string;
   private apiKey: string;
+  private adminEmail: string = 'xaranex@gmail.com';
+  private adminPassword: string = '4yx4w7wlaieniq4saoovl592ld1ysu28';
 
   constructor() {
     this.baseUrl = process.env.DIRECTUS_URL || 'http://localhost:8055';
@@ -71,11 +73,22 @@ export class DirectusAuth {
 
   async register(registerData: RegisterData): Promise<{ user: DirectusUser; tokens: DirectusAuthResponse }> {
     try {
-      // Create user using admin API key since registration is disabled
+      // First login as admin to get access token
+      const adminLoginResponse = await this.request('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          email: this.adminEmail,
+          password: this.adminPassword,
+        }),
+      });
+
+      const adminToken = adminLoginResponse.data.access_token;
+
+      // Create user using admin token
       const createUserResponse = await this.request('/users', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
+          'Authorization': `Bearer ${adminToken}`,
         },
         body: JSON.stringify({
           email: registerData.email,
@@ -83,7 +96,6 @@ export class DirectusAuth {
           first_name: registerData.firstName,
           last_name: registerData.lastName,
           status: 'active',
-          role: null, // Will be assigned default role or no role
         }),
       });
 
