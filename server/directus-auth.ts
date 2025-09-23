@@ -15,14 +15,14 @@ interface DirectusAuthResponse {
 }
 
 export class DirectusAuth {
-  private baseUrl: string;
-  private apiKey: string;
+  private baseUrl: string = 'https://directus-production-08d0.up.railway.app';
+  private apiKey: string = 'qIp9z5ciY-QJBMDvpdBFczidkY7TDTTZ';
   private adminEmail: string = 'xaranex@gmail.com';
   private adminPassword: string = '4yx4w7wlaieniq4saoovl592ld1ysu28';
 
   constructor() {
-    this.baseUrl = process.env.DIRECTUS_URL || 'http://localhost:8055';
-    this.apiKey = process.env.DIRECTUS_API_KEY || '';
+    this.baseUrl = process.env.DIRECTUS_URL || 'https://directus-production-08d0.up.railway.app';
+    this.apiKey = process.env.DIRECTUS_API_KEY || 'qIp9z5ciY-QJBMDvpdBFczidkY7TDTTZ';
   }
 
   private async request(endpoint: string, options: RequestInit = {}) {
