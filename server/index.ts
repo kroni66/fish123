@@ -17,6 +17,40 @@ declare module 'express-session' {
 }
 
 const app = express();
+
+// CORS configuration for session cookies
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  // Allow Railway domains and localhost for development
+  const allowedOrigins = [
+    'https://fish123-production-3ba9.up.railway.app',
+    'http://localhost:5000',
+    'http://localhost:3000',
+    /^https:\/\/.*\.railway\.app$/
+  ];
+
+  const isAllowed = allowedOrigins.some(allowedOrigin => {
+    if (typeof allowedOrigin === 'string') {
+      return origin === allowedOrigin;
+    }
+    return allowedOrigin.test(origin || '');
+  });
+
+  if (isAllowed) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -30,7 +64,7 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production', // Use true in production (HTTPS), false in dev (HTTP)
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    sameSite: 'lax'
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
   }
 }));
 
