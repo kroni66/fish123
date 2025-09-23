@@ -1,5 +1,5 @@
 // Test Directus connection using admin credentials
-const DIRECTUS_URL = process.env.DIRECTUS_URL || 'https://your-directus-url.com';
+const DIRECTUS_URL = 'https://directus-production-08d0.up.railway.app';
 const ADMIN_EMAIL = 'xaranex@gmail.com';
 const ADMIN_PASSWORD = '4yx4w7wlaieniq4saoovl592ld1ysu28';
 
