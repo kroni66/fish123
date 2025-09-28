@@ -53,13 +53,10 @@ export function useWishlist() {
     onError: (error: any) => {
       if (error.message?.includes("401") || error.message?.includes("requireAuth")) {
         toast({
-          title: "Přihlášení vyžadováno",
-          description: "Pro přidání do seznamu přání se musíte přihlásit.",
+          title: "Ověření vyžadováno",
+          description: "Pro přidání do seznamu přání musíte být ověřeni pomocí tokenu.",
           variant: "destructive",
         });
-        setTimeout(() => {
-          window.location.href = "/api/login";
-        }, 1500);
       } else {
         toast({
           title: "Chyba",
@@ -83,13 +80,10 @@ export function useWishlist() {
     onError: (error: any) => {
       if (error.message?.includes("401") || error.message?.includes("requireAuth")) {
         toast({
-          title: "Přihlášení vyžadováno",
-          description: "Pro správu seznamu přání se musíte přihlásit.",
+          title: "Ověření vyžadováno",
+          description: "Pro správu seznamu přání musíte být ověřeni pomocí tokenu.",
           variant: "destructive",
         });
-        setTimeout(() => {
-          window.location.href = "/api/login";
-        }, 1500);
       } else {
         toast({
           title: "Chyba",
@@ -108,13 +102,10 @@ export function useWishlist() {
   const addToWishlist = (productId: number) => {
     if (!isAuthenticated) {
       toast({
-        title: "Přihlášení vyžadováno",
-        description: "Pro přidání do seznamu přání se musíte přihlásit. Přesměrovávám...",
+        title: "Ověření vyžadováno",
+        description: "Pro přidání do seznamu přání musíte být ověřeni pomocí tokenu.",
         variant: "destructive",
       });
-      setTimeout(() => {
-        window.location.href = "/api/login";
-      }, 1500);
       return;
     }
     addToWishlistMutation.mutate(productId);
@@ -123,13 +114,10 @@ export function useWishlist() {
   const removeFromWishlist = (wishlistItemId: number) => {
     if (!isAuthenticated) {
       toast({
-        title: "Přihlášení vyžadováno",
-        description: "Pro správu seznamu přání se musíte přihlásit. Přesměrovávám...",
+        title: "Ověření vyžadováno",
+        description: "Pro správu seznamu přání musíte být ověřeni pomocí tokenu.",
         variant: "destructive",
       });
-      setTimeout(() => {
-        window.location.href = "/api/login";
-      }, 1500);
       return;
     }
     removeFromWishlistMutation.mutate(wishlistItemId);

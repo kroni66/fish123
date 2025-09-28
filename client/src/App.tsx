@@ -20,8 +20,6 @@ import Dashboard from "@/pages/dashboard";
 import ProductDetail from "@/pages/product-detail";
 import Checkout from "@/pages/checkout";
 import OrderConfirmation from "@/pages/order-confirmation";
-import Login from "@/pages/login";
-import Register from "@/pages/register";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -45,8 +43,6 @@ function Router() {
             <Route path="/checkout" component={Checkout} />
             <Route path="/order-confirmation" component={OrderConfirmation} />
             <Route path="/order-confirmation/:id" component={OrderConfirmation} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
             <Route component={NotFound} />
           </Switch>
         </PageTransition>

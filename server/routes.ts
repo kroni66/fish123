@@ -53,140 +53,26 @@ if (DIRECTUS_URL && DIRECTUS_URL !== "undefined") {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Authentication routes
-  app.post("/api/auth/login", async (req, res) => {
-    try {
-      const loginData = loginSchema.parse(req.body);
-      
-      const { user, tokens } = await directusAuth.login(loginData);
-
-      // Store user session with access token for profile fetching
-      req.session.user = {
-        id: user.id,
-        email: user.email,
-        firstName: user.first_name,
-        lastName: user.last_name,
-        accessToken: tokens.access_token,
-        refreshToken: tokens.refresh_token,
-      };
-
-      console.log(`Directus login successful - User: ${user.id}, Session ID: ${req.sessionID}`);
-
-      // Return user data from Directus directly
-      res.json({
-        user: {
-          id: user.id,
-          email: user.email,
-          firstName: user.first_name,
-          lastName: user.last_name,
-          directusId: user.id,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        tokens,
-      });
-    } catch (error) {
-      console.error("Login error:", error);
-      res.status(401).json({ 
-        message: error instanceof Error ? error.message : "Přihlášení se nezdařilo" 
-      });
-    }
-  });
-
-  app.post("/api/auth/register", async (req, res) => {
-    try {
-      const registerData = registerSchema.parse(req.body);
-      const { user, tokens } = await directusAuth.register(registerData);
-      
-      // Store user session with access token for profile fetching
-      req.session.user = {
-        id: user.id,
-        email: user.email,
-        firstName: user.first_name,
-        lastName: user.last_name,
-        accessToken: tokens.access_token,
-        refreshToken: tokens.refresh_token,
-      };
-      
-      // Return user data from Directus directly
-      res.json({
-        user: {
-          id: user.id,
-          email: user.email,
-          firstName: user.first_name,
-          lastName: user.last_name,
-          directusId: user.id,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        tokens,
-      });
-    } catch (error) {
-      console.error("Registration error:", error);
-      res.status(400).json({ 
-        message: error instanceof Error ? error.message : "Registrace se nezdařila" 
-      });
-    }
-  });
-
-  app.post("/api/auth/logout", async (req, res) => {
-    try {
-      // Get refresh token from session or request body
-      const refreshToken = req.session?.user?.refreshToken || req.body.refreshToken;
-      
-      if (refreshToken) {
-        await directusAuth.logout(refreshToken);
-      }
-      
-      // Clear session data
-      req.session.user = undefined;
-      
-      res.json({ message: "Úspěšně odhlášen" });
-    } catch (error) {
-      console.error("Logout error:", error);
-      // Clear session even if Directus logout fails
-      req.session.user = undefined;
-      res.json({ message: "Úspěšně odhlášen" }); // Always succeed logout
-    }
-  });
-
-  app.post("/api/auth/refresh", async (req, res) => {
-    try {
-      const { refreshToken } = req.body;
-      if (!refreshToken) {
-        return res.status(400).json({ message: "Refresh token je povinný" });
-      }
-      
-      const tokens = await directusAuth.refreshToken(refreshToken);
-      res.json(tokens);
-    } catch (error) {
-      console.error("Token refresh error:", error);
-      res.status(401).json({ 
-        message: error instanceof Error ? error.message : "Obnova tokenu se nezdařila" 
-      });
-    }
-  });
+  // Authentication routes - removed login/register/logout, only token-based auth
 
   app.get("/api/auth/user", async (req, res) => {
     try {
-      // Check if user is authenticated with session
-      const sessionUser = req.session?.user;
-      
-      console.log(`Auth check - Session ID: ${req.sessionID}, Session User:`, sessionUser ? 'exists' : 'missing');
-      console.log(`Session user details:`, sessionUser);
-      
-      if (!sessionUser) {
-        return res.status(401).json({ message: "Nepřihlášen" });
+      // Extract Bearer token from Authorization header
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ message: "Token je povinný" });
       }
 
-      // Removed demo user logic, proceed directly to Directus authentication
+      const accessToken = authHeader.substring(7); // Remove "Bearer " prefix
+
+      console.log(`Auth check - Token provided:`, accessToken.substring(0, 10) + '...');
 
       try {
         // Get user data from Directus using the access token
-        const directusUser = await directusAuth.getCurrentUser(sessionUser.accessToken);
-        
+        const directusUser = await directusAuth.getCurrentUser(accessToken);
+
         console.log(`Successfully authenticated user: ${directusUser.id}`);
-        
+
         // Return the user profile data
         res.json({
           id: directusUser.id,
@@ -199,46 +85,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           updatedAt: new Date()
         });
       } catch (userError: any) {
-        // Handle token expiration with automatic refresh
-        if (userError.message.includes('TOKEN_EXPIRED') && sessionUser.refreshToken) {
-          try {
-            console.log(`Token expired for user ${sessionUser.id}, refreshing...`);
-            
-            // Refresh the token
-            const newTokens = await directusAuth.refreshToken(sessionUser.refreshToken);
-            
-            // Update session with new tokens
-            req.session.user.accessToken = newTokens.access_token;
-            req.session.user.refreshToken = newTokens.refresh_token;
-            
-            // Retry getting user data with new token
-            const directusUser = await directusAuth.getCurrentUser(newTokens.access_token);
-            
-            console.log(`Token refreshed successfully for user: ${directusUser.id}`);
-            
-            res.json({
-              id: directusUser.id,
-              email: directusUser.email,
-              firstName: directusUser.first_name || null,
-              lastName: directusUser.last_name || null,
-              directusId: directusUser.id,
-              status: directusUser.status,
-              createdAt: new Date(),
-              updatedAt: new Date()
-            });
-          } catch (refreshError) {
-            console.log('Token refresh failed, user needs to re-authenticate');
-            delete req.session.user;
-            res.status(401).json({ message: "Relace vypršela - přihlaste se znovu" });
-          }
-        } else {
-          throw userError;
-        }
+        console.error("Token validation error:", userError);
+        res.status(401).json({ message: "Neplatný nebo vypršený token" });
       }
     } catch (error) {
       console.error("Get user error:", error);
-      res.status(401).json({ 
-        message: error instanceof Error ? error.message : "Nepodařilo se získat uživatele" 
+      res.status(401).json({
+        message: error instanceof Error ? error.message : "Nepodařilo se získat uživatele"
       });
     }
   });
@@ -417,34 +270,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Authenticated-only wishlist routes
+  // Token-based wishlist routes
   app.get("/api/wishlist/:sessionId", async (req, res) => {
     try {
-      const userId = req.session?.user?.id;
-      
-      console.log(`Wishlist fetch request - Session user ID: ${userId}, Session ID: ${req.params.sessionId}`);
-      
-      if (!userId) {
+      // Extract Bearer token from Authorization header
+      const authHeader = req.headers.authorization;
+      const accessToken = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : null;
+
+      console.log(`Wishlist fetch request - Session ID: ${req.params.sessionId}, Token provided:`, accessToken ? 'yes' : 'no');
+
+      if (!accessToken) {
         // Return empty wishlist for unauthenticated users
-        console.log(`No user in session, returning empty wishlist`);
+        console.log(`No token provided, returning empty wishlist`);
         return res.json([]);
       }
-      
-      // For authenticated users, get their user-specific wishlist with access token
-      const accessToken = req.session.user?.accessToken;
-      const wishlistItems = await storage.getWishlistItemsByUser(userId, accessToken);
-      console.log(`Fetching wishlist for authenticated user: ${userId}, Found ${wishlistItems.length} items`);
-      
-      // Get product details for each wishlist item
-      const itemsWithProducts = await Promise.all(
-        wishlistItems.map(async (item) => {
-          const product = await storage.getProductById(item.productId!);
-          return { ...item, product };
-        })
-      );
-      
-      console.log(`Returning ${itemsWithProducts.length} wishlist items with product details`);
-      res.json(itemsWithProducts);
+
+      // Get user info from token to get userId
+      try {
+        const directusUser = await directusAuth.getCurrentUser(accessToken);
+        const userId = directusUser.id;
+
+        // For authenticated users, get their user-specific wishlist with access token
+        const wishlistItems = await storage.getWishlistItemsByUser(userId, accessToken);
+        console.log(`Fetching wishlist for authenticated user: ${userId}, Found ${wishlistItems.length} items`);
+
+        // Get product details for each wishlist item
+        const itemsWithProducts = await Promise.all(
+          wishlistItems.map(async (item) => {
+            const product = await storage.getProductById(item.productId!);
+            return { ...item, product };
+          })
+        );
+
+        console.log(`Returning ${itemsWithProducts.length} wishlist items with product details`);
+        res.json(itemsWithProducts);
+      } catch (userError) {
+        console.error("Token validation failed:", userError);
+        return res.status(401).json({ message: "Neplatný token" });
+      }
     } catch (error) {
       console.error("Failed to fetch wishlist items:", error);
       res.status(500).json({ message: "Failed to fetch wishlist items" });
@@ -453,36 +316,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/wishlist", async (req, res) => {
     try {
-      const userId = req.session?.user?.id;
-      
-      console.log(`Wishlist add request - Session user ID: ${userId}, Session data:`, req.session);
-      
-      // Require authentication for adding to wishlist
-      if (!userId) {
-        return res.status(401).json({ 
-          message: "Musíte se přihlásit pro přidání položek do wishlistu",
-          requireAuth: true 
+      // Extract Bearer token from Authorization header
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({
+          message: "Token je povinný pro přidání položek do wishlistu",
+          requireAuth: true
         });
       }
-      
+
+      const accessToken = authHeader.substring(7);
+
+      // Get user info from token
+      const directusUser = await directusAuth.getCurrentUser(accessToken);
+      const userId = directusUser.id;
+
+      console.log(`Wishlist add request - User ID: ${userId}, Product: ${req.body.productId}`);
+
       const wishlistItemData = insertWishlistItemSchema.parse(req.body);
-      
+
       // Only use user ID for authenticated users
       const enhancedWishlistData = {
         ...wishlistItemData,
         userId: userId,
         sessionId: null, // Don't use session for authenticated users
       };
-      
+
       console.log(`Adding item to wishlist for authenticated user: ${userId}, Product: ${wishlistItemData.productId}`);
-      
-      const accessToken = req.session.user?.accessToken;
+
       const wishlistItem = await storage.addToWishlist(enhancedWishlistData, accessToken);
       console.log(`Successfully added wishlist item:`, wishlistItem);
       res.json(wishlistItem);
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ message: "Invalid wishlist item data", errors: error.errors });
+      }
+      if (error.message?.includes('TOKEN') || error.message?.includes('Neplatný')) {
+        return res.status(401).json({ message: "Neplatný token", requireAuth: true });
       }
       console.error("Failed to add item to wishlist:", error);
       res.status(500).json({ message: "Failed to add item to wishlist" });
@@ -491,20 +361,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.delete("/api/wishlist/:id", async (req, res) => {
     try {
-      const userId = req.session?.user?.id;
-      
-      // Require authentication for removing from wishlist
-      if (!userId) {
-        return res.status(401).json({ 
-          message: "Musíte se přihlásit pro správu wishlistu",
-          requireAuth: true 
+      // Extract Bearer token from Authorization header
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({
+          message: "Token je povinný pro správu wishlistu",
+          requireAuth: true
         });
       }
-      
+
+      const accessToken = authHeader.substring(7);
+
+      // Get user info from token to validate ownership
+      const directusUser = await directusAuth.getCurrentUser(accessToken);
+
       await storage.removeFromWishlist(Number(req.params.id));
-      console.log(`Removed wishlist item ${req.params.id} for user: ${userId}`);
+      console.log(`Removed wishlist item ${req.params.id} for user: ${directusUser.id}`);
       res.status(204).send();
     } catch (error) {
+      if (error.message?.includes('TOKEN') || error.message?.includes('Neplatný')) {
+        return res.status(401).json({ message: "Neplatný token", requireAuth: true });
+      }
       console.error("Failed to remove item from wishlist:", error);
       res.status(500).json({ message: "Failed to remove item from wishlist" });
     }
@@ -512,42 +389,66 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/wishlist/:sessionId/check/:productId", async (req, res) => {
     try {
-      const userId = req.session?.user?.id;
-      
-      if (!userId) {
+      // Extract Bearer token from Authorization header
+      const authHeader = req.headers.authorization;
+      const accessToken = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : null;
+
+      if (!accessToken) {
         // Return false for unauthenticated users
         return res.json({ isInWishlist: false });
       }
-      
-      const isInWishlist = await storage.isInWishlistByUser(userId, Number(req.params.productId));
-      res.json({ isInWishlist });
+
+      try {
+        // Get user info from token
+        const directusUser = await directusAuth.getCurrentUser(accessToken);
+        const userId = directusUser.id;
+
+        const isInWishlist = await storage.isInWishlistByUser(userId, Number(req.params.productId));
+        res.json({ isInWishlist });
+      } catch (userError) {
+        // Token invalid, return false
+        return res.json({ isInWishlist: false });
+      }
     } catch (error) {
       console.error("Failed to check wishlist status:", error);
       res.status(500).json({ message: "Failed to check wishlist status" });
     }
   });
 
-  // Orders
+  // Orders - token-based authentication
   app.post("/api/orders", async (req, res) => {
     try {
-      if (!req.session.user) {
-        return res.status(401).json({ message: "Musíte se přihlásit pro vytvoření objednávky" });
+      // Extract Bearer token from Authorization header
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({
+          message: "Token je povinný pro vytvoření objednávky",
+          requireAuth: true
+        });
       }
-      // Potentially enrich orderData with userId from session
+
+      const accessToken = authHeader.substring(7);
+
+      // Get user info from token
+      const directusUser = await directusAuth.getCurrentUser(accessToken);
+
+      // Potentially enrich orderData with userId from token
       const orderData = insertOrderSchema.parse({
         ...req.body,
-        userId: req.session.user.id, // Assuming schema supports userId
+        userId: directusUser.id, // Use userId from token
       });
       const order = await storage.createOrder(orderData);
-      
+
       // Clear cart after successful order
-      // Ensure clearCart can handle session ID or user ID based on how orders are linked to carts
-      await storage.clearCart(orderData.sessionId); // Or use a user-specific cart clearing method
-      
+      await storage.clearCart(orderData.sessionId);
+
       res.json(order);
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ message: "Invalid order data", errors: error.errors });
+      }
+      if (error.message?.includes('TOKEN') || error.message?.includes('Neplatný')) {
+        return res.status(401).json({ message: "Neplatný token", requireAuth: true });
       }
       res.status(500).json({ message: "Failed to create order" });
     }
@@ -579,24 +480,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/reviews", async (req, res) => {
     try {
-      if (!req.session.user) {
-        return res.status(401).json({ message: "Musíte se přihlásit pro přidání recenze" });
+      // Extract Bearer token from Authorization header
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({
+          message: "Token je povinný pro přidání recenze",
+          requireAuth: true
+        });
       }
 
-      const { id: userId, email, firstName, lastName } = req.session.user;
-      const customerName = `${firstName || ''} ${lastName || ''}`.trim() || email; // Fallback to email if name parts are missing
+      const accessToken = authHeader.substring(7);
+
+      // Get user info from token
+      const directusUser = await directusAuth.getCurrentUser(accessToken);
+      const customerName = `${directusUser.first_name || ''} ${directusUser.last_name || ''}`.trim() || directusUser.email;
 
       const reviewData = insertReviewSchema.parse({
         ...req.body,
-        userId: userId,
+        userId: directusUser.id,
         customerName: customerName,
-        customerEmail: email,
+        customerEmail: directusUser.email,
       });
       const review = await storage.createReview(reviewData);
       res.json(review);
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ message: "Invalid review data", errors: error.errors });
+      }
+      if (error.message?.includes('TOKEN') || error.message?.includes('Neplatný')) {
+        return res.status(401).json({ message: "Neplatný token", requireAuth: true });
       }
       res.status(500).json({ message: "Failed to create review" });
     }
@@ -617,13 +529,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.patch("/api/reviews/:id/helpful", async (req, res) => {
     try {
-      if (!req.session.user) {
-        return res.status(401).json({ message: "Musíte se přihlásit pro označení recenze jako užitečné" });
+      // Extract Bearer token from Authorization header
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({
+          message: "Token je povinný pro označení recenze jako užitečné",
+          requireAuth: true
+        });
       }
+
+      const accessToken = authHeader.substring(7);
+
+      // Validate token
+      await directusAuth.getCurrentUser(accessToken);
+
       const id = parseInt(req.params.id);
       const review = await storage.markReviewHelpful(id);
       res.json(review);
     } catch (error) {
+      if (error.message?.includes('TOKEN') || error.message?.includes('Neplatný')) {
+        return res.status(401).json({ message: "Neplatný token", requireAuth: true });
+      }
       res.status(500).json({ message: "Failed to mark review as helpful" });
     }
   });

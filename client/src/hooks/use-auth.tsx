@@ -6,9 +6,8 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (data: LoginData) => Promise<void>;
-  register: (data: RegisterData) => Promise<void>;
-  logout: () => Promise<void>;
+  setToken: (token: string) => Promise<void>;
+  clearToken: () => Promise<void>;
   error: string | null;
 }
 
@@ -21,43 +20,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-      try {
-        const response = await apiRequest("GET", "/api/auth/user");
-        const userData = await response.json();
-        setUser(userData);
-      } catch {
+      const token = localStorage.getItem('auth_token');
+      if (token) {
+        try {
+          const response = await apiRequest("GET", "/api/auth/user", undefined, {
+            'Authorization': `Bearer ${token}`
+          });
+          const userData = await response.json();
+          setUser(userData);
+        } catch {
+          // Token invalid or expired, remove it
+          localStorage.removeItem('auth_token');
+          setUser(null);
+        }
+      } else {
         setUser(null);
-      } finally {
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
 
     checkAuthStatus();
   }, []);
 
-  const login = async (data: LoginData) => {
+  const setToken = async (token: string) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiRequest("POST", "/api/auth/login", data);
-      const loginResult = await response.json();
-      
-      // Set initial user data from login response
-      setUser(loginResult.user);
-      
-      // Wait a moment for session to be established, then fetch fresh data
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      try {
-        const userResponse = await apiRequest("GET", "/api/auth/user");
-        const userData = await userResponse.json();
-        setUser(userData);
-      } catch (userError) {
-        // If fetching user data fails, keep the login result user data
-        console.warn("Failed to fetch updated user data:", userError);
-      }
+      // Validate token by fetching user data
+      const response = await apiRequest("GET", "/api/auth/user", undefined, {
+        'Authorization': `Bearer ${token}`
+      });
+      const userData = await response.json();
+
+      // Store token and set user
+      localStorage.setItem('auth_token', token);
+      setUser(userData);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Přihlášení se nezdařilo";
+      const errorMessage = err instanceof Error ? err.message : "Neplatný token";
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
@@ -65,44 +64,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const register = async (data: RegisterData) => {
-    setIsLoading(true);
+  const clearToken = async () => {
+    localStorage.removeItem('auth_token');
+    setUser(null);
     setError(null);
-    try {
-      const response = await apiRequest("POST", "/api/auth/register", data);
-      const registerResult = await response.json();
-      
-      // Set initial user data from registration response
-      setUser(registerResult.user);
-      
-      // Wait a moment for session to be established, then fetch fresh data
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      try {
-        const userResponse = await apiRequest("GET", "/api/auth/user");
-        const userData = await userResponse.json();
-        setUser(userData);
-      } catch (userError) {
-        // If fetching user data fails, keep the registration result user data
-        console.warn("Failed to fetch updated user data:", userError);
-      }
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Registrace se nezdařila";
-      setError(errorMessage);
-      throw new Error(errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await apiRequest("POST", "/api/auth/logout");
-    } catch {
-      // Logout should always succeed on client
-    } finally {
-      setUser(null);
-    }
   };
 
   return (
@@ -111,9 +76,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         isLoading,
         isAuthenticated: !!user,
-        login,
-        register,
-        logout,
+        setToken,
+        clearToken,
         error,
       }}
     >

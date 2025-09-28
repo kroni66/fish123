@@ -58,17 +58,12 @@ export default function WishlistPage() {
                 <Lock className="w-12 h-12 text-primary" />
               </div>
               <h1 className="text-3xl font-bold text-foreground mb-4">
-                Přihlášení vyžadováno
+                Ověření vyžadováno
               </h1>
               <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-                Pro zobrazení a správu vašeho seznamu přání se musíte přihlásit do svého účtu.
+                Pro zobrazení a správu vašeho seznamu přání musíte být ověřeni pomocí tokenu.
               </p>
               <div className="space-x-4">
-                <a href="/api/login">
-                  <Button size="lg" className="bg-primary hover:bg-primary/90">
-                    Přihlásit se
-                  </Button>
-                </a>
                 <Link href="/">
                   <Button size="lg" variant="outline">
                     Zpět na hlavní stránku
