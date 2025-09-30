@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Twitter } from "lucide-react";
-import greyLogoPath from "@assets/Grevy logo.svg";
+// Logo is served from public folder
 
 export function Footer() {
   return (
@@ -15,7 +15,7 @@ export function Footer() {
             <Link href="/" className="flex items-center group mb-6">
               <div className="relative">
                 <img 
-                  src={greyLogoPath}
+                  src="/grevynew.png"
                   alt="Grevy Logo"
                   className="h-10 w-auto group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
                 />

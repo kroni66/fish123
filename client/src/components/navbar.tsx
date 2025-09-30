@@ -4,7 +4,7 @@ import { ShoppingCart, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/use-cart";
 import { CartOverlay } from "@/components/cart-overlay";
-import greyLogoPath from "@assets/Grevy logo.svg";
+// Logo is served from public folder
 
 export function Navbar() {
   const [location] = useLocation();
@@ -115,7 +115,6 @@ export function Navbar() {
           {/* Dark overlay for text readability */}
           <div className="absolute inset-0 bg-black/40 rounded-2xl"></div>
         </div>
-        
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
           <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo */}
@@ -123,7 +122,7 @@ export function Navbar() {
               <Link href="/" className="flex items-center group">
                 <div className="relative">
                   <img 
-                    src={greyLogoPath}
+                    src="/grevynew.png"
                     alt="Grevy Logo"
                     className="h-8 sm:h-10 w-auto group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
                   />
