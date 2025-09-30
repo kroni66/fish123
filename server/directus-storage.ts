@@ -40,7 +40,7 @@ interface DirectusProduct {
   description: string;
   price: number;
   category: number;
-  image: DirectusFile | null;
+  image: DirectusFile | string | null;
   images: string[];
   in_stock: boolean;
   slug: string;
@@ -76,7 +76,7 @@ interface DirectusArticle {
   content: string;
   author: string;
   category: string;
-  image: DirectusFile | null;
+  image: DirectusFile | string | null;
   read_time: number;
   published: boolean;
   date_created: string;
@@ -175,9 +175,21 @@ export class DirectusStorage implements IStorage {
   }
 
   private transformProduct(directusProduct: DirectusProduct): Product {
-    const imageUrl = directusProduct.image
-      ? `${DIRECTUS_URL}/assets/${directusProduct.image.id}`
-      : undefined;
+    let imageUrl: string | undefined;
+    
+    if (directusProduct.image) {
+      if (typeof directusProduct.image === 'string') {
+        // Image is a file ID string
+        imageUrl = `${this.baseUrl}/assets/${directusProduct.image}`;
+        console.log(`Product ${directusProduct.id} image URL (string): ${imageUrl}`);
+      } else {
+        // Image is a DirectusFile object
+        imageUrl = `${this.baseUrl}/assets/${directusProduct.image.id}`;
+        console.log(`Product ${directusProduct.id} image URL (object): ${imageUrl}`);
+      }
+    } else {
+      console.log(`Product ${directusProduct.id} has no image`);
+    }
 
     return {
       id: directusProduct.id,
@@ -517,9 +529,17 @@ export class DirectusStorage implements IStorage {
 
   // Transform methods for articles
   private transformArticle(directusArticle: DirectusArticle): Article {
-    const imageUrl = directusArticle.image
-      ? `${DIRECTUS_URL}/assets/${directusArticle.image.id}`
-      : undefined;
+    let imageUrl: string | undefined;
+    
+    if (directusArticle.image) {
+      if (typeof directusArticle.image === 'string') {
+        // Image is a file ID string
+        imageUrl = `${this.baseUrl}/assets/${directusArticle.image}`;
+      } else {
+        // Image is a DirectusFile object
+        imageUrl = `${this.baseUrl}/assets/${directusArticle.image.id}`;
+      }
+    }
 
     return {
       id: directusArticle.id,
