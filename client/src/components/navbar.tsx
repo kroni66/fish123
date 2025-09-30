@@ -116,7 +116,7 @@ export function Navbar() {
           <div className="absolute inset-0 bg-black/40 rounded-2xl"></div>
         </div>
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center justify-between h-14 sm:h-16">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center group">
@@ -124,7 +124,7 @@ export function Navbar() {
                   <img 
                     src="/grevynew.png"
                     alt="Grevy Logo"
-                    className="h-8 sm:h-10 w-auto group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+                    className="h-12 sm:h-16 w-auto group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
                   />
                 </div>
               </Link>

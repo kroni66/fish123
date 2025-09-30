@@ -17,7 +17,7 @@ export function Footer() {
                 <img 
                   src="/grevynew.png"
                   alt="Grevy Logo"
-                  className="h-10 w-auto group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+                  className="h-16 w-auto group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
                 />
               </div>
             </Link>
